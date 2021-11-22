@@ -7,7 +7,7 @@ const Default = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Início</Link>
           </li>
           <li>
             <Link to="/clientes">Clientes</Link>
