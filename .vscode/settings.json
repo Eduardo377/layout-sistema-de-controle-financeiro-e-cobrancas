@@ -4,8 +4,6 @@
     "node_modules": true,
     "yarn.lock": true,
     "package-lock.json": true,
-    ".gitignore": true,
-    "README.md": true,
-    "README.old.md": true
+    "README.md": true
   }
 }
