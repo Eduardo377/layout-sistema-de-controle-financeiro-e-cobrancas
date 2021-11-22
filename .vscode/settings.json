@@ -3,7 +3,6 @@
     ".vscode": true,
     "node_modules": true,
     "yarn.lock": true,
-    "package-lock.json": true,
-    "README.md": true
+    "package-lock.json": true
   }
 }
