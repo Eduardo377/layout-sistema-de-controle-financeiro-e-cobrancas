@@ -1,5 +1,6 @@
 import { Outlet, Link as RouterLink, useLocation } from "react-router-dom";
-import { Box, Link } from "@material-ui/core";
+import { Box, Link, Container, Avatar, Button } from "@material-ui/core";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 import HomeIcone from "../../icones/Home";
 import ClientesIcone from "../../icones/Clientes";
@@ -8,6 +9,25 @@ import estilo from "./estilo.module.css";
 
 const Default = () => {
   const { pathname } = useLocation();
+
+  const tamanhoIcone = 3;
+  const menuLinks = [
+    {
+      url: "/",
+      nome: "Home",
+      icone: <HomeIcone size={tamanhoIcone} />,
+    },
+    {
+      url: "/clientes",
+      nome: "Cliente",
+      icone: <ClientesIcone size={tamanhoIcone} />,
+    },
+    {
+      url: "/cobrancas",
+      nome: "Cobranças",
+      icone: <CobrancasIcone size={tamanhoIcone} />,
+    },
+  ];
 
   return (
     <Box display="flex" minHeight="100vh">
@@ -20,37 +40,65 @@ const Default = () => {
           paddingY="2rem"
           className={estilo.menu}
         >
-          <Link
-            component={RouterLink}
-            to="/"
-            color={pathname !== "/" ? "inherit" : "primary"}
-          >
-            <HomeIcone size="3" />
-            <Box component="span">Home</Box>
-          </Link>
-
-          <Link
-            component={RouterLink}
-            to="/clientes"
-            color={pathname !== "/clientes" ? "inherit" : "primary"}
-          >
-            <ClientesIcone size="3" />
-            <Box component="span">Clientes</Box>
-          </Link>
-
-          <Link
-            component={RouterLink}
-            to="/cobrancas"
-            color={pathname !== "/cobrancas" ? "inherit" : "primary"}
-          >
-            <CobrancasIcone size="3" />
-            <Box component="span">Cobranças</Box>
-          </Link>
+          {menuLinks.map((item) => {
+            return (
+              <Box
+                width="100%"
+                key={item.nome}
+                color={pathname !== item.url ? "inherit" : "primary.main"}
+                sx={{
+                  borderRight: `2px solid ${
+                    pathname === item.url ? "currentColor" : "transparent"
+                  }`,
+                }}
+              >
+                <Link
+                  component={RouterLink}
+                  to={item.url}
+                  color={pathname !== item.url ? "inherit" : "primary"}
+                >
+                  {item.icone}
+                  <Box component="span">{item.nome}</Box>
+                </Link>
+              </Box>
+            );
+          })}
         </Box>
       </Box>
-      <Box flex="1">
+
+      <Box flex="1" paddingX={4}>
+        <Box
+          paddingTop={4}
+          paddingBottom={2}
+          marginBottom={2}
+          sx={{ borderBottom: "1px solid #ACD9C5" }}
+        >
+          <Container maxWidth="lg">
+            <Box display="flex" alignItems="center">
+              <Box component="h2" margin={0} flex="1">
+                Resumo das cobranças
+              </Box>
+
+              <Box
+                display="flex"
+                alignItems="center"
+                sx={{ color: "#0E8750", cursor: "pointer" }}
+              >
+                <Box marginRight={2}>
+                  <Avatar>LR</Avatar>
+                </Box>
+                <Box component="h3" margin={0} fontWeight="600">
+                  Lorena
+                </Box>
+                <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
         <main>
-          <Outlet />
+          <Container maxWidth="lg">
+            <Outlet />
+          </Container>
         </main>
       </Box>
     </Box>
