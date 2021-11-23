@@ -6,6 +6,7 @@ const theme = createTheme({
       "@global": {
         body: {
           backgroundColor: "#F8F8F9",
+          color: "#3F3F55",
         },
       },
     },
