@@ -19,7 +19,7 @@ const Default = () => {
     },
     {
       url: "/clientes",
-      nome: "Cliente",
+      nome: "Clientes",
       icone: <ClientesIcone size={tamanhoIcone} />,
     },
     {
