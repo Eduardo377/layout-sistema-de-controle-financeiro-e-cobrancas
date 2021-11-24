@@ -1,0 +1,17 @@
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-primario {
+  background-color: var(--primaria);
+}
+
+.btn-secundario {
+  background-color: #dedee9;
+  color: #0e8750;
+}
