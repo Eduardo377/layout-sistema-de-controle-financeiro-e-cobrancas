@@ -7,6 +7,18 @@
   flex-direction: column;
 }
 
+.flex-1 {
+  flex: 1;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.items-center {
+  align-items: center;
+}
+
 .btn-primario {
   background-color: var(--primaria);
 }
@@ -14,4 +26,9 @@
 .btn-secundario {
   background-color: #dedee9;
   color: #0e8750;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
 }
