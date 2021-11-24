@@ -19,6 +19,18 @@
   align-items: center;
 }
 
+.gap-1 {
+  gap: 1rem;
+}
+
+.gap-2 {
+  gap: 2rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
 .btn-primario {
   background-color: var(--primaria);
 }
@@ -31,4 +43,28 @@
 .container {
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.bg-verde-claro {
+  background-color: var(--verde-claro);
+}
+
+.texto-verde {
+  color: var(--verde);
+}
+
+.bg-vermelho-claro {
+  background-color: var(--vermelho-claro);
+}
+
+.texto-vermelho {
+  color: var(--vermelho);
+}
+
+.bg-amarelo-claro {
+  background-color: var(--amarelo-claro);
+}
+
+.texto-amarelo {
+  color: var(--amarelo);
 }
