@@ -1,7 +1,11 @@
-import React from "react";
+import { useEffect } from "react";
 
-const index = () => {
+const Cobrancas = ({ setTituloDaRota }) => {
+  useEffect(() => {
+    setTituloDaRota("Cobranças");
+  }, []);
+
   return <div>Cobrancas</div>;
 };
 
-export default index;
+export default Cobrancas;
