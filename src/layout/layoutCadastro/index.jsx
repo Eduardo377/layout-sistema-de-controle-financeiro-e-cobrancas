@@ -22,7 +22,7 @@ const LayoutCadastro = () => {
   return (
     <main className={`${estilos.main} flex`}>
       <aside className={`${estilos.aside} flex justify-center`}>
-        <img src={selecionarImagemStep()} />
+        <img className={estilos.img} src={selecionarImagemStep()} />
         <ul className={`${estilos.ul} flex-column`}>
           <li className={`${estilos.li} flex-column`}>
             <b className={`${estilos.b}`}>Cadastre-se</b>
@@ -44,7 +44,9 @@ const LayoutCadastro = () => {
           </li>
         </ul>
       </aside>
-      <Outlet />
+      <div className={`${estilos.div} flex justify-center`}>
+        <Outlet />
+      </div>
     </main>
   );
 };

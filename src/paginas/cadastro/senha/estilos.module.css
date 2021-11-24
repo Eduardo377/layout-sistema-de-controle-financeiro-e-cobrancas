@@ -1,0 +1,32 @@
+.form {
+    padding: 2px;        
+}
+
+.label {
+    color: var(--cinza-escuro);
+    font-family: var(--fonte-primaria);
+    font-weight: 600;
+    position: relative;
+}
+
+.input {
+    width: 23rem;
+}
+
+.button {
+    width: 10rem;
+    padding: 0.5rem;
+    margin-top: 3rem;
+}
+
+.img {
+    position: absolute;
+    bottom: 10vh;
+}
+
+.olho {
+    cursor: pointer;
+    position: absolute;
+    bottom: 1.6rem;
+    left: 20rem;
+}

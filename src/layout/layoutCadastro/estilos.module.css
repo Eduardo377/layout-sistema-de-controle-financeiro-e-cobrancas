@@ -7,12 +7,12 @@
     width: 35vw;
     align-items: flex-start;
 }
-img {
-    margin-top: 3.5rem;
+.img {
+    margin-top: 20vh;
 }
 .ul {
     gap: 2rem;
-    margin-top: 4rem;
+    margin-top: 21vh;
 }
 
 
@@ -28,4 +28,9 @@ img {
 .span {
     font-family: var(--fonte-primaria);
     color: var(--cinza)
+}
+
+.div {
+    width: calc(100vw - 35vw);
+    margin-top: 20vh;
 }
