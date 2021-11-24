@@ -1,7 +1,7 @@
 import React from "react";
 
-const Clientes = () => {
+const index = () => {
   return <div>Clientes</div>;
 };
 
-export default Clientes;
+export default index;

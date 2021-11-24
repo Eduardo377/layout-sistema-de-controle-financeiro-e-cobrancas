@@ -1,7 +1,7 @@
 import React from "react";
 
-const Cadastro = () => {
+const index = () => {
   return <div>Cadastro</div>;
 };
 
-export default Cadastro;
+export default index;

@@ -1,9 +1,43 @@
 :root {
   --primaria: #da0175;
   --verde: #1fa7af;
-  --verde-claro: #eef6f6;
+  --verde-calro: #eef6f6;
   --vermelho: #971d1d;
   --vermelho-claro: #ffefef;
   --amarelo: #c5a605;
   --amarelo-claro: #fcf6dc;
+
+  --fonte-primaria: "Nunito", sans-serif;
+  --fonte-secundaria: "Montserrat", sans-serif;
+  --fonte-inter: "Inter", sans-serif;
+}
+
+html {
+  font-size: 16px;
+  font-family: var(--fonte-primaria);
+}
+
+a {
+  color: var(--primaria);
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+
+  font-size: 1rem;
+
+  padding: 0.3rem 1.2rem;
+}
+
+input {
+  background-color: white;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+
+  padding: 0.7rem 1rem;
+
+  width: 100%;
 }

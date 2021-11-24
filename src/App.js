@@ -1,16 +1,11 @@
-import { ThemeProvider } from "@material-ui/core/styles";
-
-import CssBaseline from "@material-ui/core/CssBaseline";
-import temaPersonalizado from "./temaPersonalizado";
 import Routes from "./rotas";
 
+import "./estilos/resetaEstilos.css";
+import "./estilos/global.css";
+import "./estilos/utilitarios.css";
+
 function App() {
-  return (
-    <ThemeProvider theme={temaPersonalizado}>
-      <CssBaseline />
-      <Routes />
-    </ThemeProvider>
-  );
+  return <Routes />;
 }
 
 export default App;

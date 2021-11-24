@@ -1,32 +1,31 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import LayoutPadrao from "../layouts/Padrao";
+import LayoutPadrao from "../layout/Padrao";
 
-import RotaPrivada from "./RotaPrivada";
+import Home from "../paginas/home";
+import Clientes from "../paginas/clientes";
+import Cobrancas from "../paginas/cobrancas";
+import Login from "../paginas/login";
+import Cadastro from "../paginas/cadastro";
 
-import Inicio from "../paginas/Inicio";
-import Clientes from "../paginas/Clientes";
-import Cobrancas from "../paginas/Cobrancas";
-import Login from "../paginas/Login";
-import Cadastro from "../paginas/Cadastro";
-
-const Index = () => {
+const Rotas = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<RotaPrivada />}>
-          <Route element={<LayoutPadrao />}>
-            <Route path="/" element={<Inicio />} />
-            <Route path="/clientes" element={<Clientes />} />
-            <Route path="/cobrancas" element={<Cobrancas />} />
-          </Route>
+        <Route element={<LayoutPadrao />}>
+          <Route path="/" element={<Home />} />
+
+          <Route path="/clientes" element={<Clientes />} />
+
+          <Route path="/cobrancas" element={<Cobrancas />} />
         </Route>
 
         <Route path="/login" element={<Login />} />
+
         <Route path="/cadastro" element={<Cadastro />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
-export default Index;
+export default Rotas;
