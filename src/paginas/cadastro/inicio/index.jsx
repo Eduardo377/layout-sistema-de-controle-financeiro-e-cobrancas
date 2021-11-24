@@ -1,10 +1,5 @@
+const CadastroInicio = (props) => {
+  return <div>Inicio</div>;
+};
 
-const Inicio = (props) => {
-    return (
-        <div>
-            Inicio
-        </div>
-    );
-}
-
-export default Inicio;
+export default CadastroInicio;

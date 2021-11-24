@@ -1,4 +1,4 @@
-const Sucesso = (props) => {
+const CadastroSucesso = (props) => {
   return (
     <div>
       <h1>Sucesso</h1>
@@ -6,4 +6,4 @@ const Sucesso = (props) => {
   );
 };
 
-export default Sucesso;
+export default CadastroSucesso;

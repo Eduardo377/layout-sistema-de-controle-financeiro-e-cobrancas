@@ -7,10 +7,11 @@ import Home from "../paginas/home";
 import Clientes from "../paginas/clientes";
 import Cobrancas from "../paginas/cobrancas";
 import Login from "../paginas/login";
-import Cadastro from "../paginas/cadastro";
-import Inicio from "../paginas/cadastro/inicio";
-import Senha from "../paginas/cadastro/senha";
-import Sucesso from "../paginas/cadastro/sucesso";
+import LayoutCadastro from "../layout/layoutCadastro";
+import CadastroInicio from "../paginas/cadastro/inicio";
+import CadastroSenha from "../paginas/cadastro/senha";
+import CadastroSucesso from "../paginas/cadastro/sucesso";
+import NotFound from "../paginas/notfound";
 
 const Rotas = () => {
   const [tituloDaRota, setTituloDaRota] = useState("");
@@ -37,11 +38,12 @@ const Rotas = () => {
 
         <Route path="/login" element={<Login />} />
 
-        <Route path="/cadastro" element={<Cadastro />}>
-          <Route path="inicio" element={<Inicio />} />
-          <Route path="senha" element={<Senha />} />
-          <Route path="sucesso" element={<Sucesso />} />
+        <Route path="/cadastro" element={<LayoutCadastro />}>
+          <Route path="inicio" element={<CadastroInicio />} />
+          <Route path="senha" element={<CadastroSenha />} />
+          <Route path="sucesso" element={<CadastroSucesso />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

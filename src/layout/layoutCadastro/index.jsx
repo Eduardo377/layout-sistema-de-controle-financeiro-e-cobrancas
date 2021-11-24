@@ -1,11 +1,12 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-const Cadastro = () => {
+const LayoutCadastro = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   useEffect(() => {
-    pathname === "/cadastro" && navigate("inicio");
+    (pathname === "/cadastro" || pathname === "/cadastro/") &&
+      navigate("inicio");
   }, []);
 
   return (
@@ -16,4 +17,4 @@ const Cadastro = () => {
   );
 };
 
-export default Cadastro;
+export default LayoutCadastro;

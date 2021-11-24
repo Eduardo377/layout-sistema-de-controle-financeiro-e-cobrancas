@@ -1,4 +1,4 @@
-const Senha = () => {
+const CadastroSenha = () => {
   return (
     <div>
       <h1>Senha</h1>
@@ -6,4 +6,4 @@ const Senha = () => {
   );
 };
 
-export default Senha;
+export default CadastroSenha;
