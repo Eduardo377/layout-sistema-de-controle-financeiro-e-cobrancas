@@ -8,6 +8,9 @@ import Clientes from "../paginas/clientes";
 import Cobrancas from "../paginas/cobrancas";
 import Login from "../paginas/login";
 import Cadastro from "../paginas/cadastro";
+import Inicio from "../paginas/cadastro/inicio";
+import Senha from "../paginas/cadastro/senha";
+import Sucesso from "../paginas/cadastro/sucesso";
 
 const Rotas = () => {
   const [tituloDaRota, setTituloDaRota] = useState("");
@@ -34,7 +37,11 @@ const Rotas = () => {
 
         <Route path="/login" element={<Login />} />
 
-        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/cadastro" element={<Cadastro />}>
+          <Route path="inicio" element={<Inicio />} />
+          <Route path="senha" element={<Senha />} />
+          <Route path="sucesso" element={<Sucesso />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
