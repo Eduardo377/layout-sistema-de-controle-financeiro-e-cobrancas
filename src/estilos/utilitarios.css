@@ -19,13 +19,17 @@
   align-items: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .btn-primario {
   background-color: var(--primaria);
 }
 
 .btn-secundario {
   background-color: #dedee9;
-  color: #0e8750;
+  color: var(--verde-escuro);
 }
 
 .container {

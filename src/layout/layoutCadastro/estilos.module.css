@@ -1,0 +1,31 @@
+.main {
+    min-height: 100vh;
+}
+
+.aside {
+    background-color: #F0F0F5 ;
+    width: 35vw;
+    align-items: flex-start;
+}
+img {
+    margin-top: 3.5rem;
+}
+.ul {
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+
+.li {
+    list-style-type: none;
+}
+
+.b {
+    font-family: var(--fonte-secundaria);
+    color: var(--verde-escuro);
+}
+
+.span {
+    font-family: var(--fonte-primaria);
+    color: var(--cinza)
+}
