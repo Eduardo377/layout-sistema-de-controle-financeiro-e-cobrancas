@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LayoutPadrao from "../layout/Padrao";
@@ -9,15 +10,26 @@ import Login from "../paginas/login";
 import Cadastro from "../paginas/cadastro";
 
 const Rotas = () => {
+  const [tituloDaRota, setTituloDaRota] = useState("");
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<LayoutPadrao />}>
-          <Route path="/" element={<Home />} />
+        <Route element={<LayoutPadrao tituloDaRota={tituloDaRota} />}>
+          <Route
+            path="/"
+            element={<Home setTituloDaRota={setTituloDaRota} />}
+          />
 
-          <Route path="/clientes" element={<Clientes />} />
+          <Route
+            path="/clientes"
+            element={<Clientes setTituloDaRota={setTituloDaRota} />}
+          />
 
-          <Route path="/cobrancas" element={<Cobrancas />} />
+          <Route
+            path="/cobrancas"
+            element={<Cobrancas setTituloDaRota={setTituloDaRota} />}
+          />
         </Route>
 
         <Route path="/login" element={<Login />} />
