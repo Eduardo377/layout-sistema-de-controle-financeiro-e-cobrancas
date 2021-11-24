@@ -13,6 +13,10 @@
 }
 
 html {
+  background-color: #f8f8f9;
+
+  color: #343447;
+
   font-size: 16px;
   font-family: var(--fonte-primaria);
 }

@@ -1,18 +1,11 @@
-const Home = () => {
-  return (
-    <div>
-      <h1>Home</h1>
-      <button className="btn-primario">Botao</button>
-      <br />
-      <br />
-      <button className="btn-secundario">Botao</button>
+import { useEffect } from "react";
 
-      <br />
-      <br />
+const Home = ({ setTituloDaRota }) => {
+  useEffect(() => {
+    setTituloDaRota("Resumo das cobranças");
+  }, []);
 
-      <input type="text" placeholder="Digite o nome" />
-    </div>
-  );
+  return <div>Home</div>;
 };
 
 export default Home;
