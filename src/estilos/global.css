@@ -1,11 +1,14 @@
 :root {
   --primaria: #da0175;
   --verde: #1fa7af;
-  --verde-calro: #eef6f6;
+  --verde-claro: #eef6f6;
   --vermelho: #971d1d;
   --vermelho-claro: #ffefef;
   --amarelo: #c5a605;
   --amarelo-claro: #fcf6dc;
+  --verde-escuro: #0E8750;
+  --cinza-claro: #F0F0F5;
+  --cinza-escuro: #344054;
 
   --fonte-primaria: "Nunito", sans-serif;
   --fonte-secundaria: "Montserrat", sans-serif;
@@ -13,6 +16,10 @@
 }
 
 html {
+  background-color: #f8f8f9;
+
+  color: #343447;
+
   font-size: 16px;
   font-family: var(--fonte-primaria);
 }
