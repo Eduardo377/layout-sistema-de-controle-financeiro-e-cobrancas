@@ -4,6 +4,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import estilos from "./estilos.module.css";
 
 import Modal from "../../componentes/Modal";
+import Formulario from "./Formulario";
 
 import HomeIcone from "../../assets/icones/home";
 import ClientesIcone from "../../assets/icones/clientes";
@@ -108,7 +109,9 @@ const Padrao = ({ tituloDaRota }) => {
       </div>
 
       <Modal modal={modal} handleModal={setModal}>
-        Modal
+        <h3 className="text-center mb-2">Edite seu cadastro</h3>
+
+        <Formulario />
       </Modal>
     </>
   );
