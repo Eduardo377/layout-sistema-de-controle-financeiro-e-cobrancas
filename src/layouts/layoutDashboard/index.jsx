@@ -3,12 +3,12 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 
 import estilos from "./estilos.module.css";
 
-import HomeIcone from "../assets/icones/home";
-import ClientesIcone from "../assets/icones/clientes";
-import CobrancasIcone from "../assets/icones/cobrancas";
-import chevronIcone from "../assets/icones/chevron-down.svg";
-import editarIcone from "../assets/icones/editar.svg";
-import sairIcone from "../assets/icones/sair.svg";
+import HomeIcone from "../../assets/icones/home";
+import ClientesIcone from "../../assets/icones/clientes";
+import CobrancasIcone from "../../assets/icones/cobrancas";
+import chevronIcone from "../../assets/icones/chevron-down.svg";
+import editarIcone from "../../assets/icones/editar.svg";
+import sairIcone from "../../assets/icones/sair.svg";
 
 const Padrao = ({ tituloDaRota }) => {
   const [menuUsuario, abreMenuUsuario] = useState(false);

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import LayoutPadrao from "../layout/Padrao";
+import LayoutDashboard from "../layouts/layoutDashboard";
+import LayoutCadastro from "../layouts/layoutCadastro";
 
 import Home from "../paginas/home";
 import Clientes from "../paginas/clientes";
 import Cobrancas from "../paginas/cobrancas";
 import Login from "../paginas/login";
-import LayoutCadastro from "../layout/layoutCadastro";
 import CadastroInicio from "../paginas/cadastro/inicio";
 import CadastroSenha from "../paginas/cadastro/senha";
 import CadastroSucesso from "../paginas/cadastro/sucesso";
@@ -19,7 +19,7 @@ const Rotas = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<LayoutPadrao tituloDaRota={tituloDaRota} />}>
+        <Route element={<LayoutDashboard tituloDaRota={tituloDaRota} />}>
           <Route
             path="/"
             element={<Home setTituloDaRota={setTituloDaRota} />}
@@ -43,6 +43,7 @@ const Rotas = () => {
           <Route path="senha" element={<CadastroSenha />} />
           <Route path="sucesso" element={<CadastroSucesso />} />
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
