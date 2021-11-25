@@ -51,7 +51,8 @@
 
 .main {
   flex: 1;
-  padding: 0 2rem;
+  padding: 0 2rem 5rem 2rem;
+  overflow-y: scroll;
 }
 
 .header {
@@ -73,6 +74,7 @@
 }
 
 .usuario {
+  border-radius: 0.5rem;
   color: #0e8750;
   cursor: pointer;
 
@@ -89,6 +91,13 @@
   padding: 0.6rem;
 
   margin-right: 1rem;
+
+  transition: all 0.2s;
+}
+
+.usuario:hover .avatar {
+  color: white;
+  background-color: #0e8750;
 }
 
 .usuarioMenu {
@@ -98,7 +107,7 @@
 
   color: #747488;
 
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   position: absolute;
   right: -0.84rem;
   margin-top: 0.6rem;
@@ -121,7 +130,7 @@
 
   display: block;
   position: absolute;
-  top: -1.5rem;
+  top: -1rem;
   right: 0;
 
   transform: rotate(45deg);
