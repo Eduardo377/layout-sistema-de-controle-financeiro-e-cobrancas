@@ -6,11 +6,6 @@
     color: var(--cinza-escuro);
     font-family: var(--fonte-primaria);
     font-weight: 600;
-    position: relative;
-}
-
-.input {
-    width: 23rem;
 }
 
 .button {
@@ -20,14 +15,22 @@
     margin-bottom: 1rem;
 }
 
+.input {
+    width: 23rem;
+}
+
 .img {
     position: absolute;
     bottom: 10vh;
 }
 
-.olho {
-    cursor: pointer;
-    position: absolute;
-    bottom: 1.6rem;
-    left: 20rem;
+.erro {
+    border: none;
+    border: 0.1rem solid red;
+}
+
+.span {
+    color: red;
+    position: relative;
+    bottom: 0.6rem;
 }
