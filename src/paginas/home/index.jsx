@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import CardCobrancas from "./CardCobrancas";
+import CardClientes from "./CardClientes";
 
 import estilos from "./estilos.module.css";
 
@@ -7,7 +8,7 @@ import cobrancaVerde from "../../assets/icones/cobranca-verde.svg";
 import cobrancaVermelha from "../../assets/icones/cobranca-vermelha.svg";
 import cobrancaAmarela from "../../assets/icones/cobranca-amarela.svg";
 
-const dados = [
+const dadosCobrancas = [
   {
     cliente: "Sara Silva",
     id_cobranca: "223456187",
@@ -27,6 +28,29 @@ const dados = [
     cliente: "Soraia nexes",
     id_cobranca: "223456487",
     valor: 70000,
+  },
+];
+
+const dadosClientes = [
+  {
+    cliente: "Sara Silva",
+    data: "03/02/2021",
+    valor: 50000,
+  },
+  {
+    cliente: "Carlos Prado",
+    data: "03/02/2021",
+    valor: 50000,
+  },
+  {
+    cliente: "Lara Brito",
+    data: "03/02/2021",
+    valor: 50000,
+  },
+  {
+    cliente: "Soraia nexes",
+    data: "03/02/2021",
+    valor: 50000,
   },
 ];
 
@@ -72,22 +96,38 @@ const Home = ({ setTituloDaRota }) => {
           nome="Cobranças Pagas"
           total={10}
           cor="verde"
-          lista={dados}
+          lista={dadosCobrancas}
         ></CardCobrancas>
 
         <CardCobrancas
           nome="Cobranças Vencidas"
-          total={10}
+          total="08"
           cor="vermelho"
-          lista={dados}
+          lista={dadosCobrancas}
         ></CardCobrancas>
 
         <CardCobrancas
           nome="Cobranças Previstas"
-          total={10}
+          total="05"
           cor="amarelo"
-          lista={dados}
+          lista={dadosCobrancas}
         ></CardCobrancas>
+      </section>
+
+      <section className={`flex gap-2 ${estilos.clientesSecao}`}>
+        <CardClientes
+          lista={dadosClientes}
+          nome={`Clientes em dia`}
+          cor="verde"
+          total="08"
+        ></CardClientes>
+
+        <CardClientes
+          lista={dadosClientes}
+          nome={`Clientes inadimplentes`}
+          total="08"
+          cor="vermelho"
+        ></CardClientes>
       </section>
     </>
   );

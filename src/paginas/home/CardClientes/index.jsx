@@ -1,17 +1,17 @@
 import React from "react";
 import estilos from "./estilos.module.css";
 
-const CardCobrancas = ({
-  nome = "Nome do card",
-  total,
-  cor,
-  lista,
-  children,
-}) => {
+import clienteVerde from "../../../assets/icones/cliente-verde.svg";
+import clienteVermelho from "../../../assets/icones/cliente-vermelho.svg";
+
+const CardCobrancas = ({ nome = "Nome do card", total, cor, lista }) => {
   return (
     <div className={`flex-1 ${estilos.card}`}>
       <div className={`flex items-center gap-1 ${estilos.header}`}>
-        <span className={`flex-1 text-center`}>{nome}</span>
+        <span className={`flex-1 flex items-center gap-1`}>
+          <img src={cor === "verde" ? clienteVerde : clienteVermelho} alt="" />
+          {nome}
+        </span>
         <span className={`${estilos.badge} texto-${cor} bg-${cor}-claro`}>
           {total}
         </span>
@@ -19,7 +19,7 @@ const CardCobrancas = ({
 
       <div className={`${estilos.subHeader}`}>
         <span>Cliente</span>
-        <span>ID da cob.</span>
+        <span>Data de venc.</span>
         <span>Valor</span>
       </div>
 
@@ -29,7 +29,7 @@ const CardCobrancas = ({
             <li key={item.id_cobranca} className={`${estilos.listaItem}`}>
               <span>{item.cliente}</span>
 
-              <span>{item.id_cobranca}</span>
+              <span>{item.data}</span>
 
               <span>
                 {(item.valor / 100).toLocaleString("pt-BR", {
