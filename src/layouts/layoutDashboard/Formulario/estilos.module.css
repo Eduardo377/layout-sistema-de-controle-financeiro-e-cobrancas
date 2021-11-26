@@ -11,3 +11,16 @@
 
   transform: translateY(-50%);
 }
+
+.inputErro {
+  border-color: #e70000;
+}
+
+.inputMensagemErro {
+  color: #e70000;
+
+  font-size: 0.8rem;
+  font-family: var(--fonte-inter);
+
+  margin-top: 0.2rem;
+}

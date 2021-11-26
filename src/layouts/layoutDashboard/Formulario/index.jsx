@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import validacao from "./validacao";
+
 import estilos from "./estilos.module.css";
 
 import olhoFechado from "../../../assets/icones/olho.svg";
 import olhoAberto from "../../../assets/icones/olho2.png";
 
 const Formulario = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validacao),
+  });
+
   const [verSenha, setVerSenha] = useState("password");
   const [iconeSenha, setIconeSenha] = useState(olhoFechado);
+  const [senhaValida, setSenhaValida] = useState(true);
 
   useEffect(() => {
     setIconeSenha(verSenha === "password" ? olhoFechado : olhoAberto);
@@ -16,38 +29,67 @@ const Formulario = () => {
     setVerSenha(verSenha === "password" ? "text" : "password");
   }
 
-  function onSubmit(event) {
-    event.preventDefault();
+  function checaSeSenhaSaoIguais(senha1, senha2) {
+    if (senha1 !== senha2) {
+      return setSenhaValida(false);
+    }
+
+    return setSenhaValida(true);
+  }
+
+  function onSubmit(data) {
+    const { senha1, senha2, ...resto } = data;
+
+    if (senha1 || senha2) {
+      checaSeSenhaSaoIguais(senha1, senha2);
+    }
+
+    console.log({ ...resto, senha: senha1 });
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-1">
         <label htmlFor="nome">Nome*</label>
         <input
-          type="text"
+          value="Lorena Ribeiro"
           id="nome"
           name="nome"
           placeholder="Digite seu nome"
-          required
+          {...register("nome", {
+            required: true,
+          })}
+          className={`${errors.nome && estilos.inputErro}`}
         />
+
+        <p className={`${estilos.inputMensagemErro}`}>{errors.nome?.message}</p>
       </div>
 
       <div className="mb-1">
         <label htmlFor="email">Email*</label>
         <input
-          type="email"
+          value="lorena@email.com"
           id="email"
           name="email"
           placeholder="Digite seu email"
-          required
+          {...register("email", { required: true })}
+          className={`${errors.nome && estilos.inputErro}`}
         />
+        <p className={`${estilos.inputMensagemErro}`}>
+          {errors.email?.message}
+        </p>
       </div>
 
       <div className="flex gap-2 mb-1">
         <div>
           <label htmlFor="cpf">CPF</label>
-          <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" />
+          <input
+            type="text"
+            id="cpf"
+            name="cpf"
+            placeholder="Digite seu CPF"
+            {...register("cpf")}
+          />
         </div>
 
         <div>
@@ -57,6 +99,7 @@ const Formulario = () => {
             id="telefone"
             name="telefone"
             placeholder="Digite seu telefone"
+            {...register("telefone")}
           />
         </div>
       </div>
@@ -69,6 +112,8 @@ const Formulario = () => {
             id="novasenha"
             name="novasenha"
             placeholder=""
+            {...register("senha1")}
+            onChange={() => setSenhaValida(true)}
           />
           <img
             src={iconeSenha}
@@ -87,7 +132,10 @@ const Formulario = () => {
             id="confirmarsenha"
             name="confirmarsenha"
             placeholder=""
+            {...register("senha2")}
+            onChange={() => setSenhaValida(true)}
           />
+
           <img
             src={iconeSenha}
             alt=""
@@ -95,6 +143,9 @@ const Formulario = () => {
             onClick={handleVerSenha}
           />
         </div>
+        <p className={`${estilos.inputMensagemErro}`}>
+          {!senhaValida && "As senha não coincidem"}
+        </p>
       </div>
 
       <div className="text-center">
