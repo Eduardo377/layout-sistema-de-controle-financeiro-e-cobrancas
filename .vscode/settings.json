@@ -3,7 +3,7 @@
     ".vscode": false,
     "node_modules": true,
     "yarn.lock": true,
-    "package-lock.json": true,
+    "package-lock.json": false,
     "README.md": true,
     ".gitignore": true,
     ".env": true,

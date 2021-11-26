@@ -1,15 +1,18 @@
 import { useLocalStorage } from "react-use";
 import { useState } from "react";
+import useRequests from "../Requisições/useRequests";
 
 const useAuthProvider = () => {
-  const [token, setToken, removeToken] = useLocalStorage("token", "logado");
+  const [token, setToken, removeToken] = useLocalStorage("token", "");
   const [etapaCadastro, setEtapaCadastro] = useState(1);
   const [dadosCadastro, setDadosCadastro] = useState({
     nome: "",
     email: "",
   });
+  const { login } = useRequests();
 
-  const logar = (callback, novoToken) => {
+  const logar = async (dados, callback) => {
+    const novoToken = await login(dados);
     setToken(novoToken);
     callback();
   };
