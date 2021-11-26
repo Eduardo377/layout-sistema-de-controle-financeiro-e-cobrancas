@@ -4,7 +4,8 @@ import useAuth from "../../hooks/Autenticação/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { token } = useAuth()
+  const { token } = useAuth();
+
   useEffect(() => {
     if (token) {
       return navigate("/");

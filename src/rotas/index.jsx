@@ -22,7 +22,6 @@ import useAuth from "../hooks/Autenticação/useAuth";
 
 const RotasProtegidas = () => {
   const { token } = useAuth();
-  console.log(token);
   return token ? <Outlet /> : <Navigate to="/login" />;
 };
 
