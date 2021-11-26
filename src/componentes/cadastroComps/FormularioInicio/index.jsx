@@ -40,7 +40,6 @@ const FormularioInicio = () => {
       setEtapaCadastro(2);
       return navigate("/cadastro/senha");
     }
-    return;
   };
 
   const inputOnchange = (target) => {

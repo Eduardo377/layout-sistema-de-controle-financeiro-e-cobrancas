@@ -46,6 +46,7 @@ const useRequests = () => {
       if (!response.ok) {
         throw new Error(dados.message);
       }
+
       return response.ok;
     } catch (error) {
       window.alert(error);
@@ -56,7 +57,9 @@ const useRequests = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_URL_BASE}/login`, {
         method: "POST",
+        mode: "cors",
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
@@ -65,12 +68,12 @@ const useRequests = () => {
       const dados = await response.json();
 
       if (!response.ok) {
-        throw new Error(dados);
+        throw new Error(dados.message);
       }
-
-      return dados;
+      const { token } = dados;
+      return token;
     } catch (error) {
-      window.alert(error.message);
+      window.alert(error);
     }
   };
 

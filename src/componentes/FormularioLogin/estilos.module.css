@@ -1,0 +1,18 @@
+.form {
+    margin-top: 20vh;
+}
+
+.h2 {
+    font-family: var(--fonte-primaria)
+}
+
+.button {
+    width: 10rem;
+    padding: 0.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.input {
+    width: 23rem;
+}
