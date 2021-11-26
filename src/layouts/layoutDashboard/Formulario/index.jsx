@@ -52,32 +52,30 @@ const Formulario = () => {
       <div className="mb-1">
         <label htmlFor="nome">Nome*</label>
         <input
-          value="Lorena Ribeiro"
+          defaultValue="Lorena Ribeiro"
           id="nome"
           name="nome"
           placeholder="Digite seu nome"
           {...register("nome", {
             required: true,
           })}
-          className={`${errors.nome && estilos.inputErro}`}
+          className={`${errors.nome && " inputErro"}`}
         />
 
-        <p className={`${estilos.inputMensagemErro}`}>{errors.nome?.message}</p>
+        <p className={`${"inputMensagemErro"}`}>{errors.nome?.message}</p>
       </div>
 
       <div className="mb-1">
         <label htmlFor="email">Email*</label>
         <input
-          value="lorena@email.com"
+          defaultValue="lorena@email.com"
           id="email"
           name="email"
           placeholder="Digite seu email"
           {...register("email", { required: true })}
-          className={`${errors.nome && estilos.inputErro}`}
+          className={`${errors.email && "inputErro"}`}
         />
-        <p className={`${estilos.inputMensagemErro}`}>
-          {errors.email?.message}
-        </p>
+        <p className={`${"inputMensagemErro"}`}>{errors.email?.message}</p>
       </div>
 
       <div className="flex gap-2 mb-1">
@@ -114,6 +112,7 @@ const Formulario = () => {
             placeholder=""
             {...register("senha1")}
             onChange={() => setSenhaValida(true)}
+            className={`${!senhaValida && "inputErro"}`}
           />
           <img
             src={iconeSenha}
@@ -134,6 +133,7 @@ const Formulario = () => {
             placeholder=""
             {...register("senha2")}
             onChange={() => setSenhaValida(true)}
+            className={`${!senhaValida && "inputErro"}`}
           />
 
           <img
@@ -143,8 +143,8 @@ const Formulario = () => {
             onClick={handleVerSenha}
           />
         </div>
-        <p className={`${estilos.inputMensagemErro}`}>
-          {!senhaValida && "As senha não coincidem"}
+        <p className={`${"inputMensagemErro"}`}>
+          {!senhaValida && "As senhas não coincidem"}
         </p>
       </div>
 
