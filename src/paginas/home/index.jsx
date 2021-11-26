@@ -11,12 +11,12 @@ import cobrancaAmarela from "../../assets/icones/cobranca-amarela.svg";
 const dadosCobrancas = [
   {
     cliente: "Sara Silva",
-    id_cobranca: "223456187",
+    id_cobranca: "223456387",
     valor: 100000,
   },
   {
     cliente: "Carlos Prado",
-    id_cobranca: "223456287",
+    id_cobranca: "223456387",
     valor: 40000,
   },
   {
