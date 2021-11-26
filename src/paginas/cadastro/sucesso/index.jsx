@@ -2,9 +2,18 @@ import sucesso from "../../../assets/icones/sucesso.svg";
 import bottomStep3 from "../../../assets/icones/bottom-step3.svg";
 import estilos from "./estilos.module.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import useAuth from "../../../hooks/Autenticação/useAuth";
 
 const CadastroSucesso = (props) => {
   const navigate = useNavigate();
+  const { etapaCadastro } = useAuth();
+
+  useEffect(() => {
+    if (etapaCadastro !== 3) {
+      return navigate("/cadastro/inicio");
+    }
+  }, []);
 
   const handleOnClick = () => {
     return navigate("/login");

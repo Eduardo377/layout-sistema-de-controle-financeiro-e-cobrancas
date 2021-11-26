@@ -4,6 +4,8 @@ import estilos from "./estilos.module.css";
 import olho from "../../../assets/icones/olho.svg";
 import olhoAberto from "../../../assets/icones/olho2.png";
 import { useState, useEffect } from "react";
+import useAuth from "../../../hooks/Autenticação/useAuth";
+import useRequests from "../../../hooks/Requisições/useRequests";
 
 const FormularioSenha = () => {
   const [olhaAberto, setOlhoAberto] = useState(false);
@@ -12,6 +14,15 @@ const FormularioSenha = () => {
   const [erro, setErro] = useState(false);
 
   const navigate = useNavigate();
+  const { etapaCadastro, setEtapaCadastro, dadosCadastro, setDadosCadastro } =
+    useAuth();
+  const { cadastrarUsuario } = useRequests();
+
+  useEffect(() => {
+    if (etapaCadastro !== 2) {
+      return navigate("/cadastro/inicio");
+    }
+  }, []);
 
   useEffect(() => {
     if (inputSenha.senha !== inputSenha.repeticao) {
@@ -30,18 +41,24 @@ const FormularioSenha = () => {
     return setErro(false);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!inputSenha.senha || !inputSenha.repeticao) {
-      return window.alert("ERRO: PREENCHA OS CAMPOS OBRIGATÓRIOS");
+      return window.alert("ERRO: preencha os campos obrigatórios!");
     }
 
     if (inputSenha.senha !== inputSenha.repeticao) {
-      return window.alert("ERRO: SENHAS NÃO COINCIDEM");
+      return window.alert("ERRO: senhas não coincidem!");
     }
-
-    return navigate("/cadastro/sucesso");
+    const { senha } = inputSenha;
+    const body = { ...dadosCadastro };
+    body.senha = senha;
+    const response = await cadastrarUsuario(body);
+    if (response) {
+      setEtapaCadastro(3);
+      return navigate("/cadastro/sucesso");
+    }
   };
 
   const inputOnchange = (target) => {
