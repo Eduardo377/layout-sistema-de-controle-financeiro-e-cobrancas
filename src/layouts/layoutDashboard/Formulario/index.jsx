@@ -93,13 +93,13 @@ const Formulario = () => {
         </div>
 
         <div>
-          <label htmlFor="telefone">Telefone</label>
+          <label htmlFor="tel">Telefone</label>
           <input
             type="tel"
-            id="telefone"
-            name="telefone"
+            id="tel"
+            name="tel"
             placeholder="Digite seu telefone"
-            {...register("telefone")}
+            {...register("tel")}
           />
         </div>
       </div>
