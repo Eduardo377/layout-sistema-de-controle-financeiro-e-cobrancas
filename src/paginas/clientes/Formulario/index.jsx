@@ -1,78 +1,93 @@
 import React from "react";
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import validacao from "./validacao";
+
 import estilos from "./estilos.module.css";
 
 const Formulario = () => {
-  function onSubmit(event) {
-    event.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validacao),
+  });
+
+  function onSubmit(data) {
+    console.log(data);
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-1">
         <label htmlFor="nome">Nome*</label>
         <input
-          type="text"
           id="nome"
           name="nome"
           placeholder="Digite o nome"
-          required
+          {...register("nome")}
+          className={`${errors.nome && "inputErro"}`}
         />
+        <p className={`${"inputMensagemErro"}`}>{errors.nome?.message}</p>
       </div>
 
       <div className="mb-1">
         <label htmlFor="email">Email*</label>
         <input
-          type="email"
           id="email"
           name="email"
           placeholder="Digite o email"
-          required
+          {...register("email")}
+          className={`${errors.email && "inputErro"}`}
         />
+        <p className={`${"inputMensagemErro"}`}>{errors.email?.message}</p>
       </div>
 
       <div className="flex gap-1 mb-1">
         <div>
           <label htmlFor="cpf">CPF*</label>
           <input
-            type="text"
             id="cpf"
             name="cpf"
             placeholder="Digite o cpf"
-            required
-            inputMode="numeric"
+            {...register("cpf")}
+            className={`${errors.cpf && "inputErro"}`}
           />
+          <p className={`${"inputMensagemErro"}`}>{errors.cpf?.message}</p>
         </div>
 
         <div>
-          <label htmlFor="telefone">Telefone*</label>
+          <label htmlFor="tel">Telefone*</label>
           <input
-            type="tel"
-            id="telefone"
-            name="telefone"
+            id="tel"
+            name="tel"
             placeholder="Digite o telefone"
-            required
-            inputMode="numeric"
+            {...register("tel")}
+            className={`${errors.tel && "inputErro"}`}
           />
+          <p className={`${"inputMensagemErro"}`}>{errors.tel?.message}</p>
         </div>
       </div>
 
       <div className="mb-1">
         <label htmlFor="endereco">Endereço</label>
         <input
-          type="text"
           id="endereco"
           name="endereco"
           placeholder="Digite o endereço"
+          {...register("endereco")}
         />
       </div>
 
       <div className="mb-1">
         <label htmlFor="complemento">Complemento</label>
         <input
-          type="text"
           id="complemento"
           name="complemento"
           placeholder="Digite o complemento"
+          {...register("complemento")}
         />
       </div>
 
@@ -80,39 +95,47 @@ const Formulario = () => {
         <div>
           <label htmlFor="cep">CEP</label>
           <input
-            type="text"
             id="cep"
             name="cep"
             placeholder="Digite o cep"
-            inputMode="numeric"
+            {...register("cep")}
           />
         </div>
 
         <div>
           <label htmlFor="bairro">Bairro</label>
           <input
-            type="text"
             id="bairro"
             name="bairro"
             placeholder="Digite o bairro"
+            {...register("bairro")}
           />
         </div>
       </div>
 
       <div className="flex gap-1 mb-2">
         <div className="flex-1">
-          <label htmlFor="cidade">Cidade</label>
+          <label htmlFor="cidade">Cidade*</label>
           <input
-            type="text"
             id="cidade"
             name="cidade"
             placeholder="Digite a cidade"
+            {...register("cidade")}
+            className={`${errors.cidade && "inputErro"}`}
           />
+          <p className={`${"inputMensagemErro"}`}>{errors.cidade?.message}</p>
         </div>
 
         <div className={`${estilos.inputContainerUF}`}>
-          <label htmlFor="uf">UF</label>
-          <input type="text" id="uf" name="uf" placeholder="Digite a UF" />
+          <label htmlFor="uf">UF*</label>
+          <input
+            id="uf"
+            name="uf"
+            placeholder="Digite a UF"
+            {...register("uf")}
+            className={`${errors.uf && "inputErro"}`}
+          />
+          <p className={`${"inputMensagemErro"}`}>{errors.uf?.message}</p>
         </div>
       </div>
 
