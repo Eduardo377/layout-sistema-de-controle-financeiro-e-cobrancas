@@ -10,8 +10,7 @@ const FormularioInicio = () => {
   const [erro, setErro] = useState(false);
   const navigate = useNavigate();
   const { buscarEmail } = useRequests();
-  const { setEtapaCadastro, etapaCadastro, dadosCadastro, setDadosCadastro } =
-    useAuth();
+  const { setEtapaCadastro, dadosCadastro, setDadosCadastro } = useAuth();
 
   useEffect(() => {
     if (!inputs.nome || !inputs.email) {

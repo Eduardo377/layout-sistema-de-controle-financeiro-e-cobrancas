@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-
+import useAuth from "../../../hooks/Autenticação/useAuth";
 import estilos from "./estilos.module.css";
-
+import { useNavigate } from "react-router-dom";
 import chevronIcone from "../../../assets/icones/chevron-down.svg";
 import editarIcone from "../../../assets/icones/editar.svg";
 import sairIcone from "../../../assets/icones/sair.svg";
 
 const MenuTopo = ({ tituloDaRota, setModal }) => {
   const [menuUsuario, abreMenuUsuario] = useState(false);
+  const { deslogar } = useAuth();
+  const navigate = useNavigate();
 
   const refMenuUsuario = useDetectClickOutside({
     onTriggered: fechaMenuUsuario,
@@ -17,6 +19,16 @@ const MenuTopo = ({ tituloDaRota, setModal }) => {
   function fechaMenuUsuario() {
     abreMenuUsuario(false);
   }
+
+  const handleOnclick = (e) => {
+    e.stopPropagation();
+
+    return deslogar(redirecionamento);
+  };
+
+  const redirecionamento = () => {
+    return navigate("/login");
+  };
 
   return (
     <header className={`${estilos.header}`}>
@@ -32,7 +44,7 @@ const MenuTopo = ({ tituloDaRota, setModal }) => {
           >
             <span className={`${estilos.avatar}`}>LR</span>
             <span>Lorena</span>
-            <img src={chevronIcone} alt="" />
+            <img src={chevronIcone} alt="opções de perfil" />
           </div>
 
           {menuUsuario && (
@@ -44,14 +56,14 @@ const MenuTopo = ({ tituloDaRota, setModal }) => {
                 >
                   <img
                     src={editarIcone}
-                    alt=""
+                    alt="editar"
                     className={`${estilos.usuarioMenuIconeEditar}`}
                   />
                   <span>Editar</span>
                 </span>
 
                 <span className={`${estilos.usuarioMenuItem}`}>
-                  <img src={sairIcone} alt="" />
+                  <img src={sairIcone} onClick={handleOnclick} alt="sair" />
                   <span>Sair</span>
                 </span>
               </div>
