@@ -1,0 +1,36 @@
+.form {
+    padding: 2px;        
+}
+
+.label {
+    color: var(--cinza-escuro);
+    font-family: var(--fonte-primaria);
+    font-weight: 600;
+}
+
+.button {
+    width: 10rem;
+    padding: 0.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.input {
+    width: 23rem;
+}
+
+.img {
+    position: absolute;
+    bottom: 10vh;
+}
+
+.erro {
+    border: none;
+    border: 0.1rem solid red;
+}
+
+.span {
+    color: red;
+    position: relative;
+    bottom: 0.6rem;
+}

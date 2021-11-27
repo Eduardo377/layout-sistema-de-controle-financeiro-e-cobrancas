@@ -11,6 +11,7 @@ const LayoutCadastro = () => {
   useEffect(() => {
     (pathname === "/cadastro" || pathname === "/cadastro/") &&
       navigate("inicio");
+    // eslint-disable-next-line
   }, []);
 
   const selecionarImagemStep = () => {
@@ -22,7 +23,7 @@ const LayoutCadastro = () => {
   return (
     <main className={`${estilos.main} flex`}>
       <aside className={`${estilos.aside} flex justify-center`}>
-        <img className={estilos.img} src={selecionarImagemStep()} />
+        <img className={estilos.img} src={selecionarImagemStep()} alt="steps" />
         <ul className={`${estilos.ul} flex-column`}>
           <li className={`${estilos.li} flex-column`}>
             <b className={`${estilos.b}`}>Cadastre-se</b>

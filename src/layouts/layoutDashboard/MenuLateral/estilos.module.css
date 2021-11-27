@@ -1,0 +1,49 @@
+.nav {
+  background-color: #f0f0f5;
+
+  padding: 2rem 0;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  list-style-type: none;
+
+  margin: 0;
+  padding: 0;
+}
+
+.menuItemLink {
+  color: currentColor;
+
+  border-right: 2px solid;
+  border-color: transparent;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+
+  font-weight: 600;
+
+  padding: 0 1rem;
+
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.menuItemLink:hover {
+  color: var(--primaria);
+}
+
+.menuItemLinkAtivo {
+  border-color: var(--primaria);
+  color: var(--primaria);
+}
+
+.menuItemDesabilitado {
+  pointer-events: none;
+  opacity: 0.5;
+}
