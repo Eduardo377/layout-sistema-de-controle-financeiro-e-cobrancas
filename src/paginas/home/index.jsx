@@ -11,12 +11,20 @@ import cobrancaAmarela from "../../assets/icones/cobranca-amarela.svg";
 const dadosCobrancas = [
   {
     cliente: "Sara Silva",
+<<<<<<< HEAD
     id_cobranca: "223456387",
+=======
+    id_cobranca: "223456187",
+>>>>>>> main
     valor: 100000,
   },
   {
     cliente: "Carlos Prado",
+<<<<<<< HEAD
     id_cobranca: "223456387",
+=======
+    id_cobranca: "223456287",
+>>>>>>> main
     valor: 40000,
   },
   {

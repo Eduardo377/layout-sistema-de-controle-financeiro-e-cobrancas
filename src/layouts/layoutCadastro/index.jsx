@@ -11,7 +11,7 @@ const LayoutCadastro = () => {
   useEffect(() => {
     (pathname === "/cadastro" || pathname === "/cadastro/") &&
       navigate("inicio");
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const selecionarImagemStep = () => {
