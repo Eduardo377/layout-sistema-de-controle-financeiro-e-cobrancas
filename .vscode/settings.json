@@ -3,10 +3,9 @@
     ".vscode": false,
     "node_modules": true,
     "yarn.lock": true,
-    "package-lock.json": false,
+    "package-lock.json": true,
     "README.md": true,
     ".gitignore": true,
-    ".env": true,
     ".env.exemplo": true
   }
 }
