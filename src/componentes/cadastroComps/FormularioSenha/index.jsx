@@ -14,14 +14,14 @@ const FormularioSenha = () => {
   const [erro, setErro] = useState(false);
 
   const navigate = useNavigate();
-  const { etapaCadastro, setEtapaCadastro, dadosCadastro, setDadosCadastro } =
-    useAuth();
+  const { etapaCadastro, setEtapaCadastro, dadosCadastro } = useAuth();
   const { cadastrarUsuario } = useRequests();
 
   useEffect(() => {
     if (etapaCadastro !== 2) {
       return navigate("/cadastro/inicio");
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

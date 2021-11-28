@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/Autenticação/useAuth";
 import estilos from "./estilos.module.css";
 import imgLogin from "../../assets/img-login.png";

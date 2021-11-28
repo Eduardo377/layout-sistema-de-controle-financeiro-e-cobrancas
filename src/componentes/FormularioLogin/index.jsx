@@ -1,5 +1,5 @@
 import estilos from "./estilos.module.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../hooks/Autenticação/useAuth";
 
@@ -20,7 +20,7 @@ const FormularioLogin = () => {
         "ERRO: PREENCHA OS CAMPOS OBRIGATÓRIOS DO FORMULÁRIO"
       );
     }
-    const response = await logar({ ...login }, redirecionamento);
+    await logar({ ...login }, redirecionamento);
     return;
   };
 

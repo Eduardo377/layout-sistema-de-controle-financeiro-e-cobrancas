@@ -13,6 +13,7 @@ const CadastroSucesso = (props) => {
     if (etapaCadastro !== 3) {
       return navigate("/cadastro/inicio");
     }
+    // eslint-disable-next-line
   }, []);
 
   const handleOnClick = () => {

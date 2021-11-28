@@ -1,8 +1,4 @@
-import useAuth from "../Autenticação/useAuth";
-
 const useRequests = () => {
-  const { token } = useAuth();
-
   const buscarEmail = async (body) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_URL_BASE}/email`, {
