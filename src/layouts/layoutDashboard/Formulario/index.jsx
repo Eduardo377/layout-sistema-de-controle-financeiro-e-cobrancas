@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocalStorage } from "react-use";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validacao from "./validacao";
@@ -8,7 +9,9 @@ import estilos from "./estilos.module.css";
 import olhoFechado from "../../../assets/icones/olho.svg";
 import olhoAberto from "../../../assets/icones/olho2.png";
 
-const Formulario = () => {
+const Formulario = ({ usuario, setUsuario, setModal }) => {
+  const [token] = useLocalStorage("token");
+
   const {
     register,
     handleSubmit,
@@ -37,14 +40,39 @@ const Formulario = () => {
     return setSenhaValida(true);
   }
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     const { senha1, senha2, ...resto } = data;
 
     if (senha1 || senha2) {
       checaSeSenhaSaoIguais(senha1, senha2);
     }
 
-    console.log({ ...resto, senha: senha1 });
+    const dadosASerAtualizado = { ...resto, senha: senha1 };
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_BASE}/usuarios`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(dadosASerAtualizado),
+        }
+      );
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw responseData;
+      }
+
+      setModal(false);
+      setUsuario(dadosASerAtualizado);
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   return (
@@ -52,7 +80,7 @@ const Formulario = () => {
       <div className="mb-1">
         <label htmlFor="nome">Nome*</label>
         <input
-          defaultValue="Lorena Ribeiro"
+          defaultValue={usuario?.nome}
           id="nome"
           name="nome"
           placeholder="Digite seu nome"
@@ -68,7 +96,7 @@ const Formulario = () => {
       <div className="mb-1">
         <label htmlFor="email">Email*</label>
         <input
-          defaultValue="lorena@email.com"
+          defaultValue={usuario?.email}
           id="email"
           name="email"
           placeholder="Digite seu email"
@@ -82,6 +110,7 @@ const Formulario = () => {
         <div>
           <label htmlFor="cpf">CPF</label>
           <input
+            defaultValue={usuario?.cpf}
             type="text"
             id="cpf"
             name="cpf"
@@ -93,6 +122,7 @@ const Formulario = () => {
         <div>
           <label htmlFor="tel">Telefone</label>
           <input
+            defaultValue={usuario?.tel}
             type="tel"
             id="tel"
             name="tel"

@@ -1,12 +1,13 @@
 import React from "react";
-
+import { useLocalStorage } from "react-use";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validacao from "./validacao";
 
 import estilos from "./estilos.module.css";
 
-const Formulario = () => {
+const Formulario = ({ setModal }) => {
+  const [token] = useLocalStorage("token");
   const {
     register,
     handleSubmit,
@@ -15,8 +16,32 @@ const Formulario = () => {
     resolver: yupResolver(validacao),
   });
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     console.log(data);
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_BASE}/cliente`,
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw responseData;
+      }
+
+      setModal(false);
+    } catch (error) {
+      alert(error);
+    }
   }
 
   return (
@@ -59,15 +84,15 @@ const Formulario = () => {
         </div>
 
         <div>
-          <label htmlFor="tel">Telefone*</label>
+          <label htmlFor="telefone">Telefone*</label>
           <input
-            id="tel"
-            name="tel"
+            id="telefone"
+            name="telefone"
             placeholder="Digite o telefone"
-            {...register("tel")}
-            className={`${errors.tel && "inputErro"}`}
+            {...register("telefone")}
+            className={`${errors.telefone && "inputErro"}`}
           />
-          <p className={`${"inputMensagemErro"}`}>{errors.tel?.message}</p>
+          <p className={`${"inputMensagemErro"}`}>{errors.telefone?.message}</p>
         </div>
       </div>
 
