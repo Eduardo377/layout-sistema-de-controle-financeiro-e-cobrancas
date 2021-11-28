@@ -7,7 +7,7 @@ import chevronIcone from "../../../assets/icones/chevron-down.svg";
 import editarIcone from "../../../assets/icones/editar.svg";
 import sairIcone from "../../../assets/icones/sair.svg";
 
-const MenuTopo = ({ tituloDaRota, setModal }) => {
+const MenuTopo = ({ tituloDaRota, setModal, usuario, setUsuario }) => {
   const [menuUsuario, abreMenuUsuario] = useState(false);
   const { deslogar } = useAuth();
   const navigate = useNavigate();
@@ -42,8 +42,10 @@ const MenuTopo = ({ tituloDaRota, setModal }) => {
             className={`flex items-center ${estilos.usuario}`}
             onClick={() => abreMenuUsuario(!menuUsuario)}
           >
-            <span className={`${estilos.avatar}`}>LR</span>
-            <span>Lorena</span>
+            <span className={`${estilos.avatar}`}>
+              {!!usuario.nome && usuario.nome.substring(0, 2).toUpperCase()}
+            </span>
+            <span>{!!usuario.nome && usuario.nome.split(" ")[0]}</span>
             <img src={chevronIcone} alt="opções de perfil" />
           </div>
 
