@@ -50,7 +50,7 @@ const Clientes = ({ setTituloDaRota }) => {
           <h3>Cadastro do cliente</h3>
         </div>
 
-        <Formulario />
+        <Formulario setModal={setModal} />
       </Modal>
     </div>
   );
