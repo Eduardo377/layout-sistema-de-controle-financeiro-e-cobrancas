@@ -6,7 +6,6 @@
     "package-lock.json": true,
     "README.md": true,
     ".gitignore": true,
-    ".env": true,
     ".env.exemplo": true
   }
 }
