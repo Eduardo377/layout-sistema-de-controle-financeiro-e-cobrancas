@@ -64,8 +64,11 @@ const MenuTopo = ({ tituloDaRota, setModal, usuario, setUsuario }) => {
                   <span>Editar</span>
                 </span>
 
-                <span className={`${estilos.usuarioMenuItem}`}>
-                  <img src={sairIcone} onClick={handleOnclick} alt="sair" />
+                <span
+                  className={`${estilos.usuarioMenuItem}`}
+                  onClick={handleOnclick}
+                >
+                  <img src={sairIcone} alt="sair" />
                   <span>Sair</span>
                 </span>
               </div>
