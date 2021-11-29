@@ -44,6 +44,12 @@
   color: var(--verde-escuro);
 }
 
+.btn-desabilitado {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .container {
   max-width: 1400px;
   margin: 0 auto;
