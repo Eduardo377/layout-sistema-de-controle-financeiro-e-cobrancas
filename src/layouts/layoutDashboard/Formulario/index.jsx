@@ -13,7 +13,7 @@ import sucessoIcone from "../../../assets/icones/sucesso.svg";
 const Formulario = ({ usuario, setUsuario, setModal }) => {
   const [token] = useLocalStorage("token");
   const [erroEmailExiste, setErroEmailExiste] = useState(false);
-  const [erroCpfExiste, setErroCpfExiste] = useState(false);
+  // const [erroCpfExiste, setErroCpfExiste] = useState(false);
   const [carregando, setCarregando] = useState(false);
   const [verSenha, setVerSenha] = useState("password");
   const [iconeSenha, setIconeSenha] = useState(olhoFechado);
