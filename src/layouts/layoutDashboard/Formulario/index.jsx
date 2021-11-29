@@ -80,6 +80,7 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
       if (error.message === "O email já existe" || error.field === "email") {
         setErroEmailExiste(true);
       }
+
       setCarregando(false);
     }
   }
