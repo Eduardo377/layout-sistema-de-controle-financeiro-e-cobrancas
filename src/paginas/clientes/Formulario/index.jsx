@@ -22,8 +22,6 @@ const Formulario = ({ setModal, setAlerta }) => {
   async function cadastrarCliente(data) {
     setCarregando(true);
 
-    console.log(data);
-
     try {
       const response = await fetch(
         `${process.env.REACT_APP_URL_BASE}/cliente`,
@@ -45,7 +43,6 @@ const Formulario = ({ setModal, setAlerta }) => {
 
       setModal(false);
       setAlerta(true);
-      console.log(responseData);
     } catch (error) {
       console.log(error);
       setCarregando(false);
