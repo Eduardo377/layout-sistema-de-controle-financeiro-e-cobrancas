@@ -11,7 +11,7 @@ const validacao = yup.object().shape({
     .email("Informe um email válido")
     .required(messagensErro.obrigatorio),
   cpf: yup.string().required(messagensErro.obrigatorio),
-  tel: yup.string().required(messagensErro.obrigatorio),
+  telefone: yup.string().required(messagensErro.obrigatorio),
   cidade: yup.string().required(messagensErro.obrigatorio),
   uf: yup.string().required(messagensErro.obrigatorio),
 });
