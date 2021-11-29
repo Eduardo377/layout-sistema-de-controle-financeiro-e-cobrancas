@@ -1,6 +1,7 @@
 .alerta {
   background: #c3d4fe;
   border-radius: 1rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 
   color: #243f80;
 
