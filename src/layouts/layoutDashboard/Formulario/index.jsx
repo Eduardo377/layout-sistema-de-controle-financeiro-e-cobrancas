@@ -81,7 +81,6 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
         setErroEmailExiste(true);
       }
 
-      console.log(error);
       setCarregando(false);
     }
   }
