@@ -18,10 +18,6 @@ const Clientes = ({ setTituloDaRota }) => {
     setTituloDaRota("Controle de clientes");
   }, []);
 
-  function onSubmit(event) {
-    event.preventDefault();
-  }
-
   return (
     <>
       <div className={`${estilos.clientesSecao}`}>
