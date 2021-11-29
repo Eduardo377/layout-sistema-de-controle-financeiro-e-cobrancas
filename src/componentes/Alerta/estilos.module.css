@@ -1,0 +1,14 @@
+.alerta {
+  background: #c3d4fe;
+  border-radius: 1rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+
+  color: #243f80;
+
+  padding: 1rem 2rem;
+  position: fixed !important;
+  bottom: 2rem;
+  right: 2rem;
+
+  z-index: 10;
+}

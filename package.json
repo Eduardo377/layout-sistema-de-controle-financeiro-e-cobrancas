@@ -1,20 +1,44 @@
 {
   "name": "front-integral-m05-desafio",
-  "version": "1.0.0",
-  "description": "![](https://i.imgur.com/xG74tOh.png)",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@hookform/resolvers": "^2.8.3",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "react": "^17.0.2",
+    "react-detect-click-outside": "^1.1.1",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.20.4",
+    "react-router-dom": "^6.0.2",
+    "react-scripts": "4.0.3",
+    "react-use": "^17.3.1",
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.11"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/smarticogit/front-integral-m05-desafio.git"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/smarticogit/front-integral-m05-desafio/issues"
-  },
-  "homepage": "https://github.com/smarticogit/front-integral-m05-desafio#readme"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

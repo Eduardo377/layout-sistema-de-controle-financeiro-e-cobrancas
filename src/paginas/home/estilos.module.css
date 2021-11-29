@@ -1,0 +1,29 @@
+.resumosSecao {
+  margin-bottom: 2rem;
+}
+
+.cardResumo {
+  border-radius: 1.2rem;
+
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  font-family: var(--fonte-secundaria);
+  font-weight: 700;
+  flex: 1;
+
+  padding: 1.2rem 2rem;
+}
+
+.cardResumoNome {
+  margin-bottom: 0.8rem;
+}
+
+.cardResumoValor {
+  font-size: 1.3rem;
+}
+
+.cobrancasSecao {
+  margin-bottom: 2rem;
+}

@@ -1,0 +1,74 @@
+.card {
+  background-color: white;
+  border-radius: 1.5rem;
+  box-shadow: 0px 4px rgba(172, 217, 197, 0.25);
+}
+
+.header {
+  border-bottom: 2px solid #eff0f6;
+
+  font-weight: 600;
+  font-family: var(--fonte-secundaria);
+
+  padding: 1rem;
+}
+
+.subHeader {
+  border-bottom: 1px solid #eff0f6;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  font-weight: 700;
+
+  padding: 1.2rem 1rem;
+}
+
+.subHeader span {
+  text-align: center;
+}
+
+.subHeader span:first-of-type {
+  text-align: left;
+}
+
+.subHeader span:last-of-type {
+  text-align: right;
+}
+
+.badge {
+  border-radius: 0.5rem;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  padding: 0 0.8rem;
+}
+
+.listaItem {
+  border-bottom: 1px solid #eff0f6;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  padding: 1rem 1.2rem;
+}
+
+.listaItem span {
+  text-align: center;
+}
+
+.listaItem span:first-of-type {
+  text-align: left;
+}
+
+.listaItem span:last-of-type {
+  text-align: right;
+}
+
+.footer {
+  font-size: 1.1rem;
+
+  padding: 1rem;
+}
