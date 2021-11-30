@@ -39,14 +39,26 @@ button {
   padding: 0.3rem 1.2rem;
 }
 
-input {
+input,
+textarea {
   background-color: white;
   border: 1px solid #d0d5dd;
   border-radius: 8px;
 
+  display: block;
+
   padding: 0.7rem 1rem;
 
   width: 100%;
+  max-width: 100%;
+}
+
+input:read-only {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+input[type="date"] {
+  padding: 0.55rem 1rem;
 }
 
 label {
