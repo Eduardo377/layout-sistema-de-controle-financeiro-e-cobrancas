@@ -3,9 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 
 import estilos from "./estilos.module.css";
 
-import HomeIcone from "../../../assets/icones/home";
-import ClientesIcone from "../../../assets/icones/clientes";
-import CobrancasIcone from "../../../assets/icones/cobrancas";
+import HomeIcone from "@/assets/icones/home";
+import ClientesIcone from "@/assets/icones/clientes";
+import CobrancasIcone from "@/assets/icones/cobrancas";
 
 const MenuLateral = () => {
   const { pathname } = useLocation();
@@ -24,7 +24,7 @@ const MenuLateral = () => {
     },
     {
       nome: "Cobranças",
-      link: "#",
+      link: "/cobrancas",
       icone: <CobrancasIcone tamanho={tamanhoIconesMenu} />,
     },
   ];
@@ -39,7 +39,6 @@ const MenuLateral = () => {
               className={`
           ${estilos.menuItemLink} 
           ${item.link === pathname && estilos.menuItemLinkAtivo} 
-          ${item.nome === "Cobranças" && estilos.menuItemDesabilitado}
           `}
             >
               {item.icone}

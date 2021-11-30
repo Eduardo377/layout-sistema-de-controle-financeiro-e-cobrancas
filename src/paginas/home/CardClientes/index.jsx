@@ -1,8 +1,8 @@
 import React from "react";
 import estilos from "./estilos.module.css";
 
-import clienteVerde from "../../../assets/icones/cliente-verde.svg";
-import clienteVermelho from "../../../assets/icones/cliente-vermelho.svg";
+import clienteVerde from "@/assets/icones/cliente-verde.svg";
+import clienteVermelho from "@/assets/icones/cliente-vermelho.svg";
 
 const CardCobrancas = ({ nome = "Nome do card", total, cor, lista }) => {
   return (
