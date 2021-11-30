@@ -6,9 +6,9 @@ import validacao from "./validacao";
 
 import estilos from "./estilos.module.css";
 
-import olhoFechado from "../../../assets/icones/olho.svg";
-import olhoAberto from "../../../assets/icones/olho2.png";
-import sucessoIcone from "../../../assets/icones/sucesso.svg";
+import olhoFechado from "@/assets/icones/olho.svg";
+import olhoAberto from "@/assets/icones/olho2.png";
+import sucessoIcone from "@/assets/icones/sucesso.svg";
 
 const Formulario = ({ usuario, setUsuario, setModal }) => {
   const [token] = useLocalStorage("token");

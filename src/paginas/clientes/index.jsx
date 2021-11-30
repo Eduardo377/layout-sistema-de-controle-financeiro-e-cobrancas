@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 import estilos from "./estilos.module.css";
 
-import Alerta from "../../componentes/Alerta";
+import Alerta from "@/componentes/Alerta";
 
-import ClientesIcone from "../../assets/icones/clientes";
-import lupaIcone from "../../assets/icones/lupa.svg";
+import ClientesIcone from "@/assets/icones/clientes";
+import lupaIcone from "@/assets/icones/lupa.svg";
 
-import Modal from "../../componentes/Modal";
+import Modal from "@/componentes/Modal";
 import Formulario from "./Formulario";
 
 const Clientes = ({ setTituloDaRota }) => {
