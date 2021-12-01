@@ -38,7 +38,12 @@ const MenuLateral = () => {
               to={item.link}
               className={`
           ${estilos.menuItemLink} 
-          ${item.link === pathname && estilos.menuItemLinkAtivo} 
+          ${
+            pathname.includes(item.link) &&
+            item.link !== "/" &&
+            estilos.menuItemLinkAtivo
+          } 
+          ${item.link === pathname && estilos.menuItemLinkAtivo}
           `}
             >
               {item.icone}

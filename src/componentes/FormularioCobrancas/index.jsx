@@ -70,16 +70,16 @@ const FormularioCobrancas = ({
 
         <div className="flex gap-1 mb-1">
           <div>
-            <label htmlFor="vencimento">Vencimento*</label>
+            <label htmlFor="data_vencimento">Vencimento*</label>
             <input
-              defaultValue={form?.vencimento}
+              defaultValue={form?.data_vencimento}
               type="date"
-              id="vencimento"
-              {...register("vencimento")}
+              id="data_vencimento"
+              {...register("data_vencimento")}
               placeholder="Data de vencimento"
             />
             <p className={`${"inputMensagemErro"}`}>
-              {errors.vencimento?.message}
+              {errors.data_vencimento?.message}
             </p>
           </div>
 
