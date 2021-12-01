@@ -46,7 +46,7 @@ const Rotas = () => {
               >
                 <Route path="/clientes" element={<Clientes />} />
 
-                <Route path="/clientes/:cliente" element={<Cliente />} />
+                <Route path="/clientes/:id" element={<Cliente />} />
               </Route>
 
               <Route
