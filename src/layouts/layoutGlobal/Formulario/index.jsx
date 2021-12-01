@@ -6,14 +6,14 @@ import validacao from "./validacao";
 
 import estilos from "./estilos.module.css";
 
-import olhoFechado from "../../../assets/icones/olho.svg";
-import olhoAberto from "../../../assets/icones/olho2.png";
-import sucessoIcone from "../../../assets/icones/sucesso.svg";
+import olhoFechado from "@/assets/icones/olho.svg";
+import olhoAberto from "@/assets/icones/olho2.png";
+import sucessoIcone from "@/assets/icones/sucesso.svg";
 
 const Formulario = ({ usuario, setUsuario, setModal }) => {
   const [token] = useLocalStorage("token");
   const [erroEmailExiste, setErroEmailExiste] = useState(false);
-  // const [erroCpfExiste, setErroCpfExiste] = useState(false);
+  const [erroCpfExiste, setErroCpfExiste] = useState(false);
   const [carregando, setCarregando] = useState(false);
   const [verSenha, setVerSenha] = useState("password");
   const [iconeSenha, setIconeSenha] = useState(olhoFechado);
@@ -77,8 +77,14 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
       setCarregando(false);
       setSucesso(true);
     } catch (error) {
-      if (error.message === "O email já existe" || error.field === "email") {
+      console.log(error);
+
+      if (error.field === "email") {
         setErroEmailExiste(true);
+      }
+
+      if (error.field === "cpf") {
+        setErroCpfExiste(true);
       }
 
       setCarregando(false);
@@ -132,7 +138,11 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
                 name="cpf"
                 placeholder="Digite seu CPF"
                 {...register("cpf")}
+                onChange={() => setErroCpfExiste(false)}
               />
+              <p className={`${"inputMensagemErro"}`}>
+                {erroCpfExiste && "CPF já cadastrado."}
+              </p>
             </div>
 
             <div>

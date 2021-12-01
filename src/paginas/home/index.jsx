@@ -4,9 +4,9 @@ import CardClientes from "./CardClientes";
 
 import estilos from "./estilos.module.css";
 
-import cobrancaVerde from "../../assets/icones/cobranca-verde.svg";
-import cobrancaVermelha from "../../assets/icones/cobranca-vermelha.svg";
-import cobrancaAmarela from "../../assets/icones/cobranca-amarela.svg";
+import cobrancaVerde from "@/assets/icones/cobranca-verde.svg";
+import cobrancaVermelha from "@/assets/icones/cobranca-vermelha.svg";
+import cobrancaAmarela from "@/assets/icones/cobranca-amarela.svg";
 
 const dadosCobrancas = [
   {

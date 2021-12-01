@@ -1,24 +1,27 @@
 import { memo, useEffect, useState } from "react";
 import { useLocalStorage } from "react-use";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import useAuth from "@/hooks/Autenticação/useAuth";
 
 import estilos from "./estilos.module.css";
 
 import MenuLateral from "./MenuLateral";
 import MenuTopo from "./MenuTopo";
-import Modal from "../../componentes/Modal";
+import Modal from "@/componentes/Modal";
 import Formulario from "./Formulario";
 
 const Padrao = ({ tituloDaRota }) => {
   const [usuario, setUsuario] = useState({});
   const [modal, setModal] = useState(false);
   const [token] = useLocalStorage("token");
+  const { deslogar } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const buscaUsuario = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_URL_BASE}/usuario`,
+          `${process.env.REACT_APP_URL_BASE}/usuarios`,
           {
             headers: {
               "Content-type": "application/json",
@@ -35,7 +38,11 @@ const Padrao = ({ tituloDaRota }) => {
 
         setUsuario(responseData);
       } catch (error) {
-        alert(error.message);
+        if (error.message === "jwt expired") {
+          alert("Sua sessão expirou. Faça login novamente");
+
+          deslogar(() => navigate("/login"));
+        }
       }
     };
 
