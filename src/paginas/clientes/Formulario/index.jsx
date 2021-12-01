@@ -6,7 +6,7 @@ import validacao from "./validacao";
 
 import estilos from "./estilos.module.css";
 
-const Formulario = ({ setModal, setAlerta }) => {
+const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
   const [token] = useLocalStorage("token");
   const [erroEmailExiste, setErroEmailExiste] = useState(false);
   // const [erroCpfExiste, setErroCpfExiste] = useState(false);
@@ -24,7 +24,7 @@ const Formulario = ({ setModal, setAlerta }) => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_URL_BASE}/cliente`,
+        `${process.env.REACT_APP_URL_BASE}/clientes`,
         {
           method: "POST",
           headers: {
@@ -41,6 +41,8 @@ const Formulario = ({ setModal, setAlerta }) => {
         throw responseData;
       }
 
+      console.log(responseData);
+      setClientes([...clientes, data]);
       setModal(false);
       setAlerta(true);
     } catch (error) {
@@ -150,7 +152,7 @@ const Formulario = ({ setModal, setAlerta }) => {
 
         <div className="flex gap-1 mb-2">
           <div className="flex-1">
-            <label htmlFor="cidade">Cidade*</label>
+            <label htmlFor="cidade">Cidade</label>
             <input
               id="cidade"
               name="cidade"
@@ -162,7 +164,7 @@ const Formulario = ({ setModal, setAlerta }) => {
           </div>
 
           <div className={`${estilos.inputContainerUF}`}>
-            <label htmlFor="uf">UF*</label>
+            <label htmlFor="uf">UF</label>
             <input
               id="uf"
               name="uf"
