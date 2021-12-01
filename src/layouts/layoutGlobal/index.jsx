@@ -37,6 +37,7 @@ const Padrao = ({ tituloDaRota }) => {
         }
 
         setUsuario(responseData);
+        console.log(responseData)
       } catch (error) {
         if (error.message === "jwt expired") {
           alert("Sua sessão expirou. Faça login novamente");

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocalStorage } from "react-use";
+
 
 import estilos from "./estilos.module.css";
 
@@ -25,6 +26,7 @@ const Clientes = () => {
 
   console.log(clientes);
 
+
   useEffect(async () => {
     setClientes(await buscaClientes());
   }, []);
@@ -48,6 +50,7 @@ const Clientes = () => {
       console.log(error);
     }
   }
+
 
   return (
     <>
