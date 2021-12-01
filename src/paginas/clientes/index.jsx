@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import estilos from "./estilos.module.css";
 
@@ -13,10 +13,6 @@ import Formulario from "./Formulario";
 const Clientes = ({ setTituloDaRota }) => {
   const [modal, setModal] = useState(false);
   const [alerta, setAlerta] = useState(false);
-
-  useEffect(() => {
-    setTituloDaRota("Controle de clientes");
-  }, []);
 
   return (
     <>
