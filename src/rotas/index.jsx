@@ -6,19 +6,21 @@ import {
   Navigate,
   Outlet,
 } from "react-router-dom";
-import { AuthProvider } from "../contextos/AuthContext";
-import LayoutDashboard from "../layouts/layoutDashboard";
-import LayoutCadastro from "../layouts/layoutCadastro";
+import { AuthProvider } from "@/contextos/AuthContext";
+import LayoutGlobal from "@/layouts/layoutGlobal";
+import LayoutClientes from "@/layouts/layoutClientes";
+import LayoutCadastro from "@/layouts/layoutCadastro";
 
-import Home from "../paginas/home";
-import Clientes from "../paginas/clientes";
-import Cobrancas from "../paginas/cobrancas";
-import Login from "../paginas/login";
-import CadastroInicio from "../paginas/cadastro/inicio";
-import CadastroSenha from "../paginas/cadastro/senha";
-import CadastroSucesso from "../paginas/cadastro/sucesso";
-import NotFound from "../paginas/notfound";
-import useAuth from "../hooks/Autenticação/useAuth";
+import Home from "@/paginas/home";
+import Clientes from "@/paginas/clientes";
+import Cliente from "@/paginas/clientes/cliente";
+import Cobrancas from "@/paginas/cobrancas";
+import Login from "@/paginas/login";
+import CadastroInicio from "@/paginas/cadastro/inicio";
+import CadastroSenha from "@/paginas/cadastro/senha";
+import CadastroSucesso from "@/paginas/cadastro/sucesso";
+import NotFound from "@/paginas/notfound";
+import useAuth from "@/hooks/Autenticação/useAuth";
 
 const RotasProtegidas = () => {
   const { token } = useAuth();
@@ -33,16 +35,19 @@ const Rotas = () => {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<RotasProtegidas />}>
-            <Route element={<LayoutDashboard tituloDaRota={tituloDaRota} />}>
+            <Route element={<LayoutGlobal tituloDaRota={tituloDaRota} />}>
               <Route
                 path="/"
                 element={<Home setTituloDaRota={setTituloDaRota} />}
               />
 
               <Route
-                path="/clientes"
-                element={<Clientes setTituloDaRota={setTituloDaRota} />}
-              />
+                element={<LayoutClientes setTituloDaRota={setTituloDaRota} />}
+              >
+                <Route path="/clientes" element={<Clientes />} />
+
+                <Route path="/clientes/:cliente" element={<Cliente />} />
+              </Route>
 
               <Route
                 path="/cobrancas"
