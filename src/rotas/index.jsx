@@ -7,7 +7,7 @@ import {
   Outlet,
 } from "react-router-dom";
 import { AuthProvider } from "../contextos/AuthContext";
-import LayoutDashboard from "../layouts/layoutDashboard";
+import LayoutGlobal from "../layouts/layoutGlobal";
 import LayoutCadastro from "../layouts/layoutCadastro";
 
 import Home from "../paginas/home";
@@ -33,7 +33,7 @@ const Rotas = () => {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<RotasProtegidas />}>
-            <Route element={<LayoutDashboard tituloDaRota={tituloDaRota} />}>
+            <Route element={<LayoutGlobal tituloDaRota={tituloDaRota} />}>
               <Route
                 path="/"
                 element={<Home setTituloDaRota={setTituloDaRota} />}

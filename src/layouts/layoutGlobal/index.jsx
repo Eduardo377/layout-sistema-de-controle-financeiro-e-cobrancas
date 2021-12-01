@@ -21,7 +21,7 @@ const Padrao = ({ tituloDaRota }) => {
     const buscaUsuario = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_URL_BASE}/usuario`,
+          `${process.env.REACT_APP_URL_BASE}/usuarios`,
           {
             headers: {
               "Content-type": "application/json",
@@ -37,6 +37,7 @@ const Padrao = ({ tituloDaRota }) => {
         }
 
         setUsuario(responseData);
+        console.log(responseData)
       } catch (error) {
         if (error.message === "jwt expired") {
           alert("Sua sessão expirou. Faça login novamente");
