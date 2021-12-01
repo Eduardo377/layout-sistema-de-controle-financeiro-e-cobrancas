@@ -12,8 +12,8 @@ const validacao = yup.object().shape({
     .required(messagensErro.obrigatorio),
   cpf: yup.string().required(messagensErro.obrigatorio),
   telefone: yup.string().required(messagensErro.obrigatorio),
-  cidade: yup.string().required(messagensErro.obrigatorio),
-  uf: yup.string().required(messagensErro.obrigatorio),
+  cidade: yup.string(),
+  uf: yup.string(),
 });
 
 export default validacao;
