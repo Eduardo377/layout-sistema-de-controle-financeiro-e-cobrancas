@@ -6,7 +6,7 @@ import filtro from "@/assets/icones/filtro.svg";
 
 const Cobrancas = ({ setTituloDaRota }) => {
   useEffect(() => {
-    setTituloDaRota("cobranças");
+    setTituloDaRota("Cobranças");
   }, []);
 
   return (

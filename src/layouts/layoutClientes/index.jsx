@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const LayoutClientes = ({ setTituloDaRota }) => {
   useEffect(() => {
-    setTituloDaRota("clientes");
+    setTituloDaRota("Clientes");
   }, []);
 
   return (
