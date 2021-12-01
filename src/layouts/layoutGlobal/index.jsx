@@ -41,9 +41,9 @@ const Padrao = ({ tituloDaRota }) => {
       } catch (error) {
         if (error.message === "jwt expired") {
           alert("Sua sessão expirou. Faça login novamente");
-        }
 
-        deslogar(() => navigate("/login"));
+          deslogar(() => navigate("/login"));
+        }
       }
     };
 
