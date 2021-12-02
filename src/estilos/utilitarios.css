@@ -40,7 +40,8 @@
 }
 
 .btn-secundario {
-  background-color: #dedee9;
+  border: 1px solid #dedee9;
+  background-color: #f8f8f9;
   color: var(--verde-escuro);
 }
 
@@ -85,6 +86,24 @@
 
 .mb-2 {
   margin-bottom: 2rem;
+}
+
+.my-1 {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.my-2 {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.font-captalize {
+  text-transform: capitalize;
+}
+
+.font-uppercase {
+  text-transform: uppercase;
 }
 
 .inputErro {
