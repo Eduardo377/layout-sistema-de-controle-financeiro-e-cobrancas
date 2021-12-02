@@ -48,6 +48,8 @@ const Formulario = ({
 
       if (verbo === "POST") {
         setClientes([...clientes, responseData[0]]);
+      } else {
+        setCliente(data);
       }
 
       setModal(false);
