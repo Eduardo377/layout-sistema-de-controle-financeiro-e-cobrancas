@@ -2,8 +2,9 @@
   border-bottom: 1px solid #acd9c5;
 
   margin-bottom: 1rem;
-
-  padding: 1rem 0;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .tituloDaRota {
@@ -11,8 +12,7 @@
   font-family: var(--fonte-inter);
   font-weight: 400;
   color: var(--verde-escuro);
-  position: absolute;
-  top: 3rem;
+  margin-top: auto;
 }
 
 .usuarioContainer {
