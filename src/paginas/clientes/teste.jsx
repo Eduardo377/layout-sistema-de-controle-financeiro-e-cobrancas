@@ -5,7 +5,9 @@ import FormularioCobrancas from "@componentes/FormularioCobrancas";
 
 const Teste = () => {
   const [modalCobranca, setModalCobranca] = useState(false);
-  const [formCobrancas, setFormCobrancas] = useState({
+  const [clienteID, setClienteID] = useState(false);
+  const [carregando, setCarregando] = useState(false);
+  const [formCobranca, setFormCobranca] = useState({
     paga: false,
     valor: 500,
     vencimento: "2021-11-30",
@@ -22,9 +24,10 @@ const Teste = () => {
 
         <FormularioCobrancas
           setModal={setModalCobranca}
-          form={formCobrancas}
-          setForm={setFormCobrancas}
-          carregando={false}
+          form={formCobranca}
+          setForm={setFormCobranca}
+          carregando={carregando}
+          clienteID={clienteID}
         />
       </Modal>
     </>

@@ -12,6 +12,8 @@ const FormularioCobrancas = ({
   form = {},
   setForm,
   cliente,
+  clienteID,
+  cobrancaID,
   carregando,
   setModal,
 }) => {
@@ -33,7 +35,8 @@ const FormularioCobrancas = ({
   async function onSubmit(data) {
     data.paga = paga;
     data.valor = Number(data.valor);
-    console.log(data);
+    data.cliente_id = clienteID;
+    // console.log(data);
 
     if (form && setForm) {
       setForm(data);
