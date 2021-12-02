@@ -44,9 +44,12 @@ const Rotas = () => {
               <Route
                 element={<LayoutClientes setTituloDaRota={setTituloDaRota} />}
               >
-                <Route path="/clientes" element={<Clientes />} />
+                <Route
+                  path="/clientes"
+                  element={<Clientes setTituloDaRota={setTituloDaRota} />}
+                />
 
-                <Route path="/clientes/:cliente" element={<Cliente />} />
+                <Route path="/clientes/:id" element={<Cliente />} />
               </Route>
 
               <Route
