@@ -11,8 +11,8 @@
   font-family: var(--fonte-inter);
   font-weight: 400;
   color: var(--verde-escuro);
-  position: absolute;
-  top: 3rem;
+  position: relative;
+  top: 1.5rem;
 }
 
 .usuarioContainer {

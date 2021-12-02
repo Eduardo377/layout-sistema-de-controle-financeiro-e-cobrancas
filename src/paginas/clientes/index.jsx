@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLocalStorage } from "react-use";
+
+import fetcher from "@/constantes/fetcher";
 
 import estilos from "./estilos.module.css";
 
@@ -26,7 +27,6 @@ const Clientes = () => {
   const [clientes, setClientes] = useState([]);
   const [cliente, setCliente] = useState("");
   const [clienteID, setClienteID] = useState(null);
-  const [token] = useLocalStorage("token");
 
   useEffect(async () => {
     setClientes(await buscaClientes());
@@ -34,15 +34,7 @@ const Clientes = () => {
 
   async function buscaClientes() {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL_BASE}/clientes`,
-        {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetcher("clientes");
 
       const data = await response.json();
 
@@ -70,17 +62,7 @@ const Clientes = () => {
     setCarregandoCobranca(true);
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL_BASE}/cobrancas`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formCobranca),
-        }
-      );
+      const response = await fetcher("cobrancas", "POST", formCobranca);
 
       const responseData = await response.json();
 
@@ -173,6 +155,7 @@ const Clientes = () => {
           setAlerta={setAlerta}
           setClientes={setClientes}
           clientes={clientes}
+          verbo="POST"
         />
       </Modal>
 
