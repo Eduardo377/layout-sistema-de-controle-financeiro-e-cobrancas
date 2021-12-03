@@ -1,16 +1,24 @@
-import React, { useState } from "react";
-import { useLocalStorage } from "react-use";
-import { useForm } from "react-hook-form";
+import fetcher from "@/constantes/fetcher";
 import { yupResolver } from "@hookform/resolvers/yup";
-import validacao from "./validacao";
-
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import estilos from "./estilos.module.css";
+import validacao from "./validacao";
+import { useParams } from "react-router";
 
-const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
-  const [token] = useLocalStorage("token");
+const Formulario = ({
+  setModal,
+  setAlerta,
+  setClientes,
+  clientes,
+  setCliente,
+  cliente,
+  verbo,
+}) => {
   const [erroEmailExiste, setErroEmailExiste] = useState(false);
-  // const [erroCpfExiste, setErroCpfExiste] = useState(false);
+  const [erroCpfExiste, setErroCpfExiste] = useState(false);
   const [carregando, setCarregando] = useState(false);
+  const { id: clienteID } = useParams();
   const {
     register,
     handleSubmit,
@@ -23,17 +31,13 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
     setCarregando(true);
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL_BASE}/clientes`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      let response;
+
+      if (verbo === "POST") {
+        response = await fetcher(`clientes`, verbo, data);
+      } else {
+        response = await fetcher(`clientes/${cliente.id}`, verbo, data);
+      }
 
       const responseData = await response.json();
 
@@ -41,12 +45,23 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
         throw responseData;
       }
 
-      console.log(responseData);
-      setClientes([...clientes, data]);
+      if (verbo === "POST") {
+        setClientes([...clientes, responseData[0]]);
+      } else {
+        setCliente({ id: clienteID, ...data });
+      }
+
       setModal(false);
       setAlerta(true);
     } catch (error) {
-      console.log(error);
+      if (error.field === "email") {
+        setErroEmailExiste(true);
+      }
+
+      if (error.field === "cpf") {
+        setErroCpfExiste(true);
+      }
+
       setCarregando(false);
     }
   }
@@ -57,6 +72,7 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
         <div className="mb-1">
           <label htmlFor="nome">Nome*</label>
           <input
+            defaultValue={cliente?.nome}
             id="nome"
             name="nome"
             placeholder="Digite o nome"
@@ -71,31 +87,42 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
         <div className="mb-1">
           <label htmlFor="email">Email*</label>
           <input
+            defaultValue={cliente?.email}
             id="email"
             name="email"
             placeholder="Digite o email"
             {...register("email")}
             className={`${errors.email && "inputErro"}`}
+            onChange={() => setErroEmailExiste(false)}
           />
           <p className={`${"inputMensagemErro"}`}>{errors.email?.message}</p>
+          <p className={`${"inputMensagemErro"}`}>
+            {erroEmailExiste && "E-mail já cadastrado"}
+          </p>
         </div>
 
         <div className="flex gap-1 mb-1">
           <div>
             <label htmlFor="cpf">CPF*</label>
             <input
+              defaultValue={cliente?.cpf}
               id="cpf"
               name="cpf"
               placeholder="Digite o cpf"
               {...register("cpf")}
               className={`${errors.cpf && "inputErro"}`}
+              onChange={() => setErroCpfExiste(false)}
             />
             <p className={`${"inputMensagemErro"}`}>{errors.cpf?.message}</p>
+            <p className={`${"inputMensagemErro"}`}>
+              {erroCpfExiste && "CPF já cadastrado"}
+            </p>
           </div>
 
           <div>
             <label htmlFor="telefone">Telefone*</label>
             <input
+              defaultValue={cliente?.telefone}
               id="telefone"
               name="telefone"
               placeholder="Digite o telefone"
@@ -111,6 +138,7 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
         <div className="mb-1">
           <label htmlFor="endereco">Endereço</label>
           <input
+            defaultValue={cliente?.endereco}
             id="endereco"
             name="endereco"
             placeholder="Digite o endereço"
@@ -121,6 +149,7 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
         <div className="mb-1">
           <label htmlFor="complemento">Complemento</label>
           <input
+            defaultValue={cliente?.complemento}
             id="complemento"
             name="complemento"
             placeholder="Digite o complemento"
@@ -132,6 +161,7 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
           <div>
             <label htmlFor="cep">CEP</label>
             <input
+              defaultValue={cliente?.cep}
               id="cep"
               name="cep"
               placeholder="Digite o cep"
@@ -142,6 +172,7 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
           <div>
             <label htmlFor="bairro">Bairro</label>
             <input
+              defaultValue={cliente?.bairro}
               id="bairro"
               name="bairro"
               placeholder="Digite o bairro"
@@ -154,6 +185,7 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
           <div className="flex-1">
             <label htmlFor="cidade">Cidade</label>
             <input
+              defaultValue={cliente?.cidade}
               id="cidade"
               name="cidade"
               placeholder="Digite a cidade"
@@ -166,6 +198,7 @@ const Formulario = ({ setModal, setAlerta, setClientes, clientes }) => {
           <div className={`${estilos.inputContainerUF}`}>
             <label htmlFor="uf">UF</label>
             <input
+              defaultValue={cliente?.uf}
               id="uf"
               name="uf"
               placeholder="Digite a UF"

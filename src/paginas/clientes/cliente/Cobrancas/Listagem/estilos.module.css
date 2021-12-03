@@ -1,0 +1,79 @@
+.listaHeader,
+.listaBody li {
+  display: grid;
+  grid-template-columns: repeat(4, calc(100% / 7)) 1fr;
+  align-items: center;
+}
+
+.listaHeader {
+  padding-bottom: 1.5rem;
+}
+
+.listaHeader span {
+  font-weight: 700;
+}
+
+.listaBody {
+  color: #6e6e85;
+  font-size: 0.9rem;
+}
+
+.listaBody li {
+  border-top: 1px solid #eff0f6;
+
+  padding: 1rem 0;
+}
+
+.listaBody li div:last-of-type {
+  overflow: hidden;
+}
+
+.status {
+  border-radius: 8px;
+
+  font-weight: 600;
+  font-size: 0.9rem;
+
+  text-align: center;
+  text-transform: capitalize;
+
+  padding: 0 0.8rem;
+}
+
+.statusVerde {
+  background: var(--verde-claro);
+  color: var(--verde);
+}
+
+.statusVermelho {
+  background: var(--vermelho-claro);
+  color: var(--vermelho);
+}
+
+.statusAmarelo {
+  background: var(--amarelo-claro);
+  color: var(--amarelo);
+}
+
+.descricao {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.icones {
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.icones span {
+  cursor: pointer;
+}
+
+.icones span:last-of-type span {
+  color: var(--vermelho);
+}
+
+.icones img {
+  margin-bottom: 0.2rem;
+}

@@ -51,7 +51,7 @@ const FormularioCobrancas = ({
           <input
             id="nome"
             {...register("nome")}
-            defaultValue={form?.nome || cliente}
+            defaultValue={form?.nome || cliente?.nome || cliente}
             readOnly
           />
         </div>
