@@ -35,7 +35,7 @@ const Listagem = ({ cliente, setFormCobranca, formCobranca }) => {
 
   return (
     <>
-      {cobrancas && (
+      {cobrancas.length > 0 && (
         <>
           <div className={`${estilos.listaHeader}`}>
             <span className="flex items-center gap-1">
