@@ -26,8 +26,8 @@ const Cobrancas = ({ setTituloDaRota }) => {
   }, []);
 
   const escolherEstiloDeStatus = (status) => {
-    if (status === "paga") return estilos.paga;
-    if (status === "pendente") return estilos.pendente;
+    if (status === "Paga") return estilos.paga;
+    if (status === "Pendente") return estilos.pendente;
     return estilos.vencida;
   };
 
