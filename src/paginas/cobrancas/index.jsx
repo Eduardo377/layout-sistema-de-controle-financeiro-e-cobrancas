@@ -25,16 +25,10 @@ const Cobrancas = ({ setTituloDaRota }) => {
     setTituloDaRota("Cobranças");
   }, []);
 
-  const verificarStatus = (status, vencimento) => {
-    if (status) return estilos.paga;
-    if (+new Date() > +new Date(vencimento)) return estilos.vencida;
-    return estilos.pendente;
-  };
-
-  const nomearStatus = (status, vencimento) => {
-    if (status) return "Paga";
-    if (+new Date() > +new Date(vencimento)) return "Vencida";
-    return "Pendente";
+  const escolherEstiloDeStatus = (status) => {
+    if (status === "paga") return estilos.paga;
+    if (status === "pendente") return estilos.pendente;
+    return estilos.vencida;
   };
 
   return (
@@ -93,14 +87,12 @@ const Cobrancas = ({ setTituloDaRota }) => {
                 </span>
                 <span className={`${estilos.items}`}>
                   {new Date(item.data_vencimento)
-                    .toLocaleString("pt-BR")
-                    .slice(1, 10)}
+                    .toLocaleString("pt-BR", { timeZone: "UTC" })
+                    .slice(0, 10)}
                 </span>
                 <div className={`${estilos.items}`}>
-                  <span
-                    className={verificarStatus(item.paga, item.data_vencimento)}
-                  >
-                    {nomearStatus(item.paga, item.data_vencimento)}
+                  <span className={escolherEstiloDeStatus(item.status)}>
+                    {`${item.status}`}
                   </span>
                 </div>
                 <span className={`${estilos.item2}`}>{item.descricao}</span>
