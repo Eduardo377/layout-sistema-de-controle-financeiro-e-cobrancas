@@ -15,7 +15,7 @@ const Formulario = ({
   verbo,
 }) => {
   const [erroEmailExiste, setErroEmailExiste] = useState(false);
-  // const [erroCpfExiste, setErroCpfExiste] = useState(false);
+  const [erroCpfExiste, setErroCpfExiste] = useState(false);
   const [carregando, setCarregando] = useState(false);
   const {
     register,
@@ -29,7 +29,6 @@ const Formulario = ({
     setCarregando(true);
 
     try {
-      console.log(verbo, cliente?.id);
       let response;
 
       if (verbo === "POST") {
@@ -44,8 +43,6 @@ const Formulario = ({
         throw responseData;
       }
 
-      console.log(responseData);
-
       if (verbo === "POST") {
         setClientes([...clientes, responseData[0]]);
       } else {
@@ -55,7 +52,14 @@ const Formulario = ({
       setModal(false);
       setAlerta(true);
     } catch (error) {
-      console.log(error);
+      if (error.field === "email") {
+        setErroEmailExiste(true);
+      }
+
+      if (error.field === "cpf") {
+        setErroCpfExiste(true);
+      }
+
       setCarregando(false);
     }
   }
@@ -87,8 +91,12 @@ const Formulario = ({
             placeholder="Digite o email"
             {...register("email")}
             className={`${errors.email && "inputErro"}`}
+            onChange={() => setErroEmailExiste(false)}
           />
           <p className={`${"inputMensagemErro"}`}>{errors.email?.message}</p>
+          <p className={`${"inputMensagemErro"}`}>
+            {erroEmailExiste && "E-mail já cadastrado"}
+          </p>
         </div>
 
         <div className="flex gap-1 mb-1">
@@ -101,8 +109,12 @@ const Formulario = ({
               placeholder="Digite o cpf"
               {...register("cpf")}
               className={`${errors.cpf && "inputErro"}`}
+              onChange={() => setErroCpfExiste(false)}
             />
             <p className={`${"inputMensagemErro"}`}>{errors.cpf?.message}</p>
+            <p className={`${"inputMensagemErro"}`}>
+              {erroCpfExiste && "CPF já cadastrado"}
+            </p>
           </div>
 
           <div>
@@ -158,6 +170,7 @@ const Formulario = ({
           <div>
             <label htmlFor="bairro">Bairro</label>
             <input
+              defaultValue={cliente?.bairro}
               id="bairro"
               name="bairro"
               placeholder="Digite o bairro"
