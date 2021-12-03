@@ -21,7 +21,7 @@ const Clientes = () => {
   const [modal, setModal] = useState(false);
   const [modalCobranca, setModalCobranca] = useState(false);
   const [formCobranca, setFormCobranca] = useState(null);
-  const [carregandoCoranca, setCarregandoCobranca] = useState(false);
+  const [carregandoCobranca, setCarregandoCobranca] = useState(false);
   const [alerta, setAlerta] = useState(false);
   const [alertaCobranca, setAlertaCobranca] = useState(false);
   const [clientes, setClientes] = useState([]);
@@ -171,7 +171,7 @@ const Clientes = () => {
 
         <FormularioCobrancas
           setModal={setModalCobranca}
-          carregando={carregandoCoranca}
+          carregando={carregandoCobranca}
           cliente={cliente}
           clienteID={clienteID}
           setForm={setFormCobranca}

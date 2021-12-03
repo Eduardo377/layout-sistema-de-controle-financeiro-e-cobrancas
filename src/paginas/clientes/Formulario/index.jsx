@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import estilos from "./estilos.module.css";
 import validacao from "./validacao";
+import { useParams } from "react-router";
 
 const Formulario = ({
   setModal,
@@ -17,6 +18,7 @@ const Formulario = ({
   const [erroEmailExiste, setErroEmailExiste] = useState(false);
   const [erroCpfExiste, setErroCpfExiste] = useState(false);
   const [carregando, setCarregando] = useState(false);
+  const { id: clienteID } = useParams();
   const {
     register,
     handleSubmit,
@@ -46,7 +48,7 @@ const Formulario = ({
       if (verbo === "POST") {
         setClientes([...clientes, responseData[0]]);
       } else {
-        setCliente(data);
+        setCliente({ id: clienteID, ...data });
       }
 
       setModal(false);

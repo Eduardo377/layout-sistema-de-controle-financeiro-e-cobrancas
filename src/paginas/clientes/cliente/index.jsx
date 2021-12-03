@@ -7,12 +7,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import estilos from "./estilos.module.css";
 import Formulario from "../Formulario";
+import FormularioCobrancas from "@/componentes/FormularioCobrancas";
+import CobrancasSecao from "./Cobrancas";
 
 const Cliente = () => {
   const { id: clienteID } = useParams();
   const [cliente, setCliente] = useState({});
   const [alerta, setAlerta] = useState(false);
   const [modal, setModal] = useState(false);
+  const [modalCobranca, setModalCobranca] = useState(false);
+  const [carregandoCobranca, setCarregandoCobranca] = useState();
+  const [formCobranca, setFormCobranca] = useState(null);
+  const [alertaCobranca, setAlertaCobranca] = useState(false);
 
   useEffect(() => {
     async function fetchCliente() {
@@ -42,7 +48,7 @@ const Cliente = () => {
       </div>
 
       <section className={`${estilos.containerSecao} mb-2`}>
-        <div className={`flex items-center mb-1`}>
+        <div className={`flex items-center mb-2`}>
           <h3 className={`flex-1`}>Dados do cliente</h3>
 
           <button
@@ -104,13 +110,7 @@ const Cliente = () => {
         </div>
       </section>
 
-      <section className={`${estilos.containerSecao}`}>
-        <div className={`flex items-center mb-1`}>
-          <h3 className={`flex-1`}>Cobranças do cliente</h3>
-
-          <button className={`btn-primario`}>+ Nova cobrança</button>
-        </div>
-      </section>
+      <CobrancasSecao cliente={cliente} />
 
       <Modal modal={modal} handleModal={setModal}>
         <div className="flex gap-1 items-center mb-2">
