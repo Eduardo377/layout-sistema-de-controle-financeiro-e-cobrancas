@@ -97,3 +97,22 @@
 
   text-align: right;
 }
+
+.status {
+  border-radius: 8px;
+
+  font-weight: 700;
+  font-size: 0.9rem;
+
+  padding: 0.2rem 0;
+}
+
+.statusVermelho {
+  background: var(--vermelho-claro);
+  color: var(--vermelho);
+}
+
+.statusVerde {
+  background: var(--verde-claro);
+  color: var(--verde);
+}

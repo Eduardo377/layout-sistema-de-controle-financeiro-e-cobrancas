@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLocalStorage } from "react-use";
+
+import fetcher from "@/constantes/fetcher";
 
 import estilos from "./estilos.module.css";
 
@@ -20,13 +21,12 @@ const Clientes = () => {
   const [modal, setModal] = useState(false);
   const [modalCobranca, setModalCobranca] = useState(false);
   const [formCobranca, setFormCobranca] = useState(null);
-  const [carregandoCoranca, setCarregandoCobranca] = useState(false);
+  const [carregandoCobranca, setCarregandoCobranca] = useState(false);
   const [alerta, setAlerta] = useState(false);
   const [alertaCobranca, setAlertaCobranca] = useState(false);
   const [clientes, setClientes] = useState([]);
   const [cliente, setCliente] = useState("");
   const [clienteID, setClienteID] = useState(null);
-  const [token] = useLocalStorage("token");
 
   useEffect(async () => {
     setClientes(await buscaClientes());
@@ -34,27 +34,17 @@ const Clientes = () => {
 
   async function buscaClientes() {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL_BASE}/clientes`,
-        {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetcher("clientes");
 
       const data = await response.json();
 
       return data;
     } catch (error) {
-      console.log(error);
+      alert(error.message);
     }
   }
 
   useEffect(() => {
-    console.log(formCobranca);
-
     if (formCobranca) {
       cadastrarCobranca();
     }
@@ -70,17 +60,7 @@ const Clientes = () => {
     setCarregandoCobranca(true);
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL_BASE}/cobrancas`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formCobranca),
-        }
-      );
+      const response = await fetcher("cobrancas", "POST", formCobranca);
 
       const responseData = await response.json();
 
@@ -92,39 +72,37 @@ const Clientes = () => {
       setAlertaCobranca(true);
       setModalCobranca(false);
       setCarregandoCobranca(false);
-
-      console.log(responseData);
     } catch (error) {
-      console.log(error);
       setCarregandoCobranca(false);
+      alert(error.message);
     }
   }
 
   return (
     <>
+      <section className={`flex items-center mb-2`}>
+        <div className={`flex items-center flex-1 gap-1`}>
+          <ClientesIcone tamanho={2} />
+          <h2>Clientes</h2>
+        </div>
+
+        <div className={`flex  gap-1`}>
+          <button className="btn-primario" onClick={() => setModal(true)}>
+            + Adicionar cliente
+          </button>
+          <div className={`${estilos.inputContainer}`}>
+            <input type="text" placeholder="Pesquisa" />
+            <img
+              src={lupaIcone}
+              alt="lupa"
+              className={`${estilos.inputIcone}`}
+            />
+          </div>
+        </div>
+      </section>
+
       {clientes.length > 0 && (
         <div className={`${estilos.clientesSecao}`}>
-          <section className={`flex items-center`}>
-            <div className={`flex items-center flex-1 gap-1`}>
-              <ClientesIcone tamanho={2} />
-              <h2>Clientes</h2>
-            </div>
-
-            <div className={`flex  gap-1`}>
-              <button className="btn-primario" onClick={() => setModal(true)}>
-                + Adicionar cliente
-              </button>
-              <div className={`${estilos.inputContainer}`}>
-                <input type="text" placeholder="Pesquisa" />
-                <img
-                  src={lupaIcone}
-                  alt="lupa"
-                  className={`${estilos.inputIcone}`}
-                />
-              </div>
-            </div>
-          </section>
-
           <section className={`${estilos.listagem}`}>
             <div className={`${estilos.listagemHeader}`}>
               <span className="flex items-center gap-1">
@@ -148,7 +126,15 @@ const Clientes = () => {
                     <span>{cliente.cpf}</span>
                     <span>{cliente.email}</span>
                     <span>{cliente.telefone}</span>
-                    <span></span>
+                    <span
+                      className={`${estilos.status} ${
+                        cliente.inadimplente
+                          ? estilos.statusVermelho
+                          : estilos.statusVerde
+                      }`}
+                    >
+                      {cliente.inadimplente ? "Inadimplente" : "Em dia"}
+                    </span>
                     <span
                       onClick={() => criarCobranca(cliente.id, cliente.nome)}
                     >
@@ -173,6 +159,7 @@ const Clientes = () => {
           setAlerta={setAlerta}
           setClientes={setClientes}
           clientes={clientes}
+          verbo="POST"
         />
       </Modal>
 
@@ -184,7 +171,7 @@ const Clientes = () => {
 
         <FormularioCobrancas
           setModal={setModalCobranca}
-          carregando={carregandoCoranca}
+          carregando={carregandoCobranca}
           cliente={cliente}
           clienteID={clienteID}
           setForm={setFormCobranca}

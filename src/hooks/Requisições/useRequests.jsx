@@ -73,10 +73,34 @@ const useRequests = () => {
     }
   };
 
+  const listarCobrancas = async (token) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_BASE}/cobrancas`,
+        {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const dados = await response.json();
+
+      if (!response.ok) {
+        throw new Error(dados.message);
+      }
+
+      return dados;
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+
   return {
     buscarEmail,
     cadastrarUsuario,
     login,
+    listarCobrancas,
   };
 };
 

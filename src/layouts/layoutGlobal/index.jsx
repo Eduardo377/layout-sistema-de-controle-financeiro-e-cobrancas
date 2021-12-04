@@ -1,34 +1,24 @@
-import { memo, useEffect, useState } from "react";
-import { useLocalStorage } from "react-use";
-import { Outlet, useNavigate } from "react-router-dom";
+import Modal from "@/componentes/Modal";
+import fetcher from "@/constantes/fetcher";
 import useAuth from "@/hooks/Autenticação/useAuth";
-
+import { memo, useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import estilos from "./estilos.module.css";
-
+import Formulario from "./Formulario";
 import MenuLateral from "./MenuLateral";
 import MenuTopo from "./MenuTopo";
-import Modal from "@/componentes/Modal";
-import Formulario from "./Formulario";
 
 const Padrao = ({ tituloDaRota }) => {
   const [usuario, setUsuario] = useState({});
   const [modal, setModal] = useState(false);
-  const [token] = useLocalStorage("token");
+
   const { deslogar } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     const buscaUsuario = async () => {
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_URL_BASE}/usuarios`,
-          {
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetcher("usuarios");
 
         const responseData = await response.json();
 
@@ -37,7 +27,6 @@ const Padrao = ({ tituloDaRota }) => {
         }
 
         setUsuario(responseData);
-        console.log(responseData)
       } catch (error) {
         if (error.message === "jwt expired") {
           alert("Sua sessão expirou. Faça login novamente");

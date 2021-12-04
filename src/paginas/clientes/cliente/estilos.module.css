@@ -1,0 +1,22 @@
+.containerSecao {
+  background: white;
+  border-radius: 20px;
+
+  padding: 2rem;
+}
+
+.dados {
+  color: #3f3f55;
+  margin-bottom: 3.5rem;
+}
+
+.dados:last-of-type {
+  margin-bottom: 0;
+  justify-content: space-between;
+}
+
+.dadosCampo {
+  font-weight: 700;
+
+  margin-bottom: 0.5rem;
+}
