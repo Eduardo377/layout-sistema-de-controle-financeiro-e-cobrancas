@@ -15,11 +15,14 @@ const Cobrancas = ({ cliente }) => {
   const [carregandoCobranca, setCarregandoCobranca] = useState();
   const [formCobranca, setFormCobranca] = useState(null);
   const [alertaCobranca, setAlertaCobranca] = useState(false);
+  const [cobrancas, setCobrancas] = useState([]);
 
   useEffect(() => {
     if (formCobranca) {
       cadastrarCobranca();
     }
+
+    buscaCobrancas();
   }, [formCobranca]);
 
   async function cadastrarCobranca() {
@@ -38,8 +41,20 @@ const Cobrancas = ({ cliente }) => {
       setAlertaCobranca(true);
       setModalCobranca(false);
     } catch (error) {
-      console.log(error);
+      alert(error.message);
       setCarregandoCobranca(false);
+    }
+  }
+
+  async function buscaCobrancas() {
+    try {
+      const response = await fetcher(`cobrancas/${clienteID}`);
+
+      const responseData = await response.json();
+
+      setCobrancas(responseData);
+    } catch (error) {
+      alert(error.message);
     }
   }
 
@@ -62,6 +77,7 @@ const Cobrancas = ({ cliente }) => {
             cliente={cliente}
             formCobranca={formCobranca}
             setFormCobranca={setFormCobranca}
+            cobrancas={cobrancas}
           />
         </div>
       </section>

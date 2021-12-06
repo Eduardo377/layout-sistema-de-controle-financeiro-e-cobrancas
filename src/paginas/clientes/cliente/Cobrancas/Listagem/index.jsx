@@ -7,32 +7,7 @@ import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
 import editarCobrancaIcone from "@/assets/icones/editar.svg";
 import excluirCobrancaIcone from "@/assets/icones/excluir.svg";
 
-const Listagem = ({ cliente, setFormCobranca, formCobranca }) => {
-  const [cobrancas, setCobrancas] = useState([]);
-  const { id: clienteID } = useParams();
-
-  useEffect(() => {
-    buscaCobrancas();
-  }, []);
-
-  useEffect(() => {
-    if (formCobranca) {
-      buscaCobrancas();
-    }
-  }, [formCobranca]);
-
-  async function buscaCobrancas() {
-    try {
-      const response = await fetcher(`cobrancas/${clienteID}`);
-
-      const responseData = await response.json();
-
-      setCobrancas(responseData);
-    } catch (error) {
-      alert(error.message);
-    }
-  }
-
+const Listagem = ({ cliente, setFormCobranca, formCobranca, cobrancas }) => {
   return (
     <>
       {cobrancas.length > 0 && (
@@ -58,7 +33,12 @@ const Listagem = ({ cliente, setFormCobranca, formCobranca }) => {
                   <li key={item.id}>
                     <span>{item?.id}</span>
                     <span>
-                      {new Date(item?.data_vencimento).toLocaleDateString()}
+                      {new Date(item?.data_vencimento).toLocaleDateString(
+                        "pt-BR",
+                        {
+                          timeZone: "UTC",
+                        }
+                      )}
                     </span>
                     <span>
                       {(item?.valor / 100).toLocaleString("pt-BR", {
