@@ -16,6 +16,7 @@ import FormularioCobrancas from "@/componentes/FormularioCobrancas";
 
 import criarCorancaIcone from "@/assets/icones/criar-cobranca.svg";
 import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
+import filtroIcone from "@/assets/icones/filtro.svg";
 
 const Clientes = () => {
   const [modal, setModal] = useState(false);
@@ -90,6 +91,11 @@ const Clientes = () => {
           <button className="btn-primario" onClick={() => setModal(true)}>
             + Adicionar cliente
           </button>
+
+          <button className={`${estilos.filtroBtn}`}>
+            <img src={filtroIcone} alt="filtro" />
+          </button>
+
           <div className={`${estilos.inputContainer}`}>
             <input type="text" placeholder="Pesquisa" />
             <img
