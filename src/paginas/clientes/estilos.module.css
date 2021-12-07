@@ -2,6 +2,11 @@
   margin-bottom: 2rem;
 }
 
+.filtroBtn {
+  background: white;
+  padding: 0 0.6rem;
+}
+
 .inputContainer {
   position: relative;
 
