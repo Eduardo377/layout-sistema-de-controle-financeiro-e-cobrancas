@@ -15,6 +15,10 @@
   margin-top: auto;
 }
 
+.tituloDaRota span {
+  color: #747488;
+}
+
 .usuarioContainer {
   position: relative;
 }

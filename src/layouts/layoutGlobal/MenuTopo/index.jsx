@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useDetectClickOutside } from "react-detect-click-outside";
-import useAuth from "@/hooks/Autenticação/useAuth";
-import estilos from "./estilos.module.css";
-import { useNavigate, useLocation } from "react-router-dom";
 import chevronIcone from "@/assets/icones/chevron-down.svg";
 import editarIcone from "@/assets/icones/editar.svg";
 import sairIcone from "@/assets/icones/sair.svg";
+import useAuth from "@/hooks/Autenticação/useAuth";
+import React, { useState } from "react";
+import { useDetectClickOutside } from "react-detect-click-outside";
+import { useLocation, useNavigate } from "react-router-dom";
+import estilos from "./estilos.module.css";
 
 const MenuTopo = ({ tituloDaRota, setModal, usuario, setUsuario }) => {
   const [menuUsuario, abreMenuUsuario] = useState(false);
@@ -32,8 +32,18 @@ const MenuTopo = ({ tituloDaRota, setModal, usuario, setUsuario }) => {
 
   return (
     <header className={`${estilos.header} flex items-center`}>
-      <h1 className={`${pathname !== "/" ? `${estilos.tituloDaRota}` : null}`}>
+      <h1
+        className={`${
+          pathname !== "/" ? `${estilos.tituloDaRota}` : null
+        } flex gap-1`}
+      >
         {tituloDaRota}
+        {pathname.includes("/clientes/") && (
+          <>
+            <span>&gt;</span>
+            <span>Detalhes do cliente</span>
+          </>
+        )}
       </h1>
 
       <div className={`${estilos.usuarioContainer}`} ref={refMenuUsuario}>
