@@ -12,14 +12,13 @@ const useRequests = () => {
       });
 
       const dados = await response.json();
-
       if (!response.ok) {
         throw new Error(dados.message);
       }
 
-      return response.ok;
+      return response.status;
     } catch (error) {
-      window.alert(error);
+      return error.message;
     }
   };
 
