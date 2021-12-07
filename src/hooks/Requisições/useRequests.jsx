@@ -65,10 +65,9 @@ const useRequests = () => {
       if (!response.ok) {
         throw new Error(dados.message);
       }
-      const { token } = dados;
-      return token;
+      return dados;
     } catch (error) {
-      window.alert(error);
+      return error.message;
     }
   };
 

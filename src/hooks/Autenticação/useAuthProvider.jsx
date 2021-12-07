@@ -12,9 +12,11 @@ const useAuthProvider = () => {
   const { login } = useRequests();
 
   const logar = async (dados, callback) => {
-    const novoToken = await login(dados);
-    setToken(novoToken);
+    const response = await login(dados);
+    if (!response.token) return { response, ok: false };
+    setToken(response.token);
     callback();
+    return { ok: true };
   };
 
   const deslogar = (callback) => {
