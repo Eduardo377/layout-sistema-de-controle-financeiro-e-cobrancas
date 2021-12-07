@@ -12,6 +12,8 @@ const FormularioSenha = () => {
   const [inputSenha, setInputSenha] = useState({ senha: "", repeticao: "" });
   const [mensagemErro, setMensagemErro] = useState("*As senhas não coincidem");
   const [erro, setErro] = useState(false);
+  const [erroRepeticao, setErroRepeticao] = useState(false);
+  const [erroSenha, setErroSenha] = useState(false);
 
   const navigate = useNavigate();
   const { etapaCadastro, setEtapaCadastro, dadosCadastro } = useAuth();
@@ -25,37 +27,44 @@ const FormularioSenha = () => {
   }, []);
 
   useEffect(() => {
-    if (inputSenha.senha !== inputSenha.repeticao) {
-      setMensagemErro("*As senhas não coincidem");
-      return setErro(true);
+    if (inputSenha.senha) {
+      return setErroSenha(false);
     }
 
-    if (!inputSenha.senha && !inputSenha.repeticao) {
-      setMensagemErro("*Preencha os campos obrigatórios");
-      return setErro(true);
+    if (inputSenha.repeticao) {
+      return setErroRepeticao(false);
     }
     return setErro(false);
   }, [inputSenha]);
 
   useEffect(() => {
-    return setErro(false);
-  }, []);
+    setErroSenha(false);
+    return setErroRepeticao(false);
+  }, [inputSenha]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMensagemErro("*campo obrigatório");
 
-    if (!inputSenha.senha || !inputSenha.repeticao) {
-      return window.alert("ERRO: preencha os campos obrigatórios!");
+    if (!inputSenha.senha && !inputSenha.repeticao) {
+      setErroSenha(true);
+      return setErroRepeticao(true);
     }
+
+    if (!inputSenha.senha) return setErroSenha(true);
+    if (!inputSenha.repeticao) return setErroRepeticao(true);
 
     if (inputSenha.senha !== inputSenha.repeticao) {
-      return window.alert("ERRO: senhas não coincidem!");
+      setErroSenha(true);
+      setErroRepeticao(true);
+      return setMensagemErro("*As senhas não coincidem");
     }
+
     const { senha } = inputSenha;
     const body = { ...dadosCadastro };
     body.senha = senha;
     const response = await cadastrarUsuario(body);
-    if (response) {
+    if (response === 200) {
       setEtapaCadastro(3);
       return navigate("/cadastro/sucesso");
     }
@@ -74,7 +83,7 @@ const FormularioSenha = () => {
       <label className={`${estilos.label} flex-column`}>
         Senha*
         <input
-          className={`${estilos.input} ${erro ? estilos.erro : ""}`}
+          className={`${estilos.input} ${erroSenha ? estilos.erro : ""}`}
           type={`${olhaAberto ? "text" : "password"}`}
           name="senha"
           style={{ marginBottom: "1rem" }}
@@ -89,11 +98,11 @@ const FormularioSenha = () => {
           alt="ver senha"
         />
       </label>
-      {erro && <span className={estilos.span}>{mensagemErro}</span>}
+      {erroSenha && <span className={estilos.span}>{mensagemErro}</span>}
       <label className={`${estilos.label} flex-column`}>
         Repita a senha*
         <input
-          className={`${estilos.input} ${erro ? estilos.erro : ""}`}
+          className={`${estilos.input} ${erroRepeticao ? estilos.erro : ""}`}
           type={`${olhaAberto ? "text" : "password"}`}
           name="repeticao"
           style={{ marginBottom: "1rem" }}
@@ -108,7 +117,7 @@ const FormularioSenha = () => {
           alt="ver senha"
         />
       </label>
-      {erro && <span className={estilos.span}>{mensagemErro}</span>}
+      {erroRepeticao && <span className={estilos.span}>{mensagemErro}</span>}
       <button className={`${estilos.button} btn-primario`} type="submit">
         Cadastrar
       </button>
