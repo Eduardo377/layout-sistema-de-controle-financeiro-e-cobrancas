@@ -42,8 +42,8 @@ const FormularioInicio = () => {
       setEtapaCadastro(2);
       return navigate("/cadastro/senha");
     }
+    setErroEmail(true);
     return setMensagemErro(response);
-    return setErroEmail(true);
   };
 
   const inputOnchange = (target) => {
