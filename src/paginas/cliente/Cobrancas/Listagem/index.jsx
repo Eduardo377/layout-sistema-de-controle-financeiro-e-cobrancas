@@ -2,14 +2,20 @@ import { useState, useEffect, useContext } from "react";
 import fetcher from "@/constantes/fetcher";
 import { useParams } from "react-router";
 import estilos from "./estilos.module.css";
+import CobrancasIcone from "@/assets/icones/cobrancas";
+import FormularioCobrancas from "@/componentes/FormularioCobrancas";
 
 import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
 import editarCobrancaIcone from "@/assets/icones/editar.svg";
 import excluirCobrancaIcone from "@/assets/icones/excluir.svg";
 import buscaCobrancasCliente from "./buscaCobrancasCliente";
-import CobrancasContext from "contextos/CobrancasContext";
+import CobrancasContext from "@/contextos/CobrancasContext";
+import Modal from "@/componentes/Modal";
+import ClientesContext from "contextos/ClientesContext";
 
 const Listagem = () => {
+  const [modal, setModal] = useState(false);
+  const [currentCobranca, setCurrentCobranca] = useState({});
   const { id: clienteID } = useParams();
   const {
     cobrancasCLiente,
@@ -17,6 +23,7 @@ const Listagem = () => {
     loadingCobrancasCLiente,
     setLoadingCobrancasCLiente,
   } = useContext(CobrancasContext);
+  const { cliente } = useContext(ClientesContext);
 
   useEffect(() => {
     (async function () {
@@ -30,6 +37,12 @@ const Listagem = () => {
   if (loadingCobrancasCLiente) {
     return <div>Carregando...</div>;
   }
+
+  const editarCobranca = (cobranca) => {
+    setModal(true);
+
+    setCurrentCobranca(cobranca);
+  };
 
   return (
     <>
@@ -51,12 +64,12 @@ const Listagem = () => {
 
           <div className={`${estilos.listaBody}`}>
             <ul>
-              {cobrancasCLiente.map((item) => {
+              {cobrancasCLiente.map((cobranca) => {
                 return (
-                  <li key={item.id}>
-                    <span>{item?.id}</span>
+                  <li key={cobranca.id}>
+                    <span>{cobranca?.id}</span>
                     <span>
-                      {new Date(item?.data_vencimento).toLocaleDateString(
+                      {new Date(cobranca?.data_vencimento).toLocaleDateString(
                         "pt-BR",
                         {
                           timeZone: "UTC",
@@ -64,7 +77,7 @@ const Listagem = () => {
                       )}
                     </span>
                     <span>
-                      {(item?.valor / 100).toLocaleString("pt-BR", {
+                      {(cobranca?.valor / 100).toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       })}
@@ -73,22 +86,25 @@ const Listagem = () => {
                       <span
                         className={`
                     ${estilos.status}
-                    ${item.status === "paga" && estilos.statusVerde}
-                    ${item.status === "vencida" && estilos.statusVermelho}
-                    ${item.status === "pendente" && estilos.statusAmarelo}
+                    ${cobranca.status === "paga" && estilos.statusVerde}
+                    ${cobranca.status === "vencida" && estilos.statusVermelho}
+                    ${cobranca.status === "pendente" && estilos.statusAmarelo}
                     `}
                       >
-                        {item.status}
+                        {cobranca.status}
                       </span>
                     </span>
                     <div className="flex items-center gap-2">
                       <div className={`flex-1 ${estilos.descricao}`}>
-                        {item.descricao}
+                        {cobranca.descricao}
                       </div>
                       <div
                         className={`flex items-center gap-1 ${estilos.icones}`}
                       >
-                        <span className={`flex-column items-center`}>
+                        <span
+                          className={`flex-column items-center`}
+                          onClick={() => editarCobranca(cobranca)}
+                        >
                           <img src={editarCobrancaIcone} alt="editar" />
                           <span>Editar</span>
                         </span>
@@ -105,6 +121,15 @@ const Listagem = () => {
           </div>
         </>
       )}
+
+      <Modal modal={modal} handleModal={setModal}>
+        <FormularioCobrancas
+          setModal={setModal}
+          verbo="PUT"
+          cobranca={currentCobranca}
+          cliente={cliente}
+        />
+      </Modal>
     </>
   );
 };
