@@ -1,45 +1,59 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import validacao from "./validacao";
-
-import estilos from "./estilos.module.css";
-
-import checkboxMarcado from "@/assets/icones/checkbox-marcado.svg";
 import checkboxDesmarcado from "@/assets/icones/checkbox-desmarcado.svg";
+import checkboxMarcado from "@/assets/icones/checkbox-marcado.svg";
+import fetcher from "@/constantes/fetcher";
+import notify from "@/constantes/notify";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useState, useContext } from "react";
+import { useForm } from "react-hook-form";
+import estilos from "./estilos.module.css";
+import validacao from "./validacao";
+import defaultValues from "./defaultValues";
+import CobrancasContext from "contextos/CobrancasContext";
 
-const FormularioCobrancas = ({
-  form = {},
-  setForm,
-  cliente,
-  clienteID,
-  cobrancaID,
-  carregando,
-  setModal,
-}) => {
+const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
+  const { cobrancasCLiente, setCobrancasCLiente } =
+    useContext(CobrancasContext);
   const [paga, setPaga] = useState(true);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validacao),
+    defaultValues: defaultValues(cobranca),
   });
 
-  useEffect(() => {
-    if (form.paga !== undefined) {
-      setPaga(form.paga);
-    }
-  }, []);
-
   async function onSubmit(data) {
-    data.paga = paga;
-    data.valor = Number(data.valor);
-    data.cliente_id = clienteID;
-    // console.log(data);
+    setLoading(true);
 
-    if (form && setForm) {
-      setForm(data);
+    data.cliente_id = cliente.id;
+    data.paga = paga;
+
+    console.log(data);
+
+    try {
+      let response;
+
+      if (verbo === "POST") {
+        response = await fetcher("cobrancas", "POST", data);
+      } else {
+        response = await fetcher("cobrancas", "PUT", data);
+      }
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw responseData;
+      }
+
+      setCobrancasCLiente([...cobrancasCLiente, responseData]);
+      console.log(responseData);
+      notify.sucesso("Cobrança cadastrada com sucesso");
+      setModal(false);
+    } catch (error) {
+      setLoading(false);
+      notify.erro(error.message);
     }
   }
 
@@ -51,7 +65,7 @@ const FormularioCobrancas = ({
           <input
             id="nome"
             {...register("nome")}
-            defaultValue={form?.nome || cliente?.nome || cliente}
+            defaultValue={cliente?.nome}
             readOnly
           />
         </div>
@@ -59,7 +73,7 @@ const FormularioCobrancas = ({
         <div className="mb-1">
           <label htmlFor="descricao">Descrição*</label>
           <textarea
-            defaultValue={form?.descricao}
+            defaultValue={cobranca?.descricao}
             rows="4"
             wrap="hard"
             id="descricao"
@@ -75,7 +89,7 @@ const FormularioCobrancas = ({
           <div>
             <label htmlFor="data_vencimento">Vencimento*</label>
             <input
-              defaultValue={form?.data_vencimento}
+              defaultValue={cobranca?.data_vencimento}
               type="date"
               id="data_vencimento"
               {...register("data_vencimento")}
@@ -89,7 +103,7 @@ const FormularioCobrancas = ({
           <div>
             <label htmlFor="valor">Valor*</label>
             <input
-              defaultValue={form?.valor}
+              defaultValue={cobranca?.valor}
               type="number"
               step="0.010"
               min="0"
@@ -151,12 +165,10 @@ const FormularioCobrancas = ({
             Cancelar
           </button>
           <button
-            className={`btn-primario flex-1 ${
-              carregando && "btn-desabilitado"
-            }`}
+            className={`btn-primario flex-1 ${loading && "btn-desabilitado"}`}
             type="submit"
           >
-            {carregando ? "Carregando" : "Aplicar"}
+            {loading ? "Carregando" : "Aplicar"}
           </button>
         </div>
       </form>
