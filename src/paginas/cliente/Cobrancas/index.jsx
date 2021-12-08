@@ -28,11 +28,6 @@ const Cobrancas = () => {
       </section>
 
       <Modal modal={modal} handleModal={setModal}>
-        <div className="flex gap-1 items-center mb-2">
-          <ClientesIcone tamanho={2} />
-          <h3>Cadastro de cobrança</h3>
-        </div>
-
         <FormularioCobrancas
           setModal={setModal}
           cliente={cliente}
