@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import estilos from "./estilos.module.css";
 import CobrancasIcone from "@/assets/icones/cobrancas";
 import lupaIcone from "@/assets/icones/lupa.svg";

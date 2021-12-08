@@ -9,7 +9,7 @@ const sucesso = (mensagem = "Mensagem de sucesso") => {
       background: "#c3d4fe",
       color: "#243F80",
     },
-  });
+  }).showToast();
 };
 
 const erro = (mensagem = "Mensagem de erro") => {
@@ -21,7 +21,7 @@ const erro = (mensagem = "Mensagem de erro") => {
       background: "#F48C8C",
       color: "#AE1100",
     },
-  });
+  }).showToast();
 };
 
 export default { sucesso, erro };
