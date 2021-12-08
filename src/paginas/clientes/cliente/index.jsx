@@ -1,44 +1,24 @@
 import ClientesIcone from "@/assets/icones/clientes";
 import editarClienteIcone from "@/assets/icones/editar-cliente.svg";
-import Alerta from "@/componentes/Alerta";
 import Modal from "@/componentes/Modal";
-import fetcher from "@/constantes/fetcher";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import estilos from "./estilos.module.css";
 import Formulario from "../Formulario";
-import FormularioCobrancas from "@/componentes/FormularioCobrancas";
+import buscaCliente from "./buscaCliente";
 import CobrancasSecao from "./Cobrancas";
+import estilos from "./estilos.module.css";
 
 const Cliente = () => {
   const { id: clienteID } = useParams();
   const [cliente, setCliente] = useState({});
-  const [alerta, setAlerta] = useState(false);
+
   const [modal, setModal] = useState(false);
-  const [modalCobranca, setModalCobranca] = useState(false);
-  const [carregandoCobranca, setCarregandoCobranca] = useState();
-  const [formCobranca, setFormCobranca] = useState(null);
-  const [alertaCobranca, setAlertaCobranca] = useState(false);
 
   useEffect(() => {
-    async function fetchCliente() {
-      setCliente(await buscaCliente());
-    }
-
-    fetchCliente();
+    (async function () {
+      setCliente(await buscaCliente(clienteID));
+    })();
   }, []);
-
-  async function buscaCliente() {
-    try {
-      const response = await fetcher(`clientes/${clienteID}`);
-
-      const data = await response.json();
-
-      return data;
-    } catch (error) {
-      alert(error.message);
-    }
-  }
 
   return (
     <>
@@ -120,19 +100,11 @@ const Cliente = () => {
 
         <Formulario
           setModal={setModal}
-          setAlerta={setAlerta}
           setCliente={setCliente}
           cliente={cliente}
           verbo="PUT"
         />
       </Modal>
-
-      {alerta && (
-        <Alerta
-          mensagem="Edições do cadastro conluídas com sucesso"
-          handleAlerta={setAlerta}
-        />
-      )}
     </>
   );
 };

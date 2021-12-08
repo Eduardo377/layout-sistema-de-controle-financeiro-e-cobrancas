@@ -10,7 +10,7 @@ const Modal = ({ children, modal, handleModal }) => {
   return (
     <>
       {modal && (
-        <div className={`${estilos.modal}`} onClick={fechaModal}>
+        <div className={`${estilos.modal}`}>
           <div
             className={`${estilos.modalContainer} scale-in-center`}
             onClick={(event) => event.stopPropagation()}

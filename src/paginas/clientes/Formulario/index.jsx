@@ -1,14 +1,14 @@
 import fetcher from "@/constantes/fetcher";
 import { yupResolver } from "@hookform/resolvers/yup";
+import notify from "constantes/notify";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
 import estilos from "./estilos.module.css";
 import validacao from "./validacao";
-import { useParams } from "react-router";
 
 const Formulario = ({
   setModal,
-  setAlerta,
   setClientes,
   clientes,
   setCliente,
@@ -47,12 +47,13 @@ const Formulario = ({
 
       if (verbo === "POST") {
         setClientes([...clientes, responseData[0]]);
+        notify.sucesso("Cadastro concluído com sucesso").showToast();
       } else {
         setCliente({ id: clienteID, ...data });
+        notify.sucesso("Edições do cadastro conluídas com sucesso").showToast();
       }
 
       setModal(false);
-      setAlerta(true);
     } catch (error) {
       if (error.field === "email") {
         setErroEmailExiste(true);

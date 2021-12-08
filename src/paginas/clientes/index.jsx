@@ -1,54 +1,38 @@
+import ClientesIcone from "@/assets/icones/clientes";
+import criarCorancaIcone from "@/assets/icones/criar-cobranca.svg";
+import filtroIcone from "@/assets/icones/filtro.svg";
+import lupaIcone from "@/assets/icones/lupa.svg";
+import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
+import FormularioCobrancas from "@/componentes/FormularioCobrancas";
+import Modal from "@/componentes/Modal";
+import fetcher from "@/constantes/fetcher";
+import notify from "constantes/notify";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-import fetcher from "@/constantes/fetcher";
-
 import estilos from "./estilos.module.css";
-
-import Alerta from "@/componentes/Alerta";
-
-import ClientesIcone from "@/assets/icones/clientes";
-import lupaIcone from "@/assets/icones/lupa.svg";
-
-import Modal from "@/componentes/Modal";
 import Formulario from "./Formulario";
-import FormularioCobrancas from "@/componentes/FormularioCobrancas";
-
-import criarCorancaIcone from "@/assets/icones/criar-cobranca.svg";
-import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
-import filtroIcone from "@/assets/icones/filtro.svg";
+import buscaClientes from "./buscaClientes";
 
 const Clientes = () => {
   const [modal, setModal] = useState(false);
   const [modalCobranca, setModalCobranca] = useState(false);
   const [formCobranca, setFormCobranca] = useState(null);
   const [carregandoCobranca, setCarregandoCobranca] = useState(false);
-  const [alerta, setAlerta] = useState(false);
-  const [alertaCobranca, setAlertaCobranca] = useState(false);
   const [clientes, setClientes] = useState([]);
   const [cliente, setCliente] = useState("");
   const [clienteID, setClienteID] = useState(null);
 
-  useEffect(async () => {
-    setClientes(await buscaClientes());
+  useEffect(() => {
+    (async function () {
+      setClientes(await buscaClientes());
+    })();
   }, []);
-
-  async function buscaClientes() {
-    try {
-      const response = await fetcher("clientes");
-
-      const data = await response.json();
-
-      return data;
-    } catch (error) {
-      alert(error.message);
-    }
-  }
 
   useEffect(() => {
     if (formCobranca) {
       cadastrarCobranca();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formCobranca]);
 
   function criarCobranca(clienteID, cliente) {
@@ -70,12 +54,11 @@ const Clientes = () => {
         return;
       }
 
-      setAlertaCobranca(true);
+      notify.sucesso("Cobrança cadastrada com sucesso").showToast();
       setModalCobranca(false);
-      setCarregandoCobranca(false);
     } catch (error) {
       setCarregandoCobranca(false);
-      alert(error.message);
+      notify.erro(error.message).showToast();
     }
   }
 
@@ -162,7 +145,6 @@ const Clientes = () => {
 
         <Formulario
           setModal={setModal}
-          setAlerta={setAlerta}
           setClientes={setClientes}
           clientes={clientes}
           verbo="POST"
@@ -183,20 +165,6 @@ const Clientes = () => {
           setForm={setFormCobranca}
         />
       </Modal>
-
-      {alerta && (
-        <Alerta
-          mensagem="Cadastro concluído com sucesso"
-          handleAlerta={setAlerta}
-        />
-      )}
-
-      {alertaCobranca && (
-        <Alerta
-          mensagem="Cobrança cadastrada com sucesso"
-          handleAlerta={setAlertaCobranca}
-        />
-      )}
     </>
   );
 };

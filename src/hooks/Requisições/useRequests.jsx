@@ -12,14 +12,13 @@ const useRequests = () => {
       });
 
       const dados = await response.json();
-
       if (!response.ok) {
         throw new Error(dados.message);
       }
 
-      return response.ok;
+      return response.status;
     } catch (error) {
-      window.alert(error);
+      return error.message;
     }
   };
 
@@ -43,9 +42,9 @@ const useRequests = () => {
         throw new Error(dados.message);
       }
 
-      return response.ok;
+      return response.status;
     } catch (error) {
-      window.alert(error);
+      return error.message;
     }
   };
 
@@ -66,10 +65,9 @@ const useRequests = () => {
       if (!response.ok) {
         throw new Error(dados.message);
       }
-      const { token } = dados;
-      return token;
+      return dados;
     } catch (error) {
-      window.alert(error);
+      return error.message;
     }
   };
 

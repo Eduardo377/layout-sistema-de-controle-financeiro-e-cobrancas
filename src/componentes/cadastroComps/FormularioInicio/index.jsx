@@ -7,38 +7,43 @@ import useAuth from "../../../hooks/Autenticação/useAuth";
 
 const FormularioInicio = () => {
   const [inputs, setInputs] = useState({ nome: "", email: "" });
-  const [erro, setErro] = useState(false);
   const navigate = useNavigate();
+  const [erroNome, setErroNome] = useState(false);
+  const [erroEmail, setErroEmail] = useState(false);
+  const [mensagemErro, setMensagemErro] = useState("");
   const { buscarEmail } = useRequests();
   const { setEtapaCadastro, dadosCadastro, setDadosCadastro } = useAuth();
 
   useEffect(() => {
-    if (!inputs.nome || !inputs.email) {
-      return setErro(true);
+    if (inputs.nome) {
+      setErroNome(false);
     }
-    setErro(false);
+    if (inputs.email) {
+      setErroEmail(false);
+    }
+    setMensagemErro("");
   }, [inputs]);
-
-  useEffect(() => {
-    setErro(false);
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!inputs.nome || !inputs.email) {
-      return window.alert(
-        "ERRO: PREENCHA OS CAMPOS OBRIGATÓRIOS DO FORMULÁRIO"
-      );
+    if (!inputs.nome) {
+      return setErroNome(true);
     }
-    // const dados = { ...inputs };
-    const response = await buscarEmail({ ...inputs });
-    if (response) {
+
+    if (!inputs.email) {
+      setErroEmail(true);
+    }
+
+    const response = await buscarEmail({ ...inputs }, setMensagemErro);
+    if (response === 200) {
       const { nome, email } = inputs;
       setDadosCadastro({ ...dadosCadastro, nome, email });
       setEtapaCadastro(2);
       return navigate("/cadastro/senha");
     }
+    setErroEmail(true);
+    return setMensagemErro(response);
   };
 
   const inputOnchange = (target) => {
@@ -54,7 +59,7 @@ const FormularioInicio = () => {
       <label className={`${estilos.label} flex-column`}>
         Nome*
         <input
-          className={`${estilos.input} ${erro ? estilos.erro : ""}`}
+          className={`${estilos.input} ${erroNome ? estilos.erro : ""}`}
           type="text"
           name="nome"
           style={{ marginBottom: "1rem" }}
@@ -63,13 +68,13 @@ const FormularioInicio = () => {
           placeholder="Digite seu nome"
         />
       </label>
-      {!inputs.nome && erro && (
+      {erroNome && (
         <span className={estilos.span}>*Este campo deve ser preenchido</span>
       )}
       <label className={`${estilos.label} flex-column`}>
         E-mail*
         <input
-          className={`${estilos.input} ${erro ? estilos.erro : ""}`}
+          className={`${estilos.input} ${erroEmail ? estilos.erro : ""}`}
           type="email"
           name="email"
           style={{ marginBottom: "1rem" }}
@@ -78,9 +83,7 @@ const FormularioInicio = () => {
           placeholder="Digite seu e-mail"
         />
       </label>
-      {!inputs.email && erro && (
-        <span className={estilos.span}>*Este campo deve ser preenchido</span>
-      )}
+      {mensagemErro && <span className={estilos.span}>{mensagemErro}</span>}
       <button className={`${estilos.button} btn-primario`} type="submit">
         Continuar
       </button>
