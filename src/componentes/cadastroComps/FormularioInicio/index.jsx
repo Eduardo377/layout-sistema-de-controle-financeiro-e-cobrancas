@@ -28,7 +28,7 @@ const FormularioInicio = () => {
     e.preventDefault();
 
     if (!inputs.nome) {
-      setErroNome(true);
+      return setErroNome(true);
     }
 
     if (!inputs.email) {
