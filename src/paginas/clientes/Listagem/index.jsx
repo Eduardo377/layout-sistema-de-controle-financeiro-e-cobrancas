@@ -19,7 +19,6 @@ const Listagem = () => {
   function cadastrarCobranca(cliente) {
     setModal(true);
     setCurrentCliente(cliente);
-    console.log(cliente);
   }
 
   if (loadingClientes) {
@@ -74,11 +73,6 @@ const Listagem = () => {
       )}
 
       <Modal modal={modal} handleModal={setModal}>
-        <div className="flex gap-1 items-center mb-2">
-          <ClientesIcone tamanho={2} />
-          <h3>Cadastro de cobrança</h3>
-        </div>
-
         <FormularioCobrancas
           setModal={setModal}
           cliente={currentCliente}
