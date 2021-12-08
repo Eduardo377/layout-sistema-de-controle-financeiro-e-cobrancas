@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import fetcher from "@/constantes/fetcher";
 import { useParams } from "react-router";
 import estilos from "./estilos.module.css";
@@ -6,11 +6,34 @@ import estilos from "./estilos.module.css";
 import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
 import editarCobrancaIcone from "@/assets/icones/editar.svg";
 import excluirCobrancaIcone from "@/assets/icones/excluir.svg";
+import buscaCobrancasCliente from "./buscaCobrancasCliente";
+import CobrancasContext from "contextos/CobrancasContext";
 
-const Listagem = ({ cliente, setFormCobranca, formCobranca, cobrancas }) => {
+const Listagem = () => {
+  const { id: clienteID } = useParams();
+  const {
+    cobrancasCLiente,
+    setCobrancasCLiente,
+    loadingCobrancasCLiente,
+    setLoadingCobrancasCLiente,
+  } = useContext(CobrancasContext);
+
+  useEffect(() => {
+    (async function () {
+      buscaCobrancasCliente(clienteID).then((res) => {
+        setCobrancasCLiente(res);
+        setLoadingCobrancasCLiente(false);
+      });
+    })();
+  }, [cobrancasCLiente]);
+
+  if (loadingCobrancasCLiente) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <>
-      {cobrancas.length > 0 && (
+      {cobrancasCLiente.length > 0 && (
         <>
           <div className={`${estilos.listaHeader}`}>
             <span className="flex items-center gap-1">
@@ -28,7 +51,7 @@ const Listagem = ({ cliente, setFormCobranca, formCobranca, cobrancas }) => {
 
           <div className={`${estilos.listaBody}`}>
             <ul>
-              {cobrancas.map((item) => {
+              {cobrancasCLiente.map((item) => {
                 return (
                   <li key={item.id}>
                     <span>{item?.id}</span>
@@ -49,7 +72,7 @@ const Listagem = ({ cliente, setFormCobranca, formCobranca, cobrancas }) => {
                     <span>
                       <span
                         className={`
-                    ${estilos.status} 
+                    ${estilos.status}
                     ${item.status === "paga" && estilos.statusVerde}
                     ${item.status === "vencida" && estilos.statusVermelho}
                     ${item.status === "pendente" && estilos.statusAmarelo}
