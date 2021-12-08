@@ -3,12 +3,13 @@ import checkboxMarcado from "@/assets/icones/checkbox-marcado.svg";
 import fetcher from "@/constantes/fetcher";
 import notify from "@/constantes/notify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import estilos from "./estilos.module.css";
 import validacao from "./validacao";
 import defaultValues from "./defaultValues";
 import CobrancasContext from "contextos/CobrancasContext";
+import CobrancasIcone from "@/assets/icones/cobrancas";
 
 const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
   const { cobrancasCLiente, setCobrancasCLiente } =
@@ -24,13 +25,20 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
     defaultValues: defaultValues(cobranca),
   });
 
+  useEffect(() => {
+    if (verbo === "PUT") {
+      return setPaga(cobranca.paga);
+    }
+    setPaga(true);
+  }, []);
+
   async function onSubmit(data) {
     setLoading(true);
 
     data.cliente_id = cliente.id;
     data.paga = paga;
 
-    console.log(data);
+    data.data_vencimento = data.data_vencimento.substring(0, 10);
 
     try {
       let response;
@@ -38,6 +46,9 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
       if (verbo === "POST") {
         response = await fetcher("cobrancas", "POST", data);
       } else {
+        console.log(data);
+        setLoading(false);
+        return;
         response = await fetcher("cobrancas", "PUT", data);
       }
 
@@ -59,6 +70,10 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
 
   return (
     <>
+      <div className="flex gap-1 items-center mb-2">
+        <CobrancasIcone tamanho={2} />
+        <h3>{verbo === "POST" ? "Cadastro" : "Edição"} de cobrança</h3>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-1">
           <label htmlFor="nome">Nome*</label>
@@ -89,7 +104,10 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
           <div>
             <label htmlFor="data_vencimento">Vencimento*</label>
             <input
-              defaultValue={cobranca?.data_vencimento}
+              value={
+                cobranca.data_vencimento &&
+                cobranca.data_vencimento.substring(0, 10)
+              }
               type="date"
               id="data_vencimento"
               {...register("data_vencimento")}
@@ -121,13 +139,6 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
             className={`${estilos.inputRadio} flex items-center gap-1`}
             onClick={() => setPaga(true)}
           >
-            {/* <input
-              checked={form && form.paga}
-              name="status"
-              type="radio"
-              value={true}
-              {...register("paga")}
-            /> */}
             {paga ? (
               <img src={checkboxMarcado} alt="marcado" />
             ) : (
@@ -140,13 +151,6 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
             className={`${estilos.inputRadio} flex items-center gap-1`}
             onClick={() => setPaga(false)}
           >
-            {/* <input
-              checked={form && !form.paga}
-              name="status"
-              type="radio"
-              value={false}
-              {...register("paga")}
-            /> */}
             {!paga ? (
               <img src={checkboxMarcado} alt="marcado" />
             ) : (
