@@ -1,12 +1,14 @@
 import Modal from "@/componentes/Modal";
 import fetcher from "@/constantes/fetcher";
 import useAuth from "@/hooks/Autenticação/useAuth";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import estilos from "./estilos.module.css";
 import Formulario from "./Formulario";
 import MenuLateral from "./MenuLateral";
 import MenuTopo from "./MenuTopo";
+import { UsuarioContextProvider } from "@/contextos/UsuarioContext";
+import notify from "constantes/notify";
 
 const Padrao = ({ tituloDaRota }) => {
   const [usuario, setUsuario] = useState({});
@@ -40,7 +42,7 @@ const Padrao = ({ tituloDaRota }) => {
   }, []);
 
   return (
-    <>
+    <UsuarioContextProvider>
       <div className={`${estilos.layout}`}>
         <MenuLateral />
 
@@ -67,7 +69,7 @@ const Padrao = ({ tituloDaRota }) => {
           setModal={setModal}
         />
       </Modal>
-    </>
+    </UsuarioContextProvider>
   );
 };
 
