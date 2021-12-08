@@ -1,4 +1,4 @@
-import Routes from "./rotas";
+import Routes from "@/rotas";
 
 import "./estilos/resetaEstilos.css";
 import "toastify-js/src/toastify.css";
