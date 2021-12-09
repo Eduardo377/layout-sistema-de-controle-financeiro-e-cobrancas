@@ -52,7 +52,6 @@ const Cobrancas = ({ setTituloDaRota }) => {
             <CobrancasIcone tamanho={2} />
             <h2>Cobrancas</h2>
           </div>
-
           <div className={`flex  gap-1`}>
             <div
               className={`${estilos.filtro} flex items-center justify-center`}
