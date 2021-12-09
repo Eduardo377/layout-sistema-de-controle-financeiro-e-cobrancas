@@ -80,7 +80,7 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
           <input
             id="nome"
             {...register("nome")}
-            defaultValue={cliente?.nome}
+            defaultValue={cliente?.nome || cliente}
             readOnly
           />
         </div>

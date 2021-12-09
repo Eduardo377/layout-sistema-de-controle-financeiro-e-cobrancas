@@ -1,6 +1,6 @@
 import React from "react";
-import fetcher from "constantes/fetcher";
-import notify from "constantes/notify";
+import fetcher from "@/constantes/fetcher";
+import notify from "@/constantes/notify";
 import { Outlet } from "react-router";
 
 const CobrancasContext = React.createContext([]);
@@ -16,7 +16,7 @@ const CobrancasContextProvider = () => {
   React.useEffect(() => {
     (async function () {
       try {
-        cobrancas(await buscaCobrancas());
+        setCobrancas(await buscaCobrancas());
 
         setLoadingCobrancas(false);
       } catch (error) {
@@ -51,7 +51,7 @@ async function buscaCobrancas() {
 
     return data;
   } catch (error) {
-    notify.erro(error.message).showToast();
+    notify.erro(error.message);
   }
 }
 
