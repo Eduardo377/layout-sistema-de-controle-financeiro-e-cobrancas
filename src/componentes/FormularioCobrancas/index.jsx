@@ -35,7 +35,6 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
   async function onSubmit(data) {
     setLoading(true);
 
-    data.cliente_id = cliente.id;
     data.paga = paga;
 
     data.data_vencimento = data.data_vencimento.substring(0, 10);
@@ -44,6 +43,7 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
       let response;
 
       if (verbo === "POST") {
+        data.cliente_id = cliente.id;
         response = await fetcher("cobrancas", "POST", data);
       } else {
         console.log(data);
