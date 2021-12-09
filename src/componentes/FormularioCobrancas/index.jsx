@@ -88,7 +88,6 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
         <div className="mb-1">
           <label htmlFor="descricao">Descrição*</label>
           <textarea
-            defaultValue={cobranca?.descricao}
             rows="4"
             wrap="hard"
             id="descricao"
@@ -121,7 +120,6 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
           <div>
             <label htmlFor="valor">Valor*</label>
             <input
-              defaultValue={cobranca?.valor}
               type="number"
               step="0.010"
               min="0"
