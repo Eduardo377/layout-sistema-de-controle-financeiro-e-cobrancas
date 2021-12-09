@@ -10,13 +10,14 @@ import Modal from "@/componentes/Modal";
 import CobrancasContext from "@/contextos/CobrancasContext";
 import { useContext, useEffect, useState } from "react";
 import estilos from "./estilos.module.css";
+import fetcher from "@/constantes/fetcher";
+import notify from "@/constantes/notify";
 
 const Cobrancas = ({ setTituloDaRota }) => {
   const { cobrancas, setCobrancas } = useContext(CobrancasContext);
   const [modalExcluir, setModalExcluir] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
   const [inputBusca, setInputBusca] = useState("");
-
   const [currentCobranca, setCurrentCobranca] = useState({});
 
   const editarCobranca = (cobranca) => {
@@ -30,13 +31,35 @@ const Cobrancas = ({ setTituloDaRota }) => {
     setCurrentCobranca(cobranca);
   };
 
+  async function buscaCobrancas() {
+    try {
+      const response = await fetcher("cobrancas");
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      notify.erro(error.message);
+    }
+  }
+
   useEffect(() => {
     setTituloDaRota("Cobranças");
   }, []);
 
   useEffect(() => {
-    //TODO => busca de cobrança
-  }, []);
+    const buscarCobranca = async () => {
+      if (!inputBusca) return setCobrancas(await buscaCobrancas());
+      setCobrancas(await buscaCobrancas());
+      const novaBusca = cobrancas.filter(
+        (cobranca) =>
+          String(cobranca.id) === inputBusca ||
+          cobranca.nome.toLowerCase().includes(inputBusca.toLowerCase())
+      );
+      setCobrancas([...novaBusca]);
+    };
+    buscarCobranca();
+  }, [inputBusca]);
 
   const escolherEstiloDeStatus = (status) => {
     if (status === "Paga") return estilos.paga;
