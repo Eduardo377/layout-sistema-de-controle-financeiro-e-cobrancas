@@ -1,17 +1,15 @@
-import { useEffect, useState, useContext } from "react";
-import estilos from "./estilos.module.css";
 import CobrancasIcone from "@/assets/icones/cobrancas";
-import lupaIcone from "@/assets/icones/lupa.svg";
-import filtro from "@/assets/icones/filtro.svg";
-import ordenar from "@/assets/icones/ordenar.svg";
 import editar from "@/assets/icones/editar.svg";
 import excluir from "@/assets/icones/excluir.svg";
-import useRequests from "../../hooks/Requisições/useRequests";
-import { useLocalStorage } from "react-use";
-import CobrancasContext from "@/contextos/CobrancasContext";
+import filtro from "@/assets/icones/filtro.svg";
+import lupaIcone from "@/assets/icones/lupa.svg";
+import ordenar from "@/assets/icones/ordenar.svg";
 import ExcluirCobranca from "@/componentes/ExcluirCobranca";
-import Modal from "@/componentes/Modal";
 import FormularioCobrancas from "@/componentes/FormularioCobrancas";
+import Modal from "@/componentes/Modal";
+import CobrancasContext from "@/contextos/CobrancasContext";
+import { useContext, useEffect, useState } from "react";
+import estilos from "./estilos.module.css";
 
 const Cobrancas = ({ setTituloDaRota }) => {
   const { cobrancas, setCobrancas } = useContext(CobrancasContext);
