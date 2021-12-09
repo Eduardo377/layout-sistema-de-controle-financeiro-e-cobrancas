@@ -15,6 +15,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
   const { cobrancas, setCobrancas } = useContext(CobrancasContext);
   const [modalExcluir, setModalExcluir] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
+  const [inputBusca, setInputBusca] = useState("");
 
   const [currentCobranca, setCurrentCobranca] = useState({});
 
@@ -31,6 +32,10 @@ const Cobrancas = ({ setTituloDaRota }) => {
 
   useEffect(() => {
     setTituloDaRota("Cobranças");
+  }, []);
+
+  useEffect(() => {
+    //TODO => busca de cobrança
   }, []);
 
   const escolherEstiloDeStatus = (status) => {
@@ -55,7 +60,12 @@ const Cobrancas = ({ setTituloDaRota }) => {
               <img src={filtro} alt="filtrar" />
             </div>
             <div className={`${estilos.inputContainer}`}>
-              <input type="text" placeholder="Pesquisa" />
+              <input
+                value={inputBusca}
+                onChange={(e) => setInputBusca(e.target.value)}
+                type="text"
+                placeholder="Pesquisa"
+              />
               <img
                 src={lupaIcone}
                 alt="lupa"
