@@ -11,10 +11,12 @@ import excluirCobrancaIcone from "@/assets/icones/excluir.svg";
 import buscaCobrancasCliente from "./buscaCobrancasCliente";
 import CobrancasContext from "@/contextos/CobrancasContext";
 import Modal from "@/componentes/Modal";
-import ClientesContext from "contextos/ClientesContext";
+import ClientesContext from "@/contextos/ClientesContext";
+import ExcluirCobranca from "@/componentes/ExcluirCobranca";
 
 const Listagem = () => {
   const [modal, setModal] = useState(false);
+  const [modalExcluir, setModalExcluir] = useState(false);
   const [currentCobranca, setCurrentCobranca] = useState({});
   const { id: clienteID } = useParams();
   const {
@@ -40,6 +42,12 @@ const Listagem = () => {
 
   const editarCobranca = (cobranca) => {
     setModal(true);
+
+    setCurrentCobranca(cobranca);
+  };
+
+  const excluirCobranca = (cobranca) => {
+    setModalExcluir(true);
 
     setCurrentCobranca(cobranca);
   };
@@ -108,7 +116,11 @@ const Listagem = () => {
                           <img src={editarCobrancaIcone} alt="editar" />
                           <span>Editar</span>
                         </span>
-                        <span className={`flex-column items-center`}>
+
+                        <span
+                          className={`flex-column items-center`}
+                          onClick={() => excluirCobranca(cobranca)}
+                        >
                           <img src={excluirCobrancaIcone} alt="excluir" />
                           <span>Excluir</span>
                         </span>
@@ -128,6 +140,13 @@ const Listagem = () => {
           verbo="PUT"
           cobranca={currentCobranca}
           cliente={cliente}
+        />
+      </Modal>
+
+      <Modal modal={modalExcluir} handleModal={setModalExcluir}>
+        <ExcluirCobranca
+          cobranca={currentCobranca}
+          setModal={setModalExcluir}
         />
       </Modal>
     </>
