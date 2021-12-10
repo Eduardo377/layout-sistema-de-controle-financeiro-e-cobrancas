@@ -39,7 +39,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
 
       return data;
     } catch (error) {
-      notify.erro(error.message);
+      setTimeout(() => notify.erro(error.message), 3000);
     }
   }
 
@@ -47,17 +47,18 @@ const Cobrancas = ({ setTituloDaRota }) => {
     setTituloDaRota("Cobranças");
   }, []);
 
+  const buscarCobranca = async () => {
+    if (!inputBusca) return setCobrancas(await buscaCobrancas());
+    const cobrancasParaFiltrar = await buscaCobrancas();
+    const novaBusca = cobrancasParaFiltrar.filter(
+      (cobranca) =>
+        String(cobranca.id) === inputBusca ||
+        cobranca.nome.toLowerCase().includes(inputBusca.toLowerCase())
+    );
+    return setCobrancas([...novaBusca]);
+  };
+
   useEffect(() => {
-    const buscarCobranca = async () => {
-      if (!inputBusca) return setCobrancas(await buscaCobrancas());
-      setCobrancas(await buscaCobrancas());
-      const novaBusca = cobrancas.filter(
-        (cobranca) =>
-          String(cobranca.id) === inputBusca ||
-          cobranca.nome.toLowerCase().includes(inputBusca.toLowerCase())
-      );
-      setCobrancas([...novaBusca]);
-    };
     buscarCobranca();
   }, [inputBusca]);
 
