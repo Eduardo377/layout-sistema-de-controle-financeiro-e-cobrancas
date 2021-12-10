@@ -1,3 +1,5 @@
+import notify from "../../constantes/notify";
+
 const useRequests = () => {
   const buscarEmail = async (body) => {
     try {
@@ -88,9 +90,33 @@ const useRequests = () => {
         throw new Error(dados.message);
       }
 
+      return notify.sucesso(dados.message);
+    } catch (error) {
+      return error.message;
+    }
+  };
+
+  const excluirUmaCobranca = async (token, id) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_BASE}/cobranca/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const dados = await response.json();
+
+      if (!response.ok) {
+        throw new Error(dados.message);
+      }
+
       return dados;
     } catch (error) {
-      window.alert(error);
+      return notify.erro(error.message);
     }
   };
 
@@ -99,6 +125,7 @@ const useRequests = () => {
     cadastrarUsuario,
     login,
     listarCobrancas,
+    excluirUmaCobranca,
   };
 };
 

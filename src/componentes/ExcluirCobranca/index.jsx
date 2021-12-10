@@ -3,11 +3,17 @@ import fetcher from "@/constantes/fetcher";
 import estilos from "./estilos.module.css";
 import alertaIcone from "@/assets/icones/alerta.svg";
 import notify from "@/constantes/notify";
+import useRequests from "../../hooks/Requisições/useRequests";
+import { useLocalStorage } from "react-use";
 
 // Aguardando enpoint
 const ExcluirCobranca = ({ cobranca, setModal }) => {
+  const [token] = useLocalStorage("token");
+
+  const { excluirUmaCobranca } = useRequests();
   const excluirCobranca = async () => {
-    console.log("ID da cobrança a ser exluida => " + cobranca.id);
+    const requisicaoDeExclusao = await excluirUmaCobranca(token, cobranca.id);
+    setModal(false);
   };
 
   return (
