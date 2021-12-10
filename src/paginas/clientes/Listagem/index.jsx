@@ -17,11 +17,6 @@ const Listagem = ({ pesquisa }) => {
   const [modal, setModal] = useState(false);
   const [currentCliente, setCurrentCliente] = useState({});
   const [ordenado, setOrdenado] = useState(true);
-  const [cloneClientes, setCloneClientes] = useState([]);
-
-  useEffect(() => {
-    clientes.map((cliente) => (cliente.show = true));
-  }, [clientes]);
 
   function cadastrarCobranca(cliente) {
     setModal(true);

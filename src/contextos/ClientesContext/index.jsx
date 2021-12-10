@@ -48,6 +48,8 @@ async function buscaClientes() {
 
     const data = await response.json();
 
+    data.map((cliente) => (cliente.show = true));
+
     return data;
   } catch (error) {
     notify.erro(error.message).showToast();
