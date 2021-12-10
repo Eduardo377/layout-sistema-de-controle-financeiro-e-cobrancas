@@ -52,6 +52,10 @@
   padding-bottom: 1rem;
 }
 
+.listagemHeader span:first-of-type {
+  cursor: pointer;
+}
+
 .listagemBody {
   list-style: none;
 }
