@@ -61,6 +61,10 @@ const Cobrancas = ({ setTituloDaRota }) => {
   };
 
   useEffect(() => {
+    buscaCobrancas().then(resposta => setCobrancas(resposta))
+  }, [modalExcluir]);
+
+  useEffect(() => {
     buscarCobranca();
   }, [inputBusca]);
 
