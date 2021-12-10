@@ -101,11 +101,11 @@ const Cobrancas = ({ setTituloDaRota }) => {
         <main className={`${estilos.main}`}>
           <div className={`${estilos.headerContainer} flex items-center`}>
             <span className={`${estilos.headerItem} flex items-center ordenar`}>
-              <img src={ordenar} alt="ordenar" />
+              <img style={{ cursor: "pointer" }} src={ordenar} alt="ordenar" />
               Cliente
             </span>
             <span className={`${estilos.headerItem} flex items-center ordenar`}>
-              <img src={ordenar} alt="ordenar" />
+              <img style={{ cursor: "pointer" }} src={ordenar} alt="ordenar" />
               ID Cob.
             </span>
             <span className={`${estilos.headerItem}`}>Valor</span>
