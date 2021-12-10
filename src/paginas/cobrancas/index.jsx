@@ -19,6 +19,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
   const [modalEditar, setModalEditar] = useState(false);
   const [inputBusca, setInputBusca] = useState("");
   const [currentCobranca, setCurrentCobranca] = useState({});
+  const [ordenacao, setOrdenacao] = useState(true);
 
   const editarCobranca = (cobranca) => {
     setModalEditar(true);
@@ -68,6 +69,33 @@ const Cobrancas = ({ setTituloDaRota }) => {
     return estilos.vencida;
   };
 
+  const ordenarCobrancas = (ordemPor) => {
+    const cloneCobrancas = [...cobrancas];
+    setOrdenacao(!ordenacao);
+    if (ordemPor === "id") {
+      if (ordenacao) {
+        return setCobrancas(cloneCobrancas.sort((a, b) => a.id - b.id));
+      }
+      return setCobrancas(cloneCobrancas.sort((a, b) => b.id - a.id));
+    }
+    if (ordenacao) {
+      return setCobrancas(
+        cloneCobrancas.sort((a, b) => {
+          if (a.nome < b.nome) return -1;
+          if (a.nome > b.nome) return 1;
+          return 0;
+        })
+      );
+    }
+    return setCobrancas(
+      cloneCobrancas.sort((a, b) => {
+        if (a.nome < b.nome) return 1;
+        if (a.nome > b.nome) return -1;
+        return 0;
+      })
+    );
+  };
+
   return (
     <>
       <div>
@@ -101,11 +129,21 @@ const Cobrancas = ({ setTituloDaRota }) => {
         <main className={`${estilos.main}`}>
           <div className={`${estilos.headerContainer} flex items-center`}>
             <span className={`${estilos.headerItem} flex items-center ordenar`}>
-              <img style={{ cursor: "pointer" }} src={ordenar} alt="ordenar" />
+              <img
+                onClick={() => ordenarCobrancas("nome")}
+                style={{ cursor: "pointer" }}
+                src={ordenar}
+                alt="ordenar"
+              />
               Cliente
             </span>
             <span className={`${estilos.headerItem} flex items-center ordenar`}>
-              <img style={{ cursor: "pointer" }} src={ordenar} alt="ordenar" />
+              <img
+                onClick={() => ordenarCobrancas("id")}
+                style={{ cursor: "pointer" }}
+                src={ordenar}
+                alt="ordenar"
+              />
               ID Cob.
             </span>
             <span className={`${estilos.headerItem}`}>Valor</span>
