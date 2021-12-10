@@ -23,7 +23,7 @@ const CobrancasContextProvider = () => {
         setLoadingCobrancas(false);
       }
     })();
-  }, [cobrancas, cobrancasCLiente]);
+  }, [cobrancasCLiente]);
 
   return (
     <CobrancasContext.Provider

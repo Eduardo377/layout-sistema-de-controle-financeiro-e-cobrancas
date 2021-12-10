@@ -10,12 +10,14 @@ import Modal from "@/componentes/Modal";
 import CobrancasContext from "@/contextos/CobrancasContext";
 import { useContext, useEffect, useState } from "react";
 import estilos from "./estilos.module.css";
+import fetcher from "@/constantes/fetcher";
+import notify from "@/constantes/notify";
 
 const Cobrancas = ({ setTituloDaRota }) => {
   const { cobrancas, setCobrancas } = useContext(CobrancasContext);
   const [modalExcluir, setModalExcluir] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
-
+  const [inputBusca, setInputBusca] = useState("");
   const [currentCobranca, setCurrentCobranca] = useState({});
 
   const editarCobranca = (cobranca) => {
@@ -29,9 +31,36 @@ const Cobrancas = ({ setTituloDaRota }) => {
     setCurrentCobranca(cobranca);
   };
 
+  async function buscaCobrancas() {
+    try {
+      const response = await fetcher("cobrancas");
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      setTimeout(() => notify.erro(error.message), 3000);
+    }
+  }
+
   useEffect(() => {
     setTituloDaRota("Cobranças");
   }, []);
+
+  const buscarCobranca = async () => {
+    if (!inputBusca) return setCobrancas(await buscaCobrancas());
+    const cobrancasParaFiltrar = await buscaCobrancas();
+    const novaBusca = cobrancasParaFiltrar.filter(
+      (cobranca) =>
+        String(cobranca.id) === inputBusca ||
+        cobranca.nome.toLowerCase().includes(inputBusca.toLowerCase())
+    );
+    return setCobrancas([...novaBusca]);
+  };
+
+  useEffect(() => {
+    buscarCobranca();
+  }, [inputBusca]);
 
   const escolherEstiloDeStatus = (status) => {
     if (status === "Paga") return estilos.paga;
@@ -47,7 +76,6 @@ const Cobrancas = ({ setTituloDaRota }) => {
             <CobrancasIcone tamanho={2} />
             <h2>Cobrancas</h2>
           </div>
-
           <div className={`flex  gap-1`}>
             <div
               className={`${estilos.filtro} flex items-center justify-center`}
@@ -55,7 +83,12 @@ const Cobrancas = ({ setTituloDaRota }) => {
               <img src={filtro} alt="filtrar" />
             </div>
             <div className={`${estilos.inputContainer}`}>
-              <input type="text" placeholder="Pesquisa" />
+              <input
+                value={inputBusca}
+                onChange={(e) => setInputBusca(e.target.value)}
+                type="text"
+                placeholder="Pesquisa"
+              />
               <img
                 src={lupaIcone}
                 alt="lupa"
