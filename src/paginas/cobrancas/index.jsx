@@ -2,6 +2,7 @@ import CobrancasIcone from "@/assets/icones/cobrancas";
 import editar from "@/assets/icones/editar.svg";
 import excluir from "@/assets/icones/excluir.svg";
 import filtro from "@/assets/icones/filtro.svg";
+import semResultados from "@/assets/semresultados.png";
 import lupaIcone from "@/assets/icones/lupa.svg";
 import ordenar from "@/assets/icones/ordenar.svg";
 import ExcluirCobranca from "@/componentes/ExcluirCobranca";
@@ -19,6 +20,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
   const [modalEditar, setModalEditar] = useState(false);
   const [inputBusca, setInputBusca] = useState("");
   const [currentCobranca, setCurrentCobranca] = useState({});
+  const [ordenacao, setOrdenacao] = useState(true);
 
   const editarCobranca = (cobranca) => {
     setModalEditar(true);
@@ -68,6 +70,33 @@ const Cobrancas = ({ setTituloDaRota }) => {
     return estilos.vencida;
   };
 
+  const ordenarCobrancas = (ordemPor) => {
+    const cloneCobrancas = [...cobrancas];
+    setOrdenacao(!ordenacao);
+    if (ordemPor === "id") {
+      if (ordenacao) {
+        return setCobrancas(cloneCobrancas.sort((a, b) => a.id - b.id));
+      }
+      return setCobrancas(cloneCobrancas.sort((a, b) => b.id - a.id));
+    }
+    if (ordenacao) {
+      return setCobrancas(
+        cloneCobrancas.sort((a, b) => {
+          if (a.nome < b.nome) return -1;
+          if (a.nome > b.nome) return 1;
+          return 0;
+        })
+      );
+    }
+    return setCobrancas(
+      cloneCobrancas.sort((a, b) => {
+        if (a.nome < b.nome) return 1;
+        if (a.nome > b.nome) return -1;
+        return 0;
+      })
+    );
+  };
+
   return (
     <>
       <div>
@@ -97,24 +126,44 @@ const Cobrancas = ({ setTituloDaRota }) => {
             </div>
           </div>
         </header>
-
-        <main className={`${estilos.main}`}>
-          <div className={`${estilos.headerContainer} flex items-center`}>
-            <span className={`${estilos.headerItem} flex items-center ordenar`}>
-              <img src={ordenar} alt="ordenar" />
-              Cliente
-            </span>
-            <span className={`${estilos.headerItem} flex items-center ordenar`}>
-              <img src={ordenar} alt="ordenar" />
-              ID Cob.
-            </span>
-            <span className={`${estilos.headerItem}`}>Valor</span>
-            <span className={`${estilos.headerItem}`}>Data de Venc.</span>
-            <span className={`${estilos.headerItem}`}>Status</span>
-            <span className={`${estilos.headerItem2}`}>Descrição</span>
-            <span className={`${estilos.headerItem3}`}></span>
-          </div>
-          {cobrancas &&
+        <main
+          className={`${estilos.main} ${
+            !cobrancas.length ? "flex justify-center items-center" : ""
+          }`}
+          style={{ paddingBottom: !cobrancas.length && "2.5rem" }}
+        >
+          {cobrancas.length > 0 && (
+            <div className={`${estilos.headerContainer} flex items-center`}>
+              <span
+                className={`${estilos.headerItem} flex items-center ordenar`}
+              >
+                <img
+                  onClick={() => ordenarCobrancas("id")}
+                  style={{ cursor: "pointer" }}
+                  src={ordenar}
+                  alt="ordenar"
+                />
+                Cliente
+              </span>
+              <span
+                className={`${estilos.headerItem} flex items-center ordenar`}
+              >
+                <img
+                  onClick={() => ordenarCobrancas("id")}
+                  style={{ cursor: "pointer" }}
+                  src={ordenar}
+                  alt="ordenar"
+                />
+                ID Cob.
+              </span>
+              <span className={`${estilos.headerItem}`}>Valor</span>
+              <span className={`${estilos.headerItem}`}>Data de Venc.</span>
+              <span className={`${estilos.headerItem}`}>Status</span>
+              <span className={`${estilos.headerItem2}`}>Descrição</span>
+              <span className={`${estilos.headerItem3}`}></span>
+            </div>
+          )}
+          {cobrancas.length ? (
             cobrancas.map((item, index) => {
               return (
                 <div
@@ -164,7 +213,14 @@ const Cobrancas = ({ setTituloDaRota }) => {
                   </div>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <img
+              style={{ width: "40rem", height: "25rem" }}
+              src={semResultados}
+              alt="sem resultados"
+            />
+          )}
         </main>
       </div>
 
