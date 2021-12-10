@@ -114,9 +114,12 @@ const useRequests = () => {
         throw new Error(dados.message);
       }
 
+      dados.erro = false;
       return dados;
     } catch (error) {
-      return notify.erro(error.message);
+      notify.erro(error.message);
+      error.erro = true;
+      return error;
     }
   };
 

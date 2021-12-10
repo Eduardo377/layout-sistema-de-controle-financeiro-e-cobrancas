@@ -14,6 +14,8 @@ const ExcluirCobranca = ({ cobranca, setModal }) => {
   const excluirCobranca = async () => {
     const requisicaoDeExclusao = await excluirUmaCobranca(token, cobranca.id);
     setModal(false);
+    if (requisicaoDeExclusao.erro) return;
+    notify.sucesso(requisicaoDeExclusao.message);
   };
 
   return (
