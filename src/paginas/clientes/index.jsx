@@ -12,7 +12,7 @@ const Clientes = () => {
   const [modal, setModal] = useState(false);
   const [pesquisa, setPesquisa] = useState("");
 
-  const { clientes, setClientes, setCliente } = useContext(ClientesContext);
+  const { setCliente } = useContext(ClientesContext);
 
   useEffect(() => {
     setCliente({});
