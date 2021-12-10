@@ -8,6 +8,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react/cjs/react.development";
 import estilos from "./estilos.module.css";
+import semResultados from "@/assets/semresultados.png";
 
 const Listagem = ({ pesquisa }) => {
   const { clientes, loadingClientes, setClientes } =
@@ -16,8 +17,11 @@ const Listagem = ({ pesquisa }) => {
   const [modal, setModal] = useState(false);
   const [currentCliente, setCurrentCliente] = useState({});
   const [ordenado, setOrdenado] = useState(true);
+  const [cloneClientes, setCloneClientes] = useState([]);
 
-  useEffect(() => {}, [pesquisa]);
+  useEffect(() => {
+    clientes.map((cliente) => (cliente.show = true));
+  }, [clientes]);
 
   function cadastrarCobranca(cliente) {
     setModal(true);
@@ -41,13 +45,35 @@ const Listagem = ({ pesquisa }) => {
     setOrdenado(!ordenado);
   };
 
-  const pesquisarCliente = (nome) => {
-    nome = nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    if (nome.toLowerCase().includes(pesquisa)) {
-      return false;
-    }
+  useEffect(() => {
+    pesquisarCliente();
+  }, [pesquisa]);
 
-    return true;
+  const pesquisarCliente = () => {
+    clientes.map((cliente) => {
+      const nome = cliente.nome
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+      cliente.show = false;
+
+      if (nome.includes(pesquisa)) {
+        cliente.show = true;
+      }
+    });
+
+    console.log(clientes);
+
+    // nome = nome
+    //   .normalize("NFD")
+    //   .replace(/[\u0300-\u036f]/g, "")
+    //   .toLowerCase();
+
+    // if (nome.includes(pesquisa)) {
+    //   return false;
+    // }
+
+    // return true;
   };
 
   if (loadingClientes) {
@@ -79,9 +105,7 @@ const Listagem = ({ pesquisa }) => {
                 clientes.map((cliente, index) => (
                   <li
                     key={cliente.id || cliente.nome}
-                    className={`${
-                      pesquisa && pesquisarCliente(cliente.nome) && "hidden"
-                    }`}
+                    className={`${!cliente.show && pesquisa && "hidden"}`}
                   >
                     <span>
                       <Link to={`${cliente.id}`}>{cliente.nome}</Link>
@@ -105,6 +129,16 @@ const Listagem = ({ pesquisa }) => {
                   </li>
                 ))}
             </ul>
+
+            {clientes.every((cliente) => cliente.show === false) && pesquisa && (
+              <div className="flex justify-center">
+                <img
+                  src={semResultados}
+                  alt="Nenhum resultado encontrado"
+                  style={{ maxWidth: "40em" }}
+                />
+              </div>
+            )}
           </section>
         </div>
       )}
