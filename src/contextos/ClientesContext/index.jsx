@@ -22,7 +22,7 @@ const ClientesContextProvider = () => {
         setLoadingClientes(false);
       }
     })();
-  }, [clientes, cliente]);
+  }, [cliente]);
 
   return (
     <ClientesContext.Provider
