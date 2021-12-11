@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import CobrancasIcone from "@/assets/icones/cobrancas";
 import editar from "@/assets/icones/editar.svg";
 import excluir from "@/assets/icones/excluir.svg";
@@ -9,19 +10,22 @@ import ExcluirCobranca from "@/componentes/ExcluirCobranca";
 import FormularioCobrancas from "@/componentes/FormularioCobrancas";
 import Modal from "@/componentes/Modal";
 import CobrancasContext from "@/contextos/CobrancasContext";
-import { useContext, useEffect, useState } from "react";
 import estilos from "./estilos.module.css";
 import fetcher from "@/constantes/fetcher";
 import notify from "@/constantes/notify";
+import { useLocalStorage } from "react-use";
+import useRequests from "../../hooks/Requisições/useRequests";
 
 const Cobrancas = ({ setTituloDaRota }) => {
   const { cobrancas, setCobrancas } = useContext(CobrancasContext);
+  const [ordenacao, setOrdenacao] = useState(true);
   const [modalExcluir, setModalExcluir] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
   const [inputBusca, setInputBusca] = useState("");
   const [currentCobranca, setCurrentCobranca] = useState({});
-  const [ordenacao, setOrdenacao] = useState(true);
-  const [tipoOrdem, setTipoOrdem] = useState(1);
+  const [tipoOrdem, setTipoOrdem] = useState(2);
+  const [token] = useLocalStorage("token");
+  const { listarCobrancas } = useRequests();
 
   const editarCobranca = (cobranca) => {
     setModalEditar(true);
@@ -30,44 +34,27 @@ const Cobrancas = ({ setTituloDaRota }) => {
 
   const excluirCobranca = (cobranca) => {
     setModalExcluir(true);
-
     setCurrentCobranca(cobranca);
   };
-
-  async function buscaCobrancas() {
-    try {
-      const response = await fetcher("cobrancas");
-
-      const data = await response.json();
-
-      return data;
-    } catch (error) {
-      setTimeout(() => notify.erro(error.message), 3000);
-    }
-  }
 
   useEffect(() => {
     setTituloDaRota("Cobranças");
   }, []);
 
   const buscarCobranca = async () => {
-    if (!inputBusca) return setCobrancas(await buscaCobrancas());
-    const cobrancasParaFiltrar = await buscaCobrancas();
-    const novaBusca = cobrancasParaFiltrar.filter(
+    const atualizarLista = await listarCobrancas(token);
+    if (!inputBusca) {
+      setCobrancas([...atualizarLista]);
+      manterOrdem();
+    }
+
+    const busca = atualizarLista.filter(
       (cobranca) =>
         String(cobranca.id) === inputBusca ||
         cobranca.nome.toLowerCase().includes(inputBusca.toLowerCase())
     );
-    return setCobrancas([...novaBusca]);
+    return setCobrancas([...busca]);
   };
-
-  useEffect(() => {
-    manterOrdemAposExclusao();
-  }, [modalExcluir]);
-
-  useEffect(() => {
-    buscarCobranca();
-  }, [inputBusca]);
 
   const escolherEstiloDeStatus = (status) => {
     if (status === "Paga") return estilos.paga;
@@ -75,15 +62,17 @@ const Cobrancas = ({ setTituloDaRota }) => {
     return estilos.vencida;
   };
 
-  const manterOrdemAposExclusao = () => {
-    const cloneCobrancas = [...cobrancas];
-    if (tipoOrdem === 1)
-      return setCobrancas(cloneCobrancas.sort((a, b) => b.id - a.id));
-    if (tipoOrdem === 2)
-      return setCobrancas(cloneCobrancas.sort((a, b) => a.id - b.id));
+  const manterOrdem = async () => {
+    const cloneCobrancas = await listarCobrancas(token);
+    if (tipoOrdem === 1) {
+      return setCobrancas([...cloneCobrancas].sort((a, b) => b.id - a.id));
+    }
+    if (tipoOrdem === 2) {
+      return setCobrancas([...cloneCobrancas].sort((a, b) => a.id - b.id));
+    }
     if (tipoOrdem === 3) {
       return setCobrancas(
-        cloneCobrancas.sort((a, b) => {
+        [...cloneCobrancas].sort((a, b) => {
           if (a.nome.toLowerCase() < b.nome.toLowerCase()) return 1;
           if (a.nome.toLowerCase() > b.nome.toLowerCase()) return -1;
           return 0;
@@ -91,7 +80,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
       );
     }
     return setCobrancas(
-      cloneCobrancas.sort((a, b) => {
+      [...cloneCobrancas].sort((a, b) => {
         if (a.nome.toLowerCase() < b.nome.toLowerCase()) return -1;
         if (a.nome.toLowerCase() > b.nome.toLowerCase()) return 1;
         return 0;
@@ -105,30 +94,47 @@ const Cobrancas = ({ setTituloDaRota }) => {
     if (ordemPor === "id") {
       if (ordenacao) {
         setTipoOrdem(1);
-        return setCobrancas(cloneCobrancas.sort((a, b) => b.id - a.id));
+        return setCobrancas([...cloneCobrancas].sort((a, b) => b.id - a.id));
       }
       setTipoOrdem(2);
-      return setCobrancas(cloneCobrancas.sort((a, b) => a.id - b.id));
+      return setCobrancas([...cloneCobrancas].sort((a, b) => a.id - b.id));
     }
     if (ordenacao) {
       setTipoOrdem(3);
-      return setCobrancas(
-        cloneCobrancas.sort((a, b) => {
-          if (a.nome.toLowerCase() < b.nome.toLowerCase()) return 1;
-          if (a.nome.toLowerCase() > b.nome.toLowerCase()) return -1;
-          return 0;
-        })
-      );
+      cloneCobrancas.sort((a, b) => {
+        if (a.nome.toLowerCase() < b.nome.toLowerCase()) return 1;
+        if (a.nome.toLowerCase() > b.nome.toLowerCase()) return -1;
+        return 0;
+      });
+      return setCobrancas([...cloneCobrancas]);
     }
     setTipoOrdem(0);
-    return setCobrancas(
-      cloneCobrancas.sort((a, b) => {
-        if (a.nome.toLowerCase() < b.nome.toLowerCase()) return -1;
-        if (a.nome.toLowerCase() > b.nome.toLowerCase()) return 1;
-        return 0;
-      })
-    );
+    cloneCobrancas.sort((a, b) => {
+      if (a.nome.toLowerCase() < b.nome.toLowerCase()) return -1;
+      if (a.nome.toLowerCase() > b.nome.toLowerCase()) return 1;
+      return 0;
+    });
+    return setCobrancas([...cloneCobrancas]);
   };
+
+  useEffect(() => {
+    buscarCobranca();
+  }, [inputBusca]);
+
+  const delayOrdenacao = () => {
+    const delay = setInterval(() => manterOrdem(), 50);
+    setTimeout(() => clearInterval(delay), 100);
+  };
+
+  useEffect(() => {
+    if (modalExcluir) return;
+    const ordenar = listarCobrancas(token).then((resposta) =>
+      setCobrancas(resposta)
+    );
+    ordenar.then(delayOrdenacao());
+
+    if (inputBusca) return setTimeout(() => buscarCobranca(), 101);
+  }, [modalExcluir]);
 
   return (
     <>

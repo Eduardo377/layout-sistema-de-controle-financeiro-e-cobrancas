@@ -17,7 +17,6 @@ const CobrancasContextProvider = () => {
     (async function () {
       try {
         setCobrancas(await buscaCobrancas());
-
         setLoadingCobrancas(false);
       } catch (error) {
         setLoadingCobrancas(false);
