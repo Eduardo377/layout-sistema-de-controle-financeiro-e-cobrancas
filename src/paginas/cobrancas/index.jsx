@@ -123,7 +123,8 @@ const Cobrancas = ({ setTituloDaRota }) => {
   }, [inputBusca]);
 
   const delayOrdenacao = () => {
-    setInterval(manterOrdem(), 750);
+    const delay = setInterval(() => manterOrdem(), 750);
+    setTimeout(() => clearInterval(delay), 1500);
   };
 
   useEffect(() => {
@@ -131,10 +132,9 @@ const Cobrancas = ({ setTituloDaRota }) => {
     const ordenar = listarCobrancas(token).then((resposta) =>
       setCobrancas(resposta)
     );
-    ordenar.then(() => delayOrdenacao());
-    setTimeout(clearInterval(delayOrdenacao), 1500);
+    ordenar.then(delayOrdenacao());
 
-    if (inputBusca) return setTimeout(() => buscarCobranca(), 1500);
+    if (inputBusca) return setTimeout(() => buscarCobranca(), 1502);
   }, [modalExcluir]);
 
   return (
