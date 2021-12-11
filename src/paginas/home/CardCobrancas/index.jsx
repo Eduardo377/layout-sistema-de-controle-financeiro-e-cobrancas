@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import estilos from "./estilos.module.css";
 import CobrancasContext from "contextos/CobrancasContext";
 import CobrancasIcone from "@/assets/icones/cobrancas";
+import { Link } from "react-router-dom";
 
 const CardCobrancas = ({ status }) => {
   const { cobrancas } = useContext(CobrancasContext);
@@ -74,7 +75,7 @@ const CardCobrancas = ({ status }) => {
 
       {lista.length > 4 && (
         <div className={`text-center ${estilos.footer}`}>
-          <a href="#">Ver todos</a>
+          <Link to={`cobrancas?status=${status}`}>Ver todos</Link>
         </div>
       )}
     </div>
