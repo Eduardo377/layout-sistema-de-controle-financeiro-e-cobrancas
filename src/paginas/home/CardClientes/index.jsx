@@ -4,9 +4,10 @@ import ClientesIcone from "@/assets/icones/clientes";
 import ClientesContext from "contextos/ClientesContext";
 import React, { useContext, useEffect, useState } from "react";
 import estilos from "./estilos.module.css";
+import { Link } from "react-router-dom";
 
 const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
-  const { clientes } = useContext(ClientesContext);
+  const { clientes, setClientes } = useContext(ClientesContext);
 
   const [clientesPorStatus, setClientesPorStatus] = useState([]);
 
@@ -17,8 +18,6 @@ const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
       );
 
       setClientesPorStatus(clientesFiltrado);
-
-      console.log(clientesFiltrado);
     }
   }, [clientes]);
 
@@ -47,7 +46,9 @@ const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
           <ul className={`${estilos.lista}`}>
             {clientesPorStatus.slice(0, 4).map((cliente) => (
               <li key={cliente.id} className={`${estilos.listaItem}`}>
-                <span>{cliente.nome}</span>
+                <span>
+                  <Link to={`/clientes/${cliente.id}`}>{cliente.nome}</Link>
+                </span>
 
                 <span>{cliente.id}</span>
 
@@ -71,7 +72,7 @@ const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
 
       {clientesPorStatus.length > 4 && (
         <div className={`text-center ${estilos.footer}`}>
-          <a href="#">Ver todos</a>
+          <Link to={`clientes?inadimplentes=${status}`}>Ver todos</Link>
         </div>
       )}
     </div>

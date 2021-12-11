@@ -10,6 +10,7 @@ import { useEffect } from "react/cjs/react.development";
 import estilos from "./estilos.module.css";
 import semResultados from "@/assets/semresultados.png";
 import clientesVazioIcone from "@/assets/icones/clientes-vazio.svg";
+import { useSearchParams } from "react-router-dom";
 
 const Listagem = ({ pesquisa }) => {
   const { clientes, loadingClientes, setClientes } =
@@ -18,6 +19,9 @@ const Listagem = ({ pesquisa }) => {
   const [modal, setModal] = useState(false);
   const [currentCliente, setCurrentCliente] = useState({});
   const [ordenado, setOrdenado] = useState(true);
+
+  const [searchParams] = useSearchParams();
+  const ordenaPorInadimplentes = searchParams.get("inadimplentes");
 
   function cadastrarCobranca(cliente) {
     setModal(true);
@@ -42,7 +46,9 @@ const Listagem = ({ pesquisa }) => {
   };
 
   useEffect(() => {
-    pesquisarCliente();
+    if (pesquisa) {
+      pesquisarCliente();
+    }
   }, [pesquisa]);
 
   const pesquisarCliente = () => {
@@ -105,7 +111,15 @@ const Listagem = ({ pesquisa }) => {
                 clientes.map((cliente, index) => (
                   <li
                     key={cliente.id || cliente.nome}
-                    className={`${!cliente.show && pesquisa && "hidden"}`}
+                    className={`
+                    ${!cliente.show && pesquisa && "hidden"}
+                    ${
+                      ordenaPorInadimplentes &&
+                      cliente.inadimplente !==
+                        JSON.parse(ordenaPorInadimplentes) &&
+                      "hidden"
+                    }
+                    `}
                   >
                     <span>
                       <Link to={`${cliente.id}`}>{cliente.nome}</Link>
