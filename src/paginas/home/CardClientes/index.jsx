@@ -1,14 +1,13 @@
-import React, { useContext, useState } from "react";
-import estilos from "./estilos.module.css";
-import ClientesContext from "contextos/ClientesContext";
 import clienteVerde from "@/assets/icones/cliente-verde.svg";
 import clienteVermelho from "@/assets/icones/cliente-vermelho.svg";
-import { useEffect } from "react/cjs/react.development";
+import ClientesIcone from "@/assets/icones/clientes";
+import ClientesContext from "contextos/ClientesContext";
+import React, { useContext, useEffect, useState } from "react";
+import estilos from "./estilos.module.css";
 
 const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
   const { clientes } = useContext(ClientesContext);
-  // const [inadimplentes, setInadimplentes] = useState([])
-  // const [emDia, setEmdia] = useState([])
+
   const [clientesPorStatus, setClientesPorStatus] = useState([]);
 
   useEffect(() => {
@@ -62,6 +61,12 @@ const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
             ))}
           </ul>
         </>
+      )}
+
+      {clientesPorStatus.length === 0 && (
+        <div className="flex justify-center" style={{ padding: "3rem 0" }}>
+          <ClientesIcone tamanho={6} />
+        </div>
       )}
 
       {clientesPorStatus.length > 4 && (
