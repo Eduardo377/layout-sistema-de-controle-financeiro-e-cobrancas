@@ -9,52 +9,6 @@ import cobrancaVermelha from "@/assets/icones/cobranca-vermelha.svg";
 import cobrancaAmarela from "@/assets/icones/cobranca-amarela.svg";
 import CobrancasContext from "contextos/CobrancasContext";
 
-const dadosCobrancas = [
-  {
-    cliente: "Sara Silva",
-    id_cobranca: "223456387",
-    valor: 100000,
-  },
-  {
-    cliente: "Carlos Prado",
-    id_cobranca: "223456387",
-    valor: 40000,
-  },
-  {
-    cliente: "Lara Brito",
-    id_cobranca: "223456387",
-    valor: 90000,
-  },
-  {
-    cliente: "Soraia nexes",
-    id_cobranca: "223456487",
-    valor: 70000,
-  },
-];
-
-const dadosClientes = [
-  {
-    cliente: "Sara Silva",
-    data: "03/02/2021",
-    valor: 50000,
-  },
-  {
-    cliente: "Carlos Prado",
-    data: "03/02/2021",
-    valor: 50000,
-  },
-  {
-    cliente: "Lara Brito",
-    data: "03/02/2021",
-    valor: 50000,
-  },
-  {
-    cliente: "Soraia nexes",
-    data: "03/02/2021",
-    valor: 50000,
-  },
-];
-
 const Home = ({ setTituloDaRota }) => {
   const { cobrancas } = useContext(CobrancasContext);
   const [totalPagas, setTotalPagas] = useState([]);
@@ -145,17 +99,13 @@ const Home = ({ setTituloDaRota }) => {
 
       <section className={`flex gap-2 ${estilos.clientesSecao}`}>
         <CardClientes
-          lista={dadosClientes}
           nome={`Clientes em dia`}
           cor="verde"
-          total="08"
           status={false}
         ></CardClientes>
 
         <CardClientes
-          lista={dadosClientes}
           nome={`Clientes inadimplentes`}
-          total="08"
           cor="vermelho"
           status={true}
         ></CardClientes>
