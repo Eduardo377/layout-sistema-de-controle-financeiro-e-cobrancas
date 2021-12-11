@@ -63,7 +63,6 @@ const Cobrancas = ({ setTituloDaRota }) => {
   };
 
   const manterOrdem = async () => {
-    console.log("tentou ordenar");
     const cloneCobrancas = await listarCobrancas(token);
     if (tipoOrdem === 1) {
       return setCobrancas([...cloneCobrancas].sort((a, b) => b.id - a.id));
@@ -123,8 +122,8 @@ const Cobrancas = ({ setTituloDaRota }) => {
   }, [inputBusca]);
 
   const delayOrdenacao = () => {
-    const delay = setInterval(() => manterOrdem(), 750);
-    setTimeout(() => clearInterval(delay), 1500);
+    const delay = setInterval(() => manterOrdem(), 50);
+    setTimeout(() => clearInterval(delay), 100);
   };
 
   useEffect(() => {
@@ -134,7 +133,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
     );
     ordenar.then(delayOrdenacao());
 
-    if (inputBusca) return setTimeout(() => buscarCobranca(), 1502);
+    if (inputBusca) return setTimeout(() => buscarCobranca(), 101);
   }, [modalExcluir]);
 
   return (
@@ -205,7 +204,6 @@ const Cobrancas = ({ setTituloDaRota }) => {
           )}
           {cobrancas.length ? (
             cobrancas.map((item, index) => {
-              console.log("renderizado");
               return (
                 <div
                   key={index}
