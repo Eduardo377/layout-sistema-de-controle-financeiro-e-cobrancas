@@ -21,6 +21,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
   const [inputBusca, setInputBusca] = useState("");
   const [currentCobranca, setCurrentCobranca] = useState({});
   const [ordenacao, setOrdenacao] = useState(true);
+  const [tipoOrdem, setTipoOrdem] = useState(1);
 
   const editarCobranca = (cobranca) => {
     setModalEditar(true);
@@ -61,7 +62,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
   };
 
   useEffect(() => {
-    buscaCobrancas().then(resposta => setCobrancas(resposta))
+    manterOrdemAposExclusao();
   }, [modalExcluir]);
 
   useEffect(() => {
@@ -74,28 +75,56 @@ const Cobrancas = ({ setTituloDaRota }) => {
     return estilos.vencida;
   };
 
-  const ordenarCobrancas = (ordemPor) => {
+  const manterOrdemAposExclusao = () => {
     const cloneCobrancas = [...cobrancas];
-    setOrdenacao(!ordenacao);
-    if (ordemPor === "id") {
-      if (ordenacao) {
-        return setCobrancas(cloneCobrancas.sort((a, b) => a.id - b.id));
-      }
+    if (tipoOrdem === 1)
       return setCobrancas(cloneCobrancas.sort((a, b) => b.id - a.id));
-    }
-    if (ordenacao) {
+    if (tipoOrdem === 2)
+      return setCobrancas(cloneCobrancas.sort((a, b) => a.id - b.id));
+    if (tipoOrdem === 3) {
       return setCobrancas(
         cloneCobrancas.sort((a, b) => {
-          if (a.nome < b.nome) return -1;
-          if (a.nome > b.nome) return 1;
+          if (a.nome.toLowerCase() < b.nome.toLowerCase()) return 1;
+          if (a.nome.toLowerCase() > b.nome.toLowerCase()) return -1;
           return 0;
         })
       );
     }
     return setCobrancas(
       cloneCobrancas.sort((a, b) => {
-        if (a.nome < b.nome) return 1;
-        if (a.nome > b.nome) return -1;
+        if (a.nome.toLowerCase() < b.nome.toLowerCase()) return -1;
+        if (a.nome.toLowerCase() > b.nome.toLowerCase()) return 1;
+        return 0;
+      })
+    );
+  };
+
+  const ordenarCobrancas = (ordemPor) => {
+    const cloneCobrancas = [...cobrancas];
+    setOrdenacao(!ordenacao);
+    if (ordemPor === "id") {
+      if (ordenacao) {
+        setTipoOrdem(1);
+        return setCobrancas(cloneCobrancas.sort((a, b) => b.id - a.id));
+      }
+      setTipoOrdem(2);
+      return setCobrancas(cloneCobrancas.sort((a, b) => a.id - b.id));
+    }
+    if (ordenacao) {
+      setTipoOrdem(3);
+      return setCobrancas(
+        cloneCobrancas.sort((a, b) => {
+          if (a.nome.toLowerCase() < b.nome.toLowerCase()) return 1;
+          if (a.nome.toLowerCase() > b.nome.toLowerCase()) return -1;
+          return 0;
+        })
+      );
+    }
+    setTipoOrdem(0);
+    return setCobrancas(
+      cloneCobrancas.sort((a, b) => {
+        if (a.nome.toLowerCase() < b.nome.toLowerCase()) return -1;
+        if (a.nome.toLowerCase() > b.nome.toLowerCase()) return 1;
         return 0;
       })
     );
@@ -142,7 +171,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
                 className={`${estilos.headerItem} flex items-center ordenar`}
               >
                 <img
-                  onClick={() => ordenarCobrancas("id")}
+                  onClick={() => ordenarCobrancas("nome")}
                   style={{ cursor: "pointer" }}
                   src={ordenar}
                   alt="ordenar"
