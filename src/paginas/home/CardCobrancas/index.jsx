@@ -67,7 +67,7 @@ const CardCobrancas = ({ status }) => {
       )}
 
       {lista.length === 0 && (
-        <div className="flex justify-center" style={{ marginTop: "5rem" }}>
+        <div className="flex justify-center" style={{ padding: "3rem 0" }}>
           <CobrancasIcone tamanho={6} />
         </div>
       )}

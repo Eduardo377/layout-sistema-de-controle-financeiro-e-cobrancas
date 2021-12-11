@@ -59,7 +59,7 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
       }
 
       setCobrancasCLiente([...cobrancasCLiente, responseData]);
-      console.log(responseData);
+
       notify.sucesso("Cobrança cadastrada com sucesso");
       setModal(false);
     } catch (error) {

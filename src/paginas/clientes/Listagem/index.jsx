@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react/cjs/react.development";
 import estilos from "./estilos.module.css";
 import semResultados from "@/assets/semresultados.png";
+import clientesVazioIcone from "@/assets/icones/clientes-vazio.svg";
 
 const Listagem = ({ pesquisa }) => {
   const { clientes, loadingClientes, setClientes } =
@@ -56,19 +57,6 @@ const Listagem = ({ pesquisa }) => {
         cliente.show = true;
       }
     });
-
-    console.log(clientes);
-
-    // nome = nome
-    //   .normalize("NFD")
-    //   .replace(/[\u0300-\u036f]/g, "")
-    //   .toLowerCase();
-
-    // if (nome.includes(pesquisa)) {
-    //   return false;
-    // }
-
-    // return true;
   };
 
   if (loadingClientes) {
@@ -77,6 +65,23 @@ const Listagem = ({ pesquisa }) => {
 
   return (
     <>
+      {clientes.length === 0 && (
+        <div
+          className="flex justify-center"
+          style={{
+            background: "white",
+            borderRadius: "30px",
+            padding: "5rem 0",
+          }}
+        >
+          <img
+            src={clientesVazioIcone}
+            alt="Nenhum resultado encontrado"
+            style={{ width: "20rem" }}
+          />
+        </div>
+      )}
+
       {clientes.length > 0 && (
         <div className={`${estilos.clientesSecao}`}>
           <section className={`${estilos.listagem}`}>
