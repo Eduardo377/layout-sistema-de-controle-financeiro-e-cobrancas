@@ -105,7 +105,12 @@ const Listagem = ({ pesquisa }) => {
                     <span>
                       <Link to={`${cliente.id}`}>{cliente.nome}</Link>
                     </span>
-                    <span>{cliente.cpf}</span>
+                    <span>
+                      {String(cliente.cpf).replace(
+                        /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                        "$1.$2.$3-$4"
+                      )}
+                    </span>
                     <span>{cliente.email}</span>
                     <span>{cliente.telefone}</span>
                     <span
