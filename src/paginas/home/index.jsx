@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useContext } from "react";
 import CardCobrancas from "./CardCobrancas";
 import CardClientes from "./CardClientes";
 
@@ -7,6 +7,7 @@ import estilos from "./estilos.module.css";
 import cobrancaVerde from "@/assets/icones/cobranca-verde.svg";
 import cobrancaVermelha from "@/assets/icones/cobranca-vermelha.svg";
 import cobrancaAmarela from "@/assets/icones/cobranca-amarela.svg";
+import CobrancasContext from "contextos/CobrancasContext";
 
 const dadosCobrancas = [
   {
@@ -55,9 +56,46 @@ const dadosClientes = [
 ];
 
 const Home = ({ setTituloDaRota }) => {
+  const { cobrancas } = useContext(CobrancasContext);
+  const [totalPagas, setTotalPagas] = useState([]);
+  const [totalVencidas, setTotalVencidas] = useState([]);
+  const [totalPendentes, setTotalPendentes] = useState([]);
+
+  useEffect(() => {
+    const cobrancasPagas = cobrancas.filter((item) => item.paga);
+    const cobrancasVencidas = cobrancas.filter(
+      (item) => item.status.toLowerCase() === "vencida"
+    );
+    const cobrancasPendentes = cobrancas.filter(
+      (item) => item.status.toLowerCase() === "pendente"
+    );
+
+    setTotalPagas(reducerValores(cobrancasPagas));
+    setTotalVencidas(reducerValores(cobrancasVencidas));
+    setTotalPendentes(reducerValores(cobrancasPendentes));
+  }, [cobrancas]);
+
   useEffect(() => {
     setTituloDaRota("Resumo das cobranças");
   }, []);
+
+  const formataValorMoeda = (valor) => {
+    return (valor / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  };
+
+  const reducerValores = (arr) => {
+    if (arr.length === 0) {
+      return 0;
+    }
+
+    const valores = arr.map((item) => Number(item.valor));
+    const total = valores.reduce((acc, cur) => acc + cur);
+
+    return total;
+  };
 
   return (
     <>
@@ -66,7 +104,9 @@ const Home = ({ setTituloDaRota }) => {
           <img src={cobrancaVerde} alt="" />
           <div className="flex-column items-center flex-1">
             <span className={`${estilos.cardResumoNome}`}>Cobranças Pagas</span>
-            <span className={`${estilos.cardResumoValor}`}>R$ 30.000</span>
+            <span className={`${estilos.cardResumoValor}`}>
+              {formataValorMoeda(totalPagas)}
+            </span>
           </div>
         </div>
 
@@ -76,7 +116,9 @@ const Home = ({ setTituloDaRota }) => {
             <span className={`${estilos.cardResumoNome}`}>
               Cobranças Vencidas
             </span>
-            <span className={`${estilos.cardResumoValor}`}>R$ 7.000</span>
+            <span className={`${estilos.cardResumoValor}`}>
+              {formataValorMoeda(totalVencidas)}
+            </span>
           </div>
         </div>
 
@@ -86,32 +128,19 @@ const Home = ({ setTituloDaRota }) => {
             <span className={`${estilos.cardResumoNome}`}>
               Cobranças Previstas
             </span>
-            <span className={`${estilos.cardResumoValor}`}>R$ 10.000</span>
+            <span className={`${estilos.cardResumoValor}`}>
+              {formataValorMoeda(totalPendentes)}
+            </span>
           </div>
         </div>
       </section>
 
       <section className={`flex gap-2 ${estilos.cobrancasSecao}`}>
-        <CardCobrancas
-          nome="Cobranças Pagas"
-          total={10}
-          cor="verde"
-          lista={dadosCobrancas}
-        ></CardCobrancas>
+        <CardCobrancas status="paga"></CardCobrancas>
 
-        <CardCobrancas
-          nome="Cobranças Vencidas"
-          total="08"
-          cor="vermelho"
-          lista={dadosCobrancas}
-        ></CardCobrancas>
+        <CardCobrancas status="vencida"></CardCobrancas>
 
-        <CardCobrancas
-          nome="Cobranças Previstas"
-          total="05"
-          cor="amarelo"
-          lista={dadosCobrancas}
-        ></CardCobrancas>
+        <CardCobrancas status="pendente"></CardCobrancas>
       </section>
 
       <section className={`flex gap-2 ${estilos.clientesSecao}`}>
@@ -120,6 +149,7 @@ const Home = ({ setTituloDaRota }) => {
           nome={`Clientes em dia`}
           cor="verde"
           total="08"
+          status={false}
         ></CardClientes>
 
         <CardClientes
@@ -127,6 +157,7 @@ const Home = ({ setTituloDaRota }) => {
           nome={`Clientes inadimplentes`}
           total="08"
           cor="vermelho"
+          status={true}
         ></CardClientes>
       </section>
     </>
