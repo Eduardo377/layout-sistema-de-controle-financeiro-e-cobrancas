@@ -90,7 +90,7 @@ const useRequests = () => {
         throw new Error(dados.message);
       }
 
-      return notify.sucesso(dados.message);
+      return dados;
     } catch (error) {
       return error.message;
     }
