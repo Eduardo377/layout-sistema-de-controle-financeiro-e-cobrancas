@@ -46,10 +46,7 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
         data.cliente_id = cliente.id;
         response = await fetcher("cobrancas", "POST", data);
       } else {
-        console.log(data);
-        setLoading(false);
-        return;
-        response = await fetcher("cobrancas", "PUT", data);
+        response = await fetcher("cobranca", "PUT", data);
       }
 
       const responseData = await response.json();
@@ -58,13 +55,18 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
         throw responseData;
       }
 
-      setCobrancasCLiente([...cobrancasCLiente, responseData]);
+      if (verbo === "POST") {
+        setCobrancasCLiente([...cobrancasCLiente, responseData]);
+        notify.sucesso("Cobrança cadastrada com sucesso");
+      } else {
+        notify.sucesso("Cobrança editada com sucesso");
+      }
 
-      notify.sucesso("Cobrança cadastrada com sucesso");
       setModal(false);
     } catch (error) {
       setLoading(false);
       notify.erro(error.message);
+      setModal(false);
     }
   }
 
