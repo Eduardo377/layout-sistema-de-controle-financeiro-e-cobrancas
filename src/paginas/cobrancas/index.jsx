@@ -24,6 +24,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
   const [inputBusca, setInputBusca] = useState("");
   const [currentCobranca, setCurrentCobranca] = useState({});
   const [tipoOrdem, setTipoOrdem] = useState(2);
+  const [sucessoExclusao, setSucessoExclusao] = useState(false);
   const [token] = useLocalStorage("token");
   const { listarCobrancas } = useRequests();
 
@@ -121,19 +122,12 @@ const Cobrancas = ({ setTituloDaRota }) => {
     buscarCobranca();
   }, [inputBusca]);
 
-  const delayOrdenacao = () => {
-    const delay = setInterval(() => manterOrdem(), 50);
-    setTimeout(() => clearInterval(delay), 100);
-  };
-
   useEffect(() => {
-    if (modalExcluir) return;
+    if (modalExcluir || !sucessoExclusao) return;
     const ordenar = listarCobrancas(token).then((resposta) =>
-      setCobrancas(resposta)
+      setCobrancas([...resposta])
     );
-    ordenar.then(delayOrdenacao());
-
-    if (inputBusca) return setTimeout(() => buscarCobranca(), 101);
+    ordenar.then(manterOrdem());
   }, [modalExcluir]);
 
   return (
@@ -276,6 +270,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
         <ExcluirCobranca
           cobranca={currentCobranca}
           setModal={setModalExcluir}
+          setSucessoExclusao={setSucessoExclusao}
         />
       </Modal>
     </>

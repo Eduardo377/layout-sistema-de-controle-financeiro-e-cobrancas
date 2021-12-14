@@ -66,6 +66,9 @@
     width: 12%;
     font-size: 0.8rem;
     color: #6e6e85;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   
   .item2 {

@@ -6,13 +6,17 @@ import notify from "@/constantes/notify";
 import useRequests from "../../hooks/Requisições/useRequests";
 import { useLocalStorage } from "react-use";
 
-const ExcluirCobranca = ({ cobranca, setModal }) => {
+const ExcluirCobranca = ({ cobranca, setModal, setSucessoExclusao }) => {
   const [token] = useLocalStorage("token");
 
   const { excluirUmaCobranca } = useRequests();
   const excluirCobranca = async () => {
     const requisicaoDeExclusao = await excluirUmaCobranca(token, cobranca.id);
-    if (requisicaoDeExclusao.erro) return setModal(false);
+    if (requisicaoDeExclusao.erro) {
+      setSucessoExclusao(false);
+      return setModal(false);
+    }
+    setSucessoExclusao(true);
     notify.sucesso(requisicaoDeExclusao.message);
     return setModal(false);
   };
