@@ -63,8 +63,8 @@ const Cobrancas = ({ setTituloDaRota }) => {
     return estilos.vencida;
   };
 
-  const manterOrdem = async () => {
-    const cloneCobrancas = await listarCobrancas(token);
+  const manterOrdem = async (cobrancasTemp) => {
+    const cloneCobrancas = [...cobrancasTemp];
     if (tipoOrdem === 1) {
       return setCobrancas([...cloneCobrancas].sort((a, b) => b.id - a.id));
     }
@@ -119,15 +119,14 @@ const Cobrancas = ({ setTituloDaRota }) => {
   };
 
   useEffect(() => {
+    if (!inputBusca) return;
     buscarCobranca();
   }, [inputBusca]);
 
   useEffect(() => {
     if (modalExcluir || !sucessoExclusao) return;
-    const ordenar = listarCobrancas(token).then((resposta) =>
-      setCobrancas([...resposta])
-    );
-    ordenar.then(manterOrdem());
+    const novasCobrancas = listarCobrancas(token).then((resposta) => resposta);
+    novasCobrancas.then((resposta) => manterOrdem(resposta));
   }, [modalExcluir]);
 
   return (
