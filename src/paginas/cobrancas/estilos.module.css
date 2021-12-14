@@ -55,7 +55,7 @@
     font-weight: 700;
     width: 10%;
   }
-
+  
   .containerItems {
     padding: 1rem;
     width: 100%;
@@ -63,6 +63,7 @@
   }
   
   .items {
+    cursor: pointer;
     width: 12%;
     font-size: 0.8rem;
     color: #6e6e85;
@@ -72,6 +73,7 @@
   }
   
   .item2 {
+    cursor: pointer;
     font-size: 0.8rem;
     overflow: hidden;
     width: 30%;
