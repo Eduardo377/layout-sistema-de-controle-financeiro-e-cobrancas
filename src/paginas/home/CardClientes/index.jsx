@@ -3,8 +3,9 @@ import clienteVermelho from "@/assets/icones/cliente-vermelho.svg";
 import ClientesIcone from "@/assets/icones/clientes";
 import ClientesContext from "contextos/ClientesContext";
 import React, { useContext, useEffect, useState } from "react";
-import estilos from "./estilos.module.css";
 import { Link } from "react-router-dom";
+import uuid from "react-uuid";
+import estilos from "./estilos.module.css";
 
 const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
   const { clientes, setClientes } = useContext(ClientesContext);
@@ -45,7 +46,7 @@ const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
 
           <ul className={`${estilos.lista}`}>
             {clientesPorStatus.slice(0, 4).map((cliente) => (
-              <li key={cliente.id} className={`${estilos.listaItem}`}>
+              <li key={uuid()} className={`${estilos.listaItem}`}>
                 <span>
                   <Link to={`/clientes/${cliente.id}`}>{cliente.nome}</Link>
                 </span>

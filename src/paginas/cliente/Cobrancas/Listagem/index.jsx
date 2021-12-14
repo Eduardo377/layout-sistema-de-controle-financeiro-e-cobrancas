@@ -1,18 +1,16 @@
-import { useState, useEffect, useContext } from "react";
-import fetcher from "@/constantes/fetcher";
-import { useParams } from "react-router";
-import estilos from "./estilos.module.css";
-import CobrancasIcone from "@/assets/icones/cobrancas";
-import FormularioCobrancas from "@/componentes/FormularioCobrancas";
-
-import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
 import editarCobrancaIcone from "@/assets/icones/editar.svg";
 import excluirCobrancaIcone from "@/assets/icones/excluir.svg";
-import buscaCobrancasCliente from "./buscaCobrancasCliente";
-import CobrancasContext from "@/contextos/CobrancasContext";
+import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
+import ExcluirCobranca from "@/componentes/ExcluirCobranca";
+import FormularioCobrancas from "@/componentes/FormularioCobrancas";
 import Modal from "@/componentes/Modal";
 import ClientesContext from "@/contextos/ClientesContext";
-import ExcluirCobranca from "@/componentes/ExcluirCobranca";
+import CobrancasContext from "@/contextos/CobrancasContext";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
+import uuid from "react-uuid";
+import buscaCobrancasCliente from "./buscaCobrancasCliente";
+import estilos from "./estilos.module.css";
 
 const Listagem = () => {
   const [modal, setModal] = useState(false);
@@ -74,7 +72,7 @@ const Listagem = () => {
             <ul>
               {cobrancasCLiente.map((cobranca) => {
                 return (
-                  <li key={cobranca.id}>
+                  <li key={uuid()}>
                     <span>{cobranca?.id}</span>
                     <span>
                       {new Date(cobranca?.data_vencimento).toLocaleDateString(

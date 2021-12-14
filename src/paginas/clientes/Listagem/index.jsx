@@ -11,6 +11,7 @@ import estilos from "./estilos.module.css";
 import semResultados from "@/assets/semresultados.png";
 import clientesVazioIcone from "@/assets/icones/clientes-vazio.svg";
 import { useSearchParams } from "react-router-dom";
+import uuid from "react-uuid";
 
 const Listagem = ({ pesquisa }) => {
   const { clientes, loadingClientes, setClientes } =
@@ -108,9 +109,9 @@ const Listagem = ({ pesquisa }) => {
 
             <ul className={`${estilos.listagemBody}`}>
               {clientes &&
-                clientes.map((cliente, index) => (
+                clientes.map((cliente) => (
                   <li
-                    key={cliente.id || cliente.nome}
+                    key={uuid()}
                     className={`
                     ${!cliente.show && pesquisa && "hidden"}
                     ${
