@@ -68,8 +68,7 @@ const ModalDetalharCobranca = ({
           <div className={`flex-column gap-1`}>
             <label className={estilos.label}>Status</label>
             <span
-              className={`${() =>
-                escolherEstiloDeStatus(currentCobranca.status)}`}
+              className={`${escolherEstiloDeStatus(currentCobranca.status)}`}
             >
               {currentCobranca.status}
             </span>
