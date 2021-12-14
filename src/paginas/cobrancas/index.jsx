@@ -45,8 +45,7 @@ const Cobrancas = ({ setTituloDaRota }) => {
   const buscarCobranca = async () => {
     const atualizarLista = await listarCobrancas(token);
     if (!inputBusca) {
-      setCobrancas([...atualizarLista]);
-      manterOrdem();
+      return manterOrdem(atualizarLista);
     }
 
     const busca = atualizarLista.filter(
@@ -119,7 +118,6 @@ const Cobrancas = ({ setTituloDaRota }) => {
   };
 
   useEffect(() => {
-    if (!inputBusca) return;
     buscarCobranca();
   }, [inputBusca]);
 
