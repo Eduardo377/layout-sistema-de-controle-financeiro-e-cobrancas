@@ -105,10 +105,6 @@ const FormularioCobrancas = ({ cobranca = {}, cliente, verbo, setModal }) => {
           <div>
             <label htmlFor="data_vencimento">Vencimento*</label>
             <input
-              value={
-                cobranca.data_vencimento &&
-                cobranca.data_vencimento.substring(0, 10)
-              }
               type="date"
               id="data_vencimento"
               {...register("data_vencimento")}
