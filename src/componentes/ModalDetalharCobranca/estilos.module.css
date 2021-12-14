@@ -1,0 +1,59 @@
+.container {
+    background: rgba(145, 154, 150, 0.3);
+    backdrop-filter: blur(4px);
+    position:absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.card {
+    background-color: var(--branco);
+    border-radius: 30px;
+    position: relative;
+    padding: 3.2rem;
+    width: 500px;
+}
+
+.close {
+    cursor: pointer;
+    position: absolute;
+    right: 1.7rem;
+    top: 1.7rem;
+}
+
+.h1 {
+    font-size: 1.6rem;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.pendente {
+    background-color: #FCF6DC;
+    color: var(--amarelo);
+    font-weight: 700;
+    padding: 0.4rem;
+    border-radius: 0.8rem;
+  }
+
+  .paga {
+    color:  var(--verde);
+    background-color: var(--verde-claro);
+    font-weight: 700;
+    padding: 0.4rem;
+    border-radius: 0.8rem;
+    
+  }
+  
+  .vencida {
+      all: unset;
+    background-color: #FFEFEF;
+    color: var(--vermelho);
+    font-weight: 700;
+    padding: 0.4rem;
+    border-radius: 0.8rem;
+  }

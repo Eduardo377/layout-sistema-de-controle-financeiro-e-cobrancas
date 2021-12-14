@@ -15,26 +15,36 @@ import fetcher from "@/constantes/fetcher";
 import notify from "@/constantes/notify";
 import { useLocalStorage } from "react-use";
 import useRequests from "../../hooks/Requisições/useRequests";
+import ModalDetalharCobranca from "@/componentes/ModalDetalharCobranca";
 
 const Cobrancas = ({ setTituloDaRota }) => {
-  const { cobrancas, setCobrancas, sucessoExclusao} = useContext(CobrancasContext);
+  const { cobrancas, setCobrancas, sucessoExclusao } =
+    useContext(CobrancasContext);
   const [ordenacao, setOrdenacao] = useState(true);
   const [modalExcluir, setModalExcluir] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
+  const [modalDetalhar, setModalDetalhar] = useState(false);
   const [inputBusca, setInputBusca] = useState("");
   const [currentCobranca, setCurrentCobranca] = useState({});
   const [tipoOrdem, setTipoOrdem] = useState(2);
   const [token] = useLocalStorage("token");
-  const { listarCobrancas } = useRequests();
+  const { listarCobrancas, detalharCobranca } = useRequests();
 
   const editarCobranca = (cobranca) => {
     setModalEditar(true);
     setCurrentCobranca(cobranca);
+    console.log(cobranca);
   };
 
   const excluirCobranca = (cobranca) => {
     setModalExcluir(true);
     setCurrentCobranca(cobranca);
+  };
+
+  const visualizarCobranca = async (cobranca) => {
+    const requisicaoDeDetalhar = await detalharCobranca(token, cobranca.id);
+    setCurrentCobranca(requisicaoDeDetalhar);
+    setModalDetalhar(true);
   };
 
   useEffect(() => {
@@ -205,25 +215,49 @@ const Cobrancas = ({ setTituloDaRota }) => {
                   key={index}
                   className={`${estilos.containerItems} flex items-center`}
                 >
-                  <span className={`${estilos.items}`}>{item.nome}</span>
-                  <span className={`${estilos.items}`}>{item.id}</span>
-                  <span className={`${estilos.items}`}>
+                  <span
+                    onClick={() => visualizarCobranca(item)}
+                    className={`${estilos.items}`}
+                  >
+                    {item.nome}
+                  </span>
+                  <span
+                    onClick={() => visualizarCobranca(item)}
+                    className={`${estilos.items}`}
+                  >
+                    {item.id}
+                  </span>
+                  <span
+                    onClick={() => visualizarCobranca(item)}
+                    className={`${estilos.items}`}
+                  >
                     {(item.valor / 100).toLocaleString("pt-BR", {
                       style: "currency",
                       currency: "BRL",
                     })}
                   </span>
-                  <span className={`${estilos.items}`}>
+                  <span
+                    onClick={() => visualizarCobranca(item)}
+                    className={`${estilos.items}`}
+                  >
                     {new Date(item.data_vencimento)
                       .toLocaleString("pt-BR", { timeZone: "UTC" })
                       .slice(0, 10)}
                   </span>
-                  <div className={`${estilos.items}`}>
+                  <div
+                    onClick={() => visualizarCobranca(item)}
+                    className={`${estilos.items}`}
+                  >
                     <span className={escolherEstiloDeStatus(item.status)}>
                       {`${item.status}`}
                     </span>
                   </div>
-                  <span className={`${estilos.item2}`}>{item.descricao}</span>
+                  <span
+                    onClick={() => visualizarCobranca(item)}
+                    className={`${estilos.item2}`}
+                  >
+                    {item.descricao}
+                  </span>
                   <div className={`flex justify-center gap-2`}>
                     <div
                       className={`${estilos.divIcones} flex-column justify-center items-center`}
@@ -274,6 +308,13 @@ const Cobrancas = ({ setTituloDaRota }) => {
           setModal={setModalExcluir}
         />
       </Modal>
+      {modalDetalhar && (
+        <ModalDetalharCobranca
+          setModalDetalhar={setModalDetalhar}
+          modalDetalhar={modalDetalhar}
+          currentCobranca={currentCobranca}
+        />
+      )}
     </>
   );
 };
