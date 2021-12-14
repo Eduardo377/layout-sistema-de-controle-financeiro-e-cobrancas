@@ -17,14 +17,13 @@ import { useLocalStorage } from "react-use";
 import useRequests from "../../hooks/Requisições/useRequests";
 
 const Cobrancas = ({ setTituloDaRota }) => {
-  const { cobrancas, setCobrancas } = useContext(CobrancasContext);
+  const { cobrancas, setCobrancas, sucessoExclusao} = useContext(CobrancasContext);
   const [ordenacao, setOrdenacao] = useState(true);
   const [modalExcluir, setModalExcluir] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
   const [inputBusca, setInputBusca] = useState("");
   const [currentCobranca, setCurrentCobranca] = useState({});
   const [tipoOrdem, setTipoOrdem] = useState(2);
-  const [sucessoExclusao, setSucessoExclusao] = useState(false);
   const [token] = useLocalStorage("token");
   const { listarCobrancas } = useRequests();
 
@@ -126,6 +125,12 @@ const Cobrancas = ({ setTituloDaRota }) => {
     const novasCobrancas = listarCobrancas(token).then((resposta) => resposta);
     novasCobrancas.then((resposta) => manterOrdem(resposta));
   }, [modalExcluir]);
+
+  useEffect(() => {
+    if (modalEditar) return;
+    const novasCobrancas = listarCobrancas(token).then((resposta) => resposta);
+    novasCobrancas.then((resposta) => manterOrdem(resposta));
+  }, [modalEditar]);
 
   return (
     <>
@@ -267,7 +272,6 @@ const Cobrancas = ({ setTituloDaRota }) => {
         <ExcluirCobranca
           cobranca={currentCobranca}
           setModal={setModalExcluir}
-          setSucessoExclusao={setSucessoExclusao}
         />
       </Modal>
     </>

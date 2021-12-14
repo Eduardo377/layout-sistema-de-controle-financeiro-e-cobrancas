@@ -8,7 +8,7 @@ const CobrancasContext = React.createContext([]);
 const CobrancasContextProvider = () => {
   const [cobrancas, setCobrancas] = React.useState([]);
   const [loadingCobrancas, setLoadingCobrancas] = React.useState(true);
-
+  const [sucessoExclusao, setSucessoExclusao] = React.useState(false);
   const [cobrancasCLiente, setCobrancasCLiente] = React.useState([]);
   const [loadingCobrancasCLiente, setLoadingCobrancasCLiente] =
     React.useState(true);
@@ -16,7 +16,7 @@ const CobrancasContextProvider = () => {
   React.useEffect(() => {
     (async function () {
       try {
-        setCobrancas(await buscaCobrancas());
+        setCobrancas(await buscaCobrancas().sort((a, b) => a.id - b.id));
         setLoadingCobrancas(false);
       } catch (error) {
         setLoadingCobrancas(false);
@@ -35,6 +35,8 @@ const CobrancasContextProvider = () => {
         setCobrancasCLiente,
         loadingCobrancasCLiente,
         setLoadingCobrancasCLiente,
+        setSucessoExclusao,
+        sucessoExclusao,
       }}
     >
       <Outlet />
