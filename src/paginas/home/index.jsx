@@ -1,13 +1,11 @@
-import { useEffect, useState, useContext } from "react";
-import CardCobrancas from "./CardCobrancas";
-import CardClientes from "./CardClientes";
-
-import estilos from "./estilos.module.css";
-
+import cobrancaAmarela from "@/assets/icones/cobranca-amarela.svg";
 import cobrancaVerde from "@/assets/icones/cobranca-verde.svg";
 import cobrancaVermelha from "@/assets/icones/cobranca-vermelha.svg";
-import cobrancaAmarela from "@/assets/icones/cobranca-amarela.svg";
 import CobrancasContext from "contextos/CobrancasContext";
+import { useContext, useEffect, useState } from "react";
+import CardClientes from "./CardClientes";
+import CardCobrancas from "./CardCobrancas";
+import estilos from "./estilos.module.css";
 
 const Home = ({ setTituloDaRota }) => {
   const { cobrancas } = useContext(CobrancasContext);

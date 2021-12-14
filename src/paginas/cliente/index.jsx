@@ -1,13 +1,13 @@
 import ClientesIcone from "@/assets/icones/clientes";
 import editarClienteIcone from "@/assets/icones/editar-cliente.svg";
-import Modal from "@/componentes/Modal";
-import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router";
 import Formulario from "@/componentes/FormularioClientes";
+import Modal from "@/componentes/Modal";
+import ClientesContext from "contextos/ClientesContext";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
 import buscaCliente from "./buscaCliente";
 import CobrancasSecao from "./Cobrancas";
 import estilos from "./estilos.module.css";
-import ClientesContext from "contextos/ClientesContext";
 
 const Cliente = () => {
   const { id: clienteID } = useParams();

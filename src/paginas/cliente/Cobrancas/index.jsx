@@ -1,4 +1,3 @@
-import ClientesIcone from "@/assets/icones/clientes";
 import FormularioCobrancas from "@/componentes/FormularioCobrancas";
 import Modal from "@/componentes/Modal";
 import ClientesContext from "@/contextos/ClientesContext";
