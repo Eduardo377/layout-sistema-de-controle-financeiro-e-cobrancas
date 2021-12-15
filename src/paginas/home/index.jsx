@@ -14,6 +14,7 @@ const Home = ({ setTituloDaRota }) => {
   const [totalPendentes, setTotalPendentes] = useState([]);
 
   useEffect(() => {
+    console.log(cobrancas);
     const cobrancasPagas = cobrancas.filter((item) => item.paga);
     const cobrancasVencidas = cobrancas.filter(
       (item) => item.status.toLowerCase() === "vencida"
