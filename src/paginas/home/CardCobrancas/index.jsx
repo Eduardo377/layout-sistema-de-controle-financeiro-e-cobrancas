@@ -2,7 +2,6 @@ import CobrancasIcone from "@/assets/icones/cobrancas";
 import CobrancasContext from "contextos/CobrancasContext";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import uuid from "react-uuid";
 import estilos from "./estilos.module.css";
 
 const CardCobrancas = ({ status }) => {
@@ -51,7 +50,7 @@ const CardCobrancas = ({ status }) => {
 
           <ul className={`${estilos.lista}`}>
             {lista.slice(0, 4).map((item, index) => (
-              <li key={uuid()} className={`${estilos.listaItem}`}>
+              <li key={item.id + status} className={`${estilos.listaItem}`}>
                 <span>{item.nome}</span>
 
                 <span>{item.id}</span>

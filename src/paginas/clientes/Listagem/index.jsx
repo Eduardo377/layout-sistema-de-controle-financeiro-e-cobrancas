@@ -1,17 +1,13 @@
+import clientesVazioIcone from "@/assets/icones/clientes-vazio.svg";
 import criarCorancaIcone from "@/assets/icones/criar-cobranca.svg";
 import setasOrdenacaoIcone from "@/assets/icones/setas-ordenacao.svg";
+import semResultados from "@/assets/semresultados.png";
 import FormularioCobrancas from "@/componentes/FormularioCobrancas";
 import Modal from "@/componentes/Modal";
 import ClientesContext from "@/contextos/ClientesContext";
-import CobrancasContext from "@/contextos/CobrancasContext";
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { useEffect } from "react/cjs/react.development";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import estilos from "./estilos.module.css";
-import semResultados from "@/assets/semresultados.png";
-import clientesVazioIcone from "@/assets/icones/clientes-vazio.svg";
-import { useSearchParams } from "react-router-dom";
-import uuid from "react-uuid";
 
 const Listagem = ({ pesquisa }) => {
   const { clientes, loadingClientes, setClientes } =
@@ -111,7 +107,7 @@ const Listagem = ({ pesquisa }) => {
               {clientes &&
                 clientes.map((cliente) => (
                   <li
-                    key={uuid()}
+                    key={cliente.id}
                     className={`
                     ${!cliente.show && pesquisa && "hidden"}
                     ${
