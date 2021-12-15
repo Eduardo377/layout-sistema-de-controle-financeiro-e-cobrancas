@@ -24,6 +24,30 @@ const useRequests = () => {
     }
   };
 
+  const detalharCobranca = async (token, id) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_BASE}/cobranca/${id}`,
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const dados = await response.json();
+      if (!response.ok) {
+        throw new Error(dados.message);
+      }
+      return dados;
+    } catch (error) {
+      return error.message;
+    }
+  };
+
   const cadastrarUsuario = async (body) => {
     try {
       const response = await fetch(
@@ -129,6 +153,7 @@ const useRequests = () => {
     login,
     listarCobrancas,
     excluirUmaCobranca,
+    detalharCobranca,
   };
 };
 

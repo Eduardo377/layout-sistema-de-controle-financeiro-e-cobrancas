@@ -4,7 +4,7 @@ const defaultValues = (cobranca) => {
     descricao: cobranca.descricao || "",
     valor: cobranca.valor / 100 || "",
     paga: cobranca.paga || true,
-    data_vencimento: cobranca.data_vencimento.substring(0, 10) || "",
+    data_vencimento: cobranca.data_vencimento?.substring(0, 10) || "",
   };
 };
 
