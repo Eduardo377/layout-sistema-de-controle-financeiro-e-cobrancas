@@ -72,7 +72,7 @@ const Listagem = () => {
             <ul>
               {cobrancasCLiente.map((cobranca) => {
                 return (
-                  <li key={uuid()}>
+                  <li key={cobranca.id}>
                     <span>{cobranca?.id}</span>
                     <span>
                       {new Date(cobranca?.data_vencimento).toLocaleDateString(
