@@ -1,6 +1,7 @@
 import { useLocalStorage } from "react-use";
 import { useState } from "react";
 import useRequests from "../Requisições/useRequests";
+import jwt from "jsonwebtoken";
 
 const useAuthProvider = () => {
   const [token, setToken, removeToken] = useLocalStorage("token", "");
@@ -11,6 +12,18 @@ const useAuthProvider = () => {
   });
   const { login } = useRequests();
 
+  const verificarToken = async (token) => {
+    try {
+      const verificacao = await jwt.verify(
+        token,
+        process.env.REACT_APP_SENHA_JWT
+      );
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   const logar = async (dados, callback) => {
     const response = await login(dados);
     if (!response.token) return { response, ok: false };
@@ -20,8 +33,8 @@ const useAuthProvider = () => {
   };
 
   const deslogar = (callback) => {
-    removeToken();
     callback();
+    removeToken();
   };
 
   return {
@@ -33,6 +46,7 @@ const useAuthProvider = () => {
     setEtapaCadastro,
     dadosCadastro,
     setDadosCadastro,
+    verificarToken,
   };
 };
 

@@ -24,8 +24,9 @@ import {
 } from "react-router-dom";
 
 const RotasProtegidas = () => {
-  const { token } = useAuth();
-  return token ? <Outlet /> : <Navigate to="/login" />;
+  const { token, verificarToken } = useAuth();
+  if (!token) return <Navigate to="/login" />;
+  return verificarToken(token) ? <Outlet /> : <Navigate to="/login" />;
 };
 
 const Rotas = () => {

@@ -1,6 +1,4 @@
 import Modal from "@/componentes/Modal";
-import fetcher from "@/constantes/fetcher";
-import useAuth from "@/hooks/Autenticação/useAuth";
 import { memo, useEffect, useState, useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import estilos from "./estilos.module.css";
@@ -14,33 +12,6 @@ const Padrao = ({ tituloDaRota }) => {
   const [usuario, setUsuario] = useState({});
   const [modal, setModal] = useState(false);
 
-  const { deslogar } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const buscaUsuario = async () => {
-      try {
-        const response = await fetcher("usuarios");
-
-        const responseData = await response.json();
-
-        if (!response.ok) {
-          throw responseData;
-        }
-
-        setUsuario(responseData);
-      } catch (error) {
-        if (error.message === "jwt expired") {
-          alert("Sua sessão expirou. Faça login novamente");
-
-          deslogar(() => navigate("/login"));
-        }
-      }
-    };
-
-    buscaUsuario();
-  }, []);
-
   return (
     <UsuarioContextProvider>
       <div className={`${estilos.layout}`}>
@@ -50,8 +21,6 @@ const Padrao = ({ tituloDaRota }) => {
           <MenuTopo
             setModal={setModal}
             tituloDaRota={tituloDaRota}
-            usuario={usuario}
-            setUsuario={setUsuario}
           />
 
           <div className="container">
@@ -63,11 +32,7 @@ const Padrao = ({ tituloDaRota }) => {
       <Modal modal={modal} handleModal={setModal}>
         <h3 className="text-center mb-2">Edite seu cadastro</h3>
 
-        <Formulario
-          usuario={usuario}
-          setUsuario={setUsuario}
-          setModal={setModal}
-        />
+        <Formulario />
       </Modal>
     </UsuarioContextProvider>
   );
