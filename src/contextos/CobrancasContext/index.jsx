@@ -16,7 +16,12 @@ const CobrancasContextProvider = () => {
   React.useEffect(() => {
     (async function () {
       try {
-        setCobrancas(await buscaCobrancas().sort((a, b) => a.id - b.id));
+
+        const data = await buscaCobrancas();
+const dataSort = data.sort((a, b) => a.id - b.id)
+
+        setCobrancas(dataSort);
+
         setLoadingCobrancas(false);
       } catch (error) {
         setLoadingCobrancas(false);
