@@ -16,7 +16,8 @@ const CobrancasContextProvider = () => {
   React.useEffect(() => {
     (async function () {
       try {
-        setCobrancas(await buscaCobrancas());
+        const data = await buscaCobrancas();
+        setCobrancas(data);
         setLoadingCobrancas(false);
       } catch (error) {
         setLoadingCobrancas(false);

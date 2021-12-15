@@ -6,9 +6,11 @@ import { useContext, useEffect, useState } from "react";
 import CardClientes from "./CardClientes";
 import CardCobrancas from "./CardCobrancas";
 import estilos from "./estilos.module.css";
+import fetcher from "constantes/fetcher";
+import notify from "constantes/notify";
 
 const Home = ({ setTituloDaRota }) => {
-  const { cobrancas } = useContext(CobrancasContext);
+  const { cobrancas, setCobrancas } = useContext(CobrancasContext);
   const [totalPagas, setTotalPagas] = useState([]);
   const [totalVencidas, setTotalVencidas] = useState([]);
   const [totalPendentes, setTotalPendentes] = useState([]);
@@ -30,6 +32,20 @@ const Home = ({ setTituloDaRota }) => {
 
   useEffect(() => {
     setTituloDaRota("Resumo das cobranças");
+
+    async function buscaCobrancas() {
+      try {
+        const response = await fetcher("cobrancas");
+
+        const data = await response.json();
+
+        setCobrancas(data);
+      } catch (error) {
+        notify.erro(error.message);
+      }
+    }
+
+    buscaCobrancas();
   }, []);
 
   const formataValorMoeda = (valor) => {
