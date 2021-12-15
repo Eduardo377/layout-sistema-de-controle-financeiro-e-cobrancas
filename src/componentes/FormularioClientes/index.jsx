@@ -1,20 +1,20 @@
 import fetcher from "@/constantes/fetcher";
 import { yupResolver } from "@hookform/resolvers/yup";
-import notify from "constantes/notify";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import notify from "@/constantes/notify";
+import React, { useState, useContext } from "react";
+import { Controller, useForm } from "react-hook-form";
+import NumberFormat from "react-number-format";
 import { useParams } from "react-router";
 import estilos from "./estilos.module.css";
 import validacao from "./validacao";
+import defaultValues from "./defaultValues";
 
-const Formulario = ({
-  setModal,
-  setClientes,
-  clientes,
-  setCliente,
-  cliente,
-  verbo,
-}) => {
+import ClientesContext from "@/contextos/ClientesContext";
+
+const Formulario = ({ setModal, verbo }) => {
+  const { clientes, setClientes, cliente, setCliente } =
+    useContext(ClientesContext);
+
   const [erroEmailExiste, setErroEmailExiste] = useState(false);
   const [erroCpfExiste, setErroCpfExiste] = useState(false);
   const [carregando, setCarregando] = useState(false);
@@ -22,13 +22,20 @@ const Formulario = ({
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validacao),
+    defaultValues: defaultValues(cliente),
   });
 
   async function cadastrarCliente(data) {
     setCarregando(true);
+
+    data.cpf = data.cpf
+      .replaceAll(".", "")
+      .replaceAll(" ", "")
+      .replace("-", "");
 
     try {
       let response;
@@ -47,20 +54,25 @@ const Formulario = ({
 
       if (verbo === "POST") {
         setClientes([...clientes, responseData[0]]);
-        notify.sucesso("Cadastro concluído com sucesso").showToast();
+        notify.sucesso("Cadastro concluído com sucesso");
       } else {
         setCliente({ id: clienteID, ...data });
-        notify.sucesso("Edições do cadastro conluídas com sucesso").showToast();
+        notify.sucesso("Edições do cadastro conluídas com sucesso");
       }
 
       setModal(false);
     } catch (error) {
+      console.log(error);
       if (error.field === "email") {
         setErroEmailExiste(true);
       }
 
       if (error.field === "cpf") {
         setErroCpfExiste(true);
+      }
+
+      if (!error.field) {
+        notify.erro(error.message);
       }
 
       setCarregando(false);
@@ -73,13 +85,10 @@ const Formulario = ({
         <div className="mb-1">
           <label htmlFor="nome">Nome*</label>
           <input
-            defaultValue={cliente?.nome}
             id="nome"
             name="nome"
             placeholder="Digite o nome"
-            {...register("nome", {
-              required: true,
-            })}
+            {...register("nome")}
             className={`${errors.nome && "inputErro"}`}
           />
           <p className={`${"inputMensagemErro"}`}>{errors.nome?.message}</p>
@@ -88,13 +97,12 @@ const Formulario = ({
         <div className="mb-1">
           <label htmlFor="email">Email*</label>
           <input
-            defaultValue={cliente?.email}
             id="email"
             name="email"
             placeholder="Digite o email"
             {...register("email")}
             className={`${errors.email && "inputErro"}`}
-            onChange={() => setErroEmailExiste(false)}
+            onKeyDown={() => setErroEmailExiste(false)}
           />
           <p className={`${"inputMensagemErro"}`}>{errors.email?.message}</p>
           <p className={`${"inputMensagemErro"}`}>
@@ -105,7 +113,22 @@ const Formulario = ({
         <div className="flex gap-1 mb-1">
           <div>
             <label htmlFor="cpf">CPF*</label>
-            <input
+
+            <Controller
+              control={control}
+              name="cpf"
+              render={({ field: { onChange, name, value } }) => (
+                <NumberFormat
+                  format="###.###.###-##"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  onKeyDown={() => setErroCpfExiste(false)}
+                />
+              )}
+            />
+
+            {/* <input
               defaultValue={cliente?.cpf}
               id="cpf"
               name="cpf"
@@ -113,7 +136,7 @@ const Formulario = ({
               {...register("cpf")}
               className={`${errors.cpf && "inputErro"}`}
               onChange={() => setErroCpfExiste(false)}
-            />
+            /> */}
             <p className={`${"inputMensagemErro"}`}>{errors.cpf?.message}</p>
             <p className={`${"inputMensagemErro"}`}>
               {erroCpfExiste && "CPF já cadastrado"}
@@ -122,14 +145,28 @@ const Formulario = ({
 
           <div>
             <label htmlFor="telefone">Telefone*</label>
-            <input
+
+            <Controller
+              control={control}
+              name="telefone"
+              render={({ field: { onChange, name, value } }) => (
+                <NumberFormat
+                  format="(##) # ####-####"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
+            />
+
+            {/* <input
               defaultValue={cliente?.telefone}
               id="telefone"
               name="telefone"
               placeholder="Digite o telefone"
               {...register("telefone")}
               className={`${errors.telefone && "inputErro"}`}
-            />
+            /> */}
             <p className={`${"inputMensagemErro"}`}>
               {errors.telefone?.message}
             </p>
@@ -139,7 +176,6 @@ const Formulario = ({
         <div className="mb-1">
           <label htmlFor="endereco">Endereço</label>
           <input
-            defaultValue={cliente?.endereco}
             id="endereco"
             name="endereco"
             placeholder="Digite o endereço"
@@ -150,7 +186,6 @@ const Formulario = ({
         <div className="mb-1">
           <label htmlFor="complemento">Complemento</label>
           <input
-            defaultValue={cliente?.complemento}
             id="complemento"
             name="complemento"
             placeholder="Digite o complemento"
@@ -162,7 +197,6 @@ const Formulario = ({
           <div>
             <label htmlFor="cep">CEP</label>
             <input
-              defaultValue={cliente?.cep}
               id="cep"
               name="cep"
               placeholder="Digite o cep"
@@ -173,7 +207,6 @@ const Formulario = ({
           <div>
             <label htmlFor="bairro">Bairro</label>
             <input
-              defaultValue={cliente?.bairro}
               id="bairro"
               name="bairro"
               placeholder="Digite o bairro"
@@ -186,7 +219,6 @@ const Formulario = ({
           <div className="flex-1">
             <label htmlFor="cidade">Cidade</label>
             <input
-              defaultValue={cliente?.cidade}
               id="cidade"
               name="cidade"
               placeholder="Digite a cidade"
@@ -199,7 +231,6 @@ const Formulario = ({
           <div className={`${estilos.inputContainerUF}`}>
             <label htmlFor="uf">UF</label>
             <input
-              defaultValue={cliente?.uf}
               id="uf"
               name="uf"
               placeholder="Digite a UF"

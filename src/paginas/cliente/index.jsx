@@ -1,24 +1,35 @@
 import ClientesIcone from "@/assets/icones/clientes";
 import editarClienteIcone from "@/assets/icones/editar-cliente.svg";
+import Formulario from "@/componentes/FormularioClientes";
 import Modal from "@/componentes/Modal";
-import React, { useEffect, useState } from "react";
+import ClientesContext from "contextos/ClientesContext";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import Formulario from "../Formulario";
 import buscaCliente from "./buscaCliente";
 import CobrancasSecao from "./Cobrancas";
 import estilos from "./estilos.module.css";
 
 const Cliente = () => {
   const { id: clienteID } = useParams();
-  const [cliente, setCliente] = useState({});
+
+  const { cliente, setCliente, setLoadingCliente, loadingCliente } =
+    useContext(ClientesContext);
 
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
+    setCliente({});
+
     (async function () {
       setCliente(await buscaCliente(clienteID));
+
+      setLoadingCliente(false);
     })();
   }, []);
+
+  if (loadingCliente) {
+    return <div>Carregando...</div>;
+  }
 
   return (
     <>
@@ -48,12 +59,12 @@ const Cliente = () => {
 
           <div className={`flex-column`}>
             <span className={`${estilos.dadosCampo}`}>Telefone</span>
-            <span>{cliente.telefone}</span>
+            <span>{cliente?.telefone}</span>
           </div>
 
           <div className={`flex-column`}>
             <span className={`${estilos.dadosCampo}`}>CPF</span>
-            <span>{cliente.cpf}</span>
+            <span>{cliente?.cpf}</span>
           </div>
         </div>
 
@@ -65,27 +76,27 @@ const Cliente = () => {
 
           <div className={`flex-column`}>
             <span className={`${estilos.dadosCampo}`}>Bairro</span>
-            <span className="font-capitalize">{cliente.bairro}</span>
+            <span className="font-capitalize">{cliente?.bairro}</span>
           </div>
 
           <div className={`flex-column`}>
             <span className={`${estilos.dadosCampo}`}>Complemento</span>
-            <span className="font-capitalize">{cliente.complemento}</span>
+            <span className="font-capitalize">{cliente?.complemento}</span>
           </div>
 
           <div className={`flex-column`}>
             <span className={`${estilos.dadosCampo}`}>CEP</span>
-            <span>{cliente.cep}</span>
+            <span>{cliente?.cep}</span>
           </div>
 
           <div className={`flex-column`}>
             <span className={`${estilos.dadosCampo}`}>Cidade</span>
-            <span className="font-capitalize">{cliente.cidade}</span>
+            <span className="font-capitalize">{cliente?.cidade}</span>
           </div>
 
           <div className={`flex-column`}>
             <span className={`${estilos.dadosCampo}`}>UF</span>
-            <span className="font-uppercase">{cliente.uf}</span>
+            <span className="font-uppercase">{cliente?.uf}</span>
           </div>
         </div>
       </section>
@@ -98,12 +109,7 @@ const Cliente = () => {
           <h3>Editar cliente</h3>
         </div>
 
-        <Formulario
-          setModal={setModal}
-          setCliente={setCliente}
-          cliente={cliente}
-          verbo="PUT"
-        />
+        <Formulario setModal={setModal} verbo="PUT" />
       </Modal>
     </>
   );

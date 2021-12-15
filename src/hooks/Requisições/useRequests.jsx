@@ -1,3 +1,5 @@
+import notify from "../../constantes/notify";
+
 const useRequests = () => {
   const buscarEmail = async (body) => {
     try {
@@ -17,6 +19,30 @@ const useRequests = () => {
       }
 
       return response.status;
+    } catch (error) {
+      return error.message;
+    }
+  };
+
+  const detalharCobranca = async (token, id) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_BASE}/cobranca/${id}`,
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const dados = await response.json();
+      if (!response.ok) {
+        throw new Error(dados.message);
+      }
+      return dados;
     } catch (error) {
       return error.message;
     }
@@ -90,7 +116,34 @@ const useRequests = () => {
 
       return dados;
     } catch (error) {
-      window.alert(error);
+      return error.message;
+    }
+  };
+
+  const excluirUmaCobranca = async (token, id) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_BASE}/cobranca/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const dados = await response.json();
+
+      if (!response.ok) {
+        throw new Error(dados.message);
+      }
+
+      dados.erro = false;
+      return dados;
+    } catch (error) {
+      notify.erro(error.message);
+      error.erro = true;
+      return error;
     }
   };
 
@@ -99,6 +152,8 @@ const useRequests = () => {
     cadastrarUsuario,
     login,
     listarCobrancas,
+    excluirUmaCobranca,
+    detalharCobranca,
   };
 };
 

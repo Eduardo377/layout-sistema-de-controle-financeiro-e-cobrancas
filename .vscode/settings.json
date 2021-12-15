@@ -1,11 +1,20 @@
 {
   "files.exclude": {
-    ".vscode": false,
+    ".vscode": true,
     "node_modules": true,
     "yarn.lock": true,
     "package-lock.json": true,
     "README.md": true,
+    ".env.exemplo": true,
+    "public": true,
+    "craco.config.js": true,
     ".gitignore": true,
-    ".env.exemplo": true
+    ".env": true,
+    "jsconfig.json": true,
+    "package.json": true,
+    "src\\assets": true,
+    "src\\index.js": true,
+    "src\\hooks": true,
+    "src\\estilos": true
   }
 }
