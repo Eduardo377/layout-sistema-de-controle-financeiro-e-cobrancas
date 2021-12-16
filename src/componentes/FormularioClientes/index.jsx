@@ -57,7 +57,7 @@ const Formulario = ({ setModal, verbo }) => {
         notify.sucesso("Cadastro concluído com sucesso");
       } else {
         setCliente({ id: clienteID, ...data });
-        notify.sucesso("Edições do cadastro conluídas com sucesso");
+        notify.sucesso("Edições do cadastro concluídas com sucesso");
       }
 
       setModal(false);
@@ -251,9 +251,8 @@ const Formulario = ({ setModal, verbo }) => {
           </button>
           <button
             type="submit"
-            className={`btn-primario flex-1 ${
-              carregando && "btn-desabilitado"
-            }`}
+            className={`btn-primario flex-1 ${carregando && "btn-desabilitado"
+              }`}
           >
             {carregando ? "Carregando..." : "Aplicar"}
           </button>
