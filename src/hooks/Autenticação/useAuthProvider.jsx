@@ -12,12 +12,9 @@ const useAuthProvider = () => {
   });
   const { login } = useRequests();
 
-  const verificarToken = async (token) => {
+  const verificarToken = (token) => {
     try {
-      const verificacao = await jwt.verify(
-        token,
-        process.env.REACT_APP_SENHA_JWT
-      );
+      jwt.verify(token, process.env.REACT_APP_SENHA_JWT);
       return true;
     } catch (error) {
       return false;
@@ -47,6 +44,7 @@ const useAuthProvider = () => {
     dadosCadastro,
     setDadosCadastro,
     verificarToken,
+    removeToken,
   };
 };
 
