@@ -43,23 +43,37 @@ const Listagem = ({ pesquisa }) => {
   };
 
   useEffect(() => {
-    if (pesquisa) {
+    if (pesquisa !== "") {
       pesquisarCliente();
     }
   }, [pesquisa]);
 
   const pesquisarCliente = () => {
-    clientes.map((cliente) => {
+    pesquisa = pesquisa
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+
+    const clone = [...clientes];
+
+    clone.map((cliente) => {
       const nome = cliente.nome
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase();
+
       cliente.show = false;
 
-      if (nome.includes(pesquisa) || cliente.cpf.includes(pesquisa) || cliente.email.includes(pesquisa)) {
+      if (
+        nome.includes(pesquisa) ||
+        cliente.cpf.includes(pesquisa) ||
+        cliente.email.includes(pesquisa)
+      ) {
         cliente.show = true;
       }
     });
+
+    setClientes(clone);
   };
 
   if (loadingClientes) {
