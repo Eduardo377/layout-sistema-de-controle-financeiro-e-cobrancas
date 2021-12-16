@@ -56,7 +56,7 @@ const Listagem = ({ pesquisa }) => {
         .toLowerCase();
       cliente.show = false;
 
-      if (nome.includes(pesquisa)) {
+      if (nome.includes(pesquisa) || cliente.cpf.includes(pesquisa) || cliente.email.includes(pesquisa)) {
         cliente.show = true;
       }
     });
