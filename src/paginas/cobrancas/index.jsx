@@ -16,6 +16,7 @@ import notify from "@/constantes/notify";
 import { useLocalStorage } from "react-use";
 import useRequests from "../../hooks/Requisições/useRequests";
 import ModalDetalharCobranca from "@/componentes/ModalDetalharCobranca";
+import { useSearchParams } from "react-router-dom";
 
 const Cobrancas = ({ setTituloDaRota }) => {
   const { cobrancas, setCobrancas, sucessoExclusao } =
@@ -29,6 +30,8 @@ const Cobrancas = ({ setTituloDaRota }) => {
   const [tipoOrdem, setTipoOrdem] = useState(2);
   const [token] = useLocalStorage("token");
   const { listarCobrancas, detalharCobranca } = useRequests();
+  const [searchParams] = useSearchParams();
+  const queryStatus = searchParams.get("status");
 
   const editarCobranca = (cobranca) => {
     setModalEditar(true);
@@ -213,7 +216,13 @@ const Cobrancas = ({ setTituloDaRota }) => {
               return (
                 <div
                   key={index}
-                  className={`${estilos.containerItems} flex items-center`}
+                  className={`${estilos.containerItems} flex items-center
+                  ${
+                    queryStatus &&
+                    queryStatus !== item.status.toLowerCase() &&
+                    "hidden"
+                  }
+                  `}
                 >
                   <span
                     onClick={() => visualizarCobranca(item)}
