@@ -1,0 +1,127 @@
+.clientesSecao section {
+  margin-bottom: 2rem;
+}
+
+.filtroBtn {
+  background: white;
+  padding: 0 0.6rem;
+}
+
+.inputContainer {
+  position: relative;
+
+  min-width: 300px;
+}
+
+.inputContainer input {
+  padding-right: 2rem;
+}
+
+.inputIcone {
+  cursor: pointer;
+
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+
+  transform: translateY(-50%);
+}
+
+.inputContainerUF {
+  max-width: 12ch;
+}
+
+.listagem {
+  background: white;
+  border-radius: 30px;
+
+  padding: 2rem;
+}
+
+.listagemHeader {
+  border-bottom: 1px solid #eff0f6;
+
+  display: grid;
+  grid-template-columns: repeat(6, calc((100% - 5rem) / 6));
+  gap: 1rem;
+
+  font-weight: 700;
+
+  text-align: center;
+
+  padding-bottom: 1rem;
+}
+
+.listagemHeader span:first-of-type {
+  cursor: pointer;
+}
+
+.listagemBody {
+  list-style: none;
+}
+
+.listagemBody li {
+  border-bottom: 1px solid #eff0f6;
+
+  color: #747488;
+
+  display: grid;
+  grid-template-columns: repeat(6, calc((100% - 5rem) / 6));
+  gap: 1rem;
+  align-items: center;
+
+  font-size: 0.9rem;
+
+  text-align: center;
+
+  padding: 0.6rem 0;
+}
+
+.listagemBody li:last-of-type {
+  border: 0;
+  padding-bottom: 0;
+}
+
+.listagemBody span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.listagemBody span:first-of-type,
+.listagemHeader span:first-of-type {
+  text-align: left;
+}
+
+.listagemBody span:last-of-type {
+  color: var(--primaria);
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-weight: 600;
+  font-size: 0.8rem;
+
+  text-align: right;
+}
+
+.status {
+  border-radius: 8px;
+
+  font-weight: 700;
+  font-size: 0.9rem;
+
+  padding: 0.2rem 0;
+}
+
+.statusVermelho {
+  background: var(--vermelho-claro);
+  color: var(--vermelho);
+}
+
+.statusVerde {
+  background: var(--verde-claro);
+  color: var(--verde);
+}

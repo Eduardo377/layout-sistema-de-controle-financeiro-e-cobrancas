@@ -2,12 +2,14 @@ import chevronIcone from "@/assets/icones/chevron-down.svg";
 import editarIcone from "@/assets/icones/editar.svg";
 import sairIcone from "@/assets/icones/sair.svg";
 import useAuth from "@/hooks/Autenticação/useAuth";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { useLocation, useNavigate } from "react-router-dom";
 import estilos from "./estilos.module.css";
+import UsuarioContext from "@/contextos/UsuarioContext";
 
-const MenuTopo = ({ tituloDaRota, setModal, usuario, setUsuario }) => {
+const MenuTopo = ({ tituloDaRota, setModal }) => {
+  const { usuario } = useContext(UsuarioContext);
   const [menuUsuario, abreMenuUsuario] = useState(false);
   const { deslogar } = useAuth();
   const navigate = useNavigate();

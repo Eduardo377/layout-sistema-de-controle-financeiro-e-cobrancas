@@ -1,0 +1,23 @@
+.container {
+  text-align: center;
+}
+
+.container p {
+  color: #cc7800;
+
+  font-family: var(--fonte-secundaria);
+  font-weight: 600;
+  font-size: 1.1rem;
+
+  margin-bottom: 2rem;
+}
+
+.nao {
+  background: var(--vermelho-claro);
+  color: var(--vermelho);
+}
+
+.sim {
+  background: var(--verde-claro);
+  color: var(--verde);
+}

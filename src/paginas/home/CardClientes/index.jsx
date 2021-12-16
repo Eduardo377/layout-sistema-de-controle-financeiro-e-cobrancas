@@ -1,10 +1,26 @@
-import React from "react";
-import estilos from "./estilos.module.css";
-
 import clienteVerde from "@/assets/icones/cliente-verde.svg";
 import clienteVermelho from "@/assets/icones/cliente-vermelho.svg";
+import ClientesIcone from "@/assets/icones/clientes";
+import ClientesContext from "contextos/ClientesContext";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import estilos from "./estilos.module.css";
 
-const CardCobrancas = ({ nome = "Nome do card", total, cor, lista }) => {
+const CardClientes = ({ nome = "Nome do card", total, cor, lista, status }) => {
+  const { clientes, setClientes } = useContext(ClientesContext);
+
+  const [clientesPorStatus, setClientesPorStatus] = useState([]);
+
+  useEffect(() => {
+    if (clientes.length > 0) {
+      const clientesFiltrado = clientes.filter(
+        (cliente) => cliente.inadimplente === status
+      );
+
+      setClientesPorStatus(clientesFiltrado);
+    }
+  }, [clientes]);
+
   return (
     <div className={`flex-1 ${estilos.card}`}>
       <div className={`flex items-center gap-1 ${estilos.header}`}>
@@ -13,39 +29,54 @@ const CardCobrancas = ({ nome = "Nome do card", total, cor, lista }) => {
           {nome}
         </span>
         <span className={`${estilos.badge} texto-${cor} bg-${cor}-claro`}>
-          {total}
+          {clientesPorStatus.length > 0
+            ? String(clientesPorStatus.length).padStart(2, "0")
+            : 0}
         </span>
       </div>
 
-      <div className={`${estilos.subHeader}`}>
-        <span>Cliente</span>
-        <span>Data de venc.</span>
-        <span>Valor</span>
-      </div>
+      {clientesPorStatus.length > 0 && (
+        <>
+          <div className={`${estilos.subHeader}`}>
+            <span>Cliente</span>
+            <span>ID do Clie.</span>
+            <span>CPF</span>
+          </div>
 
-      <ul className={`${estilos.lista}`}>
-        {lista &&
-          lista.map((item) => (
-            <li key={item.id_cobranca} className={`${estilos.listaItem}`}>
-              <span>{item.cliente}</span>
+          <ul className={`${estilos.lista}`}>
+            {clientesPorStatus.slice(0, 4).map((cliente) => (
+              <li key={cliente.id + status} className={`${estilos.listaItem}`}>
+                <span>
+                  <Link to={`/clientes/${cliente.id}`}>{cliente.nome}</Link>
+                </span>
 
-              <span>{item.data}</span>
+                <span>{cliente.id}</span>
 
-              <span>
-                {(item.valor / 100).toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-              </span>
-            </li>
-          ))}
-      </ul>
+                <span>
+                  {String(cliente.cpf).replace(
+                    /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                    "$1.$2.$3-$4"
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
 
-      <div className={`text-center ${estilos.footer}`}>
-        <a href="#">Ver todos</a>
-      </div>
+      {clientesPorStatus.length === 0 && (
+        <div className="flex justify-center" style={{ padding: "3rem 0" }}>
+          <ClientesIcone tamanho={6} />
+        </div>
+      )}
+
+      {clientesPorStatus.length > 4 && (
+        <div className={`text-center ${estilos.footer}`}>
+          <Link to={`clientes?inadimplentes=${status}`}>Ver todos</Link>
+        </div>
+      )}
     </div>
   );
 };
 
-export default CardCobrancas;
+export default CardClientes;

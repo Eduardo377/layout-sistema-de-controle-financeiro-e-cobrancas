@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useLocalStorage } from "react-use";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import validacao from "./validacao";
-
-import estilos from "./estilos.module.css";
-
 import olhoFechado from "@/assets/icones/olho.svg";
 import olhoAberto from "@/assets/icones/olho2.png";
 import sucessoIcone from "@/assets/icones/sucesso.svg";
+import UsuarioContext from "@/contextos/UsuarioContext";
+import { yupResolver } from "@hookform/resolvers/yup";
+import fetcher from "constantes/fetcher";
+import React, { useContext, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import NumberFormat from "react-number-format";
+import estilos from "./estilos.module.css";
+import validacao from "./validacao";
 
-const Formulario = ({ usuario, setUsuario, setModal }) => {
-  const [token] = useLocalStorage("token");
+const Formulario = () => {
+  const { usuario, setUsuario } = useContext(UsuarioContext);
+
   const [erroEmailExiste, setErroEmailExiste] = useState(false);
   const [erroCpfExiste, setErroCpfExiste] = useState(false);
   const [carregando, setCarregando] = useState(false);
@@ -23,9 +24,18 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validacao),
+    defaultValues: {
+      nome: usuario.nome || "",
+      email: usuario.email || "",
+      cpf: usuario.cpf || "",
+      tel: usuario.tel || "",
+      senha1: "",
+      senha2: "",
+    },
   });
 
   useEffect(() => {
@@ -36,36 +46,27 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
     setVerSenha(verSenha === "password" ? "text" : "password");
   }
 
-  function checaSeSenhaSaoIguais(senha1, senha2) {
-    if (senha1 !== senha2) {
-      return setSenhaValida(false);
-    }
-
-    return setSenhaValida(true);
-  }
-
   async function onSubmit(data) {
+    data.cpf = data.cpf
+      .replaceAll(".", "")
+      .replaceAll(" ", "")
+      .replace("-", "");
+
     setCarregando(true);
     const { senha1, senha2, ...resto } = data;
 
     if (senha1 || senha2) {
-      checaSeSenhaSaoIguais(senha1, senha2);
+      if (senha1 !== senha2) {
+        setSenhaValida(false);
+        setCarregando(false);
+        return;
+      }
     }
 
     const dadosASerAtualizado = { ...resto, senha: senha1 };
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL_BASE}/usuarios`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(dadosASerAtualizado),
-        }
-      );
+      const response = await fetcher("usuarios", "PUT", dadosASerAtualizado);
 
       const responseData = await response.json();
 
@@ -77,8 +78,6 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
       setCarregando(false);
       setSucesso(true);
     } catch (error) {
-      console.log(error);
-
       if (error.field === "email") {
         setErroEmailExiste(true);
       }
@@ -94,18 +93,16 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
   return (
     <>
       {!sucesso && (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
           <div className="mb-1">
             <label htmlFor="nome">Nome*</label>
             <input
-              defaultValue={usuario?.nome}
               id="nome"
               name="nome"
               placeholder="Digite seu nome"
-              {...register("nome", {
-                required: true,
-              })}
-              className={`${errors.nome && " inputErro"}`}
+              required
+              className={`${errors.nome && " inputErro"} ${estilos.input}`}
+              {...register("nome")}
             />
 
             <p className={`${"inputMensagemErro"}`}>{errors.nome?.message}</p>
@@ -114,13 +111,14 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
           <div className="mb-1">
             <label htmlFor="email">Email*</label>
             <input
-              defaultValue={usuario?.email}
               id="email"
+              type="email"
               name="email"
+              required
               placeholder="Digite seu email"
-              {...register("email", { required: true })}
-              onChange={() => setErroEmailExiste(false)}
               className={`${errors.email && "inputErro"}`}
+              onKeyDown={() => setErroEmailExiste(false)}
+              {...register("email")}
             />
             <p className={`${"inputMensagemErro"}`}>{errors.email?.message}</p>
             <p className={`${"inputMensagemErro"}`}>
@@ -131,15 +129,22 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
           <div className="flex gap-2 mb-1">
             <div>
               <label htmlFor="cpf">CPF</label>
-              <input
-                defaultValue={usuario?.cpf}
-                type="text"
-                id="cpf"
+
+              <Controller
+                control={control}
                 name="cpf"
-                placeholder="Digite seu CPF"
-                {...register("cpf")}
-                onChange={() => setErroCpfExiste(false)}
+                render={({ field: { onChange, name, value } }) => (
+                  <NumberFormat
+                    format="###.###.###-##"
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    onKeyDown={() => setErroCpfExiste(false)}
+                  />
+                )}
               />
+
+              <p className={`${"inputMensagemErro"}`}>{errors.cpf?.message}</p>
               <p className={`${"inputMensagemErro"}`}>
                 {erroCpfExiste && "CPF já cadastrado."}
               </p>
@@ -147,13 +152,18 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
 
             <div>
               <label htmlFor="tel">Telefone</label>
-              <input
-                defaultValue={usuario?.tel}
-                type="tel"
-                id="tel"
+
+              <Controller
+                control={control}
                 name="tel"
-                placeholder="Digite seu telefone"
-                {...register("tel")}
+                render={({ field: { onChange, name, value } }) => (
+                  <NumberFormat
+                    format="(##) # ####-####"
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                  />
+                )}
               />
             </div>
           </div>
@@ -163,8 +173,7 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
             <div className={`${estilos.inputContainer}`}>
               <input
                 type={verSenha}
-                id="novasenha"
-                name="novasenha"
+                name="senha1"
                 placeholder=""
                 {...register("senha1")}
                 onChange={() => setSenhaValida(true)}
@@ -184,8 +193,7 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
             <div className={`${estilos.inputContainer}`}>
               <input
                 type={verSenha}
-                id="confirmarsenha"
-                name="confirmarsenha"
+                name="senha2"
                 placeholder=""
                 {...register("senha2")}
                 onChange={() => setSenhaValida(true)}
@@ -207,11 +215,12 @@ const Formulario = ({ usuario, setUsuario, setModal }) => {
           <div className="text-center">
             <button
               className={`btn-primario ${carregando && "btn-desabilitado"}`}
+              onClick={handleSubmit(onSubmit)}
             >
               {carregando ? "Carregando..." : "Aplicar"}
             </button>
           </div>
-        </form>
+        </div>
       )}
 
       {sucesso && (
