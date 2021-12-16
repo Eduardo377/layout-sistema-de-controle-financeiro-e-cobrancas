@@ -26,11 +26,8 @@ const UsuarioContextProvider = ({ children }) => {
 
         setUsuario(responseData);
       } catch (error) {
-        if (error.message === "jwt expired") {
-          return deslogar(() => navigate("/login"));
-        }
-
-        notify.erro(error.message);
+        notify.erro("Sua sessão expirou, faça login novamente!");
+        return deslogar(() => navigate("/login"));
       }
     };
 

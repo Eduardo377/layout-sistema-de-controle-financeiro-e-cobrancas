@@ -22,10 +22,15 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import notify from "@/constantes/notify";
 
 const RotasProtegidas = () => {
-  const { token } = useAuth();
-  return token ? <Outlet /> : <Navigate to="/login" />;
+  const { token, verificarToken, removeToken } = useAuth();
+  if (!token) return <Navigate to="/login" />;
+
+  if (verificarToken(token)) return <Outlet />;
+  removeToken();
+  return <Navigate to="/login" />;
 };
 
 const Rotas = () => {

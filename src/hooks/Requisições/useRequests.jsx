@@ -1,6 +1,7 @@
 import notify from "../../constantes/notify";
 
 const useRequests = () => {
+
   const buscarEmail = async (body) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_URL_BASE}/email`, {
