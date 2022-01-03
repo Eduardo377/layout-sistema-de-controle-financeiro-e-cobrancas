@@ -1,33 +1,70 @@
 ![](https://i.imgur.com/xG74tOh.png)
 
-# Desafio Final Módulo 5 - FRONTEND
+<h1 align="center">
+   --- APLICAÇÃO EM FRONTEND EM REACT ---
+</h1>
 
-Este repositório deverá servir de base para ser realizado o fork para desenvolvimento da parte de **FRONTEND** do desafio.
+## 💻 Sobre o Projeto
 
-A URL deste repositório deverá ser entregue na plataforma de alunos da Cubos Academy na página da parte de FRONTEND do desafio.
+Essa aplicação foi realizada no desafio final do Módulo 5 de frontend na escola [Cubos Academy][CubosAcademy], patrocinado pelo o [iFood][iFood], com ela é possível cadastrar, realizar o login, atualizar e listar usuarios.
 
-A versão final do código de cada sprint deverá estar na branch principal do repositório e sim, a cada semana acumulará as alterações das sprints, portanto a segunda sobrescrevendo a primeira e assim por diante.
+Qualquer usuario do sistema tem o poder cadastrar clientes, verificar todos os detalhes dos clientes, listar todos os clientes, deletar clientes além de editar os detalhes do clientes, assim como cadastrar cobraças no nome de clientes sejam essas faturas futuras ou passadas, pedentes, quitadas ou vencidas, verificar todos os detalhes de qualquer fatura, listar todas as faturas de um cliente ou todos, editar cobranças e deletar a cobrança.
+
+Todos os dados são protegidos em criptografia pela API após o login. Postgres é o banco de dados utilizado para esse projeto. E toda a interface visual foi desenvolvida em React e Styled-Components abordando boas práticas de programação.
+
+## 💡 Informações de como executar o projeto
+
+```bash
+
+  # Clonar todo o repositório ou em partes "backend-app" e "frontend-app"
+
+  # Acessar a pasta do projeto
+
+  ## Estando na pasta com os dois projetos, abrir dois consoles um para acessar a pasta backend-app e no outro console frontend-app
+  
+  # Ambas as pastas, rodar o comando -> yarn 
+
+  # Backend-app, Rodar o comando para subir a base de dados para o seu docker -> docker-compose up 
+
+  # Backend-app, Rodar o comando -> npm run dev ou yarn dev
+
+  # Frontend-app, Rodar o comando -> npm start ou yarn start
+
+```
+
+## 🛠 Tecnologias
+
+As seguintes ferramentas estão sendo usadas na construção do projeto:
+
+- [React.js][react]
+- [Styled-Components][styled]
+- [Node.js][nodejs]
+- [Express][express]
+- [JavaScript][javascript]
+- [Vscode][vscode]
+- [npm][multer]
+- [date-fns][datefns]
+
+Entre em [Contato!](https://www.linkedin.com/in/eduardogomes377/)
+
+[react]: https://pt-br.reactjs.org/
+[styled]: https://styled-components.com/
+[nodejs]: https://nodejs.org/
+[express]: https://expressjs.com/pt-br/
+[javascript]: https://www.ecma-international.org/
+[multer]: https://www.npmjs.com/package/multer
+[datefns]: https://date-fns.org/
+[Vscode]: https://code.visualstudio.com/
+[CubosAcademy]: https://cubos.academy/
+[iFood]: https://www.ifood.com.br/
+[RepositórioDeBackEnd]: https://github.com/Eduardo377/Sistema-de-controle-financeiro-e-cobrancas
+[RepositórioDeFrontEnd]: https://github.com/Eduardo377/layout-sistema-de-controle-financeiro-e-cobrancas
+[UrlAplicacao]: https://sistemacobranca.netlify.app/
+
+**[Repositório de Backend, ClIQUE AQUI][RepositórioDeBackEnd]**
+
+**[Repositório de Backend, Frontend, ClIQUE AQUI][RepositórioDeFrontEnd]**
+
+**[URL da aplicação funcionando, ClIQUE AQUI][UrlAplicacao]**
 
 ---
-
-No fork de vocês, favor alterar este README para adicionar os links correspondentes para os seguintes itens:
-
-**Repositório de Backend**: https://github.com/smarticogit/back-integral-m05-desafio
-
-**Repositório de Frontend**: https://github.com/smarticogit/front-integral-m05-desafio
-
-**URL da aplicação funcionando**: https://sistemacobranca.netlify.app/
-
----
-
-E os itens abaixo, que deverão ser preenchidos apenas após a finalização de todas as sprints do projeto: 
-
-**Pull Request (PR) de Backend**: https://github.com/cubos-academy/back-integral-m05-desafio/pull/32
-
-**Pull Request (PR) de Frontend**: https://github.com/cubos-academy/front-integral-m05-desafio/pull/50
-
-Estes Pull Requests (PRs) deverão ser criados a partir da branch principal do fork correspondente de vocês daquela stack tendo como destino o repositório base da stack do desafio.
-
-Ou seja, o Pull Request de **FRONTEND** deverá ser criado a partir do fork de vocês desse repositório aqui, com destino a este repositório aqui.
-
-E portanto o Pull Request de **BACKEND** deverá ser criado a partir do fork de vocês do repositório base de BACKEND desse desafio, com destino ao [repositório base de BACKEND desse desafio](https://github.com/cubos-academy/back-integral-m05-desafio).
