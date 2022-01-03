@@ -16,15 +16,13 @@ Todos os dados são protegidos em criptografia pela API após o login. Postgres 
 
 ```bash
 
-  # Clonar todo o repositório ou em partes "backend-app" e "frontend-app"
+  # Clonar os dois repositórios disponiveis  de "backend" e "frontend"
 
   # Acessar a pasta do projeto
 
   ## Estando na pasta com os dois projetos, abrir dois consoles um para acessar a pasta backend-app e no outro console frontend-app
   
   # Ambas as pastas, rodar o comando -> yarn 
-
-  # Backend-app, Rodar o comando para subir a base de dados para o seu docker -> docker-compose up 
 
   # Backend-app, Rodar o comando -> npm run dev ou yarn dev
 
